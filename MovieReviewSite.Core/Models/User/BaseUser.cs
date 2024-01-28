@@ -8,5 +8,4 @@ public class BaseUser
     public string? Name { get; set; }
     public string? UserName { get; set; }
     public int? RoleCode { get; set; }
-    public DateTimeOffset CreatedOn { get; set; }
 }

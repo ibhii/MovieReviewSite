@@ -1,32 +1,32 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MovieReviewSite.Core.Interfaces.Movie;
 using MovieReviewSite.Core.Models;
+using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Models;
 
 namespace MovieReviewSite.Controllers;
 
 public class MovieController : Controller
 {
-    private readonly ILogger<MovieController> _logger;
+    private readonly ILogger<HomeController> _logger;
+    private readonly IMovieBaseService _movieService;
 
-    public MovieController(ILogger<MovieController> logger)
+    public MovieController(ILogger<HomeController> logger,IMovieBaseService movieService)
     {
         _logger = logger;
+        _movieService = movieService;
     }
 
-    public async Task<List<MovieList>>Index()
+    [HttpGet]
+    public async Task<List<MovieList>> GetMoviesList()
     {
-        return  new List<MovieList>() ;
+        return await _movieService.GetMovieList();
     }
 
-    public IActionResult Privacy()
+    [HttpGet]
+    public async Task<MovieDetail?> GetMovieDetail(int id)
     {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        return await _movieService.GetMovieDetails(id);
     }
 }

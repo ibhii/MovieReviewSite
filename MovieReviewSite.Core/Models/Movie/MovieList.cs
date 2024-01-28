@@ -7,6 +7,6 @@ public class MovieList
     public DateTimeOffset? ReleaseDate { get; set; }
     public int? Duration { get; set; }
     public int? Rating { get; set; }
-    public string? AgeRating { get; set; }
-    public string? Image { get; set; }
+    public int? AgeRating { get; set; }
+    public byte[]? Image { get; set; }
 }

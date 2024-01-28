@@ -2,12 +2,11 @@
 
 namespace MovieReviewSite.Core.Models.Review;
 
-public class ReviewList
+public class ReviewList : ReviewBase
 {
-    public int Id { get; set; }
-    public BaseUser? UserDetail { get; set; }
+    public string? Title { get; set; }
     public string? Review { get; set; }
     public int CommentsCount { get; set; }
     public int GivenRate { get; set; }
-    public int LikesCount { get; set; }
+    public int? LikesCount { get; set; }
 }
