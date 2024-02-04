@@ -10,9 +10,9 @@ namespace MovieReviewSite.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<MovieController> _logger;
-    private readonly IMovieBaseService _movieService;
+    private readonly IMovieService _movieService;
 
-    public HomeController(ILogger<MovieController> logger,IMovieBaseService movieService)
+    public HomeController(ILogger<MovieController> logger,IMovieService movieService)
     {
         _logger = logger;
         _movieService = movieService;

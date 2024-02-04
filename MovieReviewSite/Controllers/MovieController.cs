@@ -1,18 +1,16 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.Movie;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Movie;
-using MovieReviewSite.Models;
 
 namespace MovieReviewSite.Controllers;
 
 public class MovieController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IMovieBaseService _movieService;
+    private readonly IMovieService _movieService;
 
-    public MovieController(ILogger<HomeController> logger,IMovieBaseService movieService)
+    public MovieController(ILogger<HomeController> logger,IMovieService movieService)
     {
         _logger = logger;
         _movieService = movieService;

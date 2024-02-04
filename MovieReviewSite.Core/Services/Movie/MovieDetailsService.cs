@@ -6,7 +6,7 @@ using MovieReviewSite.Core.Models.User;
 
 namespace MovieReviewSite.Core.Services.Movie;
 
-public partial class MovieBaseService
+public partial class MovieService
 {
     //TODO : join tables movie and genre to get genre and crew
     public async Task<MovieDetail?> GetMovieDetails(int id)

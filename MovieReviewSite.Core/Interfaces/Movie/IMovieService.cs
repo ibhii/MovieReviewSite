@@ -3,7 +3,7 @@ using MovieReviewSite.Core.Models.Movie;
 
 namespace MovieReviewSite.Core.Interfaces.Movie;
 
-public interface IMovieBaseService
+public interface IMovieService
 {
     Task<List<MovieList>> GetMovieList();
     Task<MovieDetail?> GetMovieDetails(int id);

@@ -5,7 +5,7 @@ using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Services.Movie;
 
-public partial class MovieBaseService
+public partial class MovieService
 {
     public async Task<List<MovieList>> GetMovieList()
     {
