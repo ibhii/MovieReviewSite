@@ -9,8 +9,6 @@ public partial class User
 
     public string? LastName { get; set; }
 
-    public string? FullName { get; set; }
-
     public int? PasswordId { get; set; }
 
     public DateTime? CreatedOn { get; set; }
@@ -39,9 +37,9 @@ public partial class User
 
     public int? Age { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public string FullName { get; set; } = null!;
 
-    public virtual ICollection<Crew> Crews { get; set; } = new List<Crew>();
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     public virtual ICollection<Password> Passwords { get; set; } = new List<Password>();
 

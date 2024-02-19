@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace MovieReviewSite.Core.Models.User;
+﻿namespace MovieReviewSite.Core.Models.User;
 
 public class BaseUser
 {

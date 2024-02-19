@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models;
-using MovieReviewSite.Core.Models.Movie;
-using MovieReviewSite.DataBase.Contexts;
+using MovieReviewSite.Core.Models.Movie.Responses;
 
-namespace MovieReviewSite.Core.Services.Movie;
+namespace MovieReviewSite.Core.Repositories.Movie;
 
-public partial class MovieService
+public partial class MovieRepository
 {
     public async Task<List<MovieList>> GetMovieList()
     {
-        var query = await _context.Movies.Select(m => new MovieList
+        var query = await Queryable.Select<DataBase.Movie, MovieList>(_context.Movies, m => new MovieList
         {
             Id = m.Id,
             MovieName = m.Name,
@@ -20,4 +19,5 @@ public partial class MovieService
         }).ToListAsync();
         return query;
     }
+    
 }

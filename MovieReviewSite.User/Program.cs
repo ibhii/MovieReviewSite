@@ -1,11 +1,17 @@
+using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Interfaces.Movie;
-using MovieReviewSite.Core.Services.Movie;
- 
+using MovieReviewSite.Core.Repositories.Movie;
+using MovieReviewSite.DataBase;
+using MovieReviewSite.DataBase.Contexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddKeyedSingleton<IMovieService, MovieService >("movie");
+builder.Services.AddDbContext<ReviewSiteContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 var app = builder.Build();
 
@@ -24,12 +30,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "Movie",
-    pattern: "{controller=Movie}/{action=GetMovieDetail}/{id}");
-app.MapControllerRoute(
-    name: "Movie",
-    pattern: "{controller=Movie}/{action=GetMoviesList}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

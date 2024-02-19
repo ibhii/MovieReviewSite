@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Movie;
+using MovieReviewSite.Core.Models.Movie.Responses;
 using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.User;
 
-namespace MovieReviewSite.Core.Services.Movie;
+namespace MovieReviewSite.Core.Repositories.Movie;
 
-public partial class MovieService
+public partial class MovieRepository
 {
     //TODO : join tables movie and genre to get genre and crew
     public async Task<MovieDetail?> GetMovieDetails(int id)

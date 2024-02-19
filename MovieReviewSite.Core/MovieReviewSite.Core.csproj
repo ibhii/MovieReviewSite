@@ -8,8 +8,9 @@
 
     <ItemGroup>
       <Folder Include="Enums\" />
-      <Folder Include="Services\Review\" />
-      <Folder Include="Services\User\" />
+      <Folder Include="Repositories\Interfaces\" />
+      <Folder Include="Repositories\Review\" />
+      <Folder Include="Repositories\User\" />
       <Folder Include="ViewModels\" />
     </ItemGroup>
 

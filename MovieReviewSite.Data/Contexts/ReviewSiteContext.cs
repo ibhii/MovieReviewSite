@@ -68,17 +68,18 @@ public partial class ReviewSiteContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BirthDate).HasColumnType("datetime");
+            entity.Property(e => e.CompleteFullName)
+                .HasMaxLength(152)
+                .HasComputedColumnSql("(concat([FirstName],' ',[MiddleName],' ',[LastName]))", false);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.DeathDate).HasColumnType("datetime");
-            entity.Property(e => e.FirstName).HasMaxLength(1);
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.FullName)
+                .HasMaxLength(101)
+                .HasComputedColumnSql("(concat([FirstName],' ',[LastName]))", false);
             entity.Property(e => e.LastModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.LastName).HasMaxLength(1);
-            entity.Property(e => e.MiddleName).HasMaxLength(1);
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Crews)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("Crew_User_ID_fk");
+            entity.Property(e => e.LastName).HasMaxLength(50);
+            entity.Property(e => e.MiddleName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Genre>(entity =>
@@ -88,8 +89,8 @@ public partial class ReviewSiteContext : DbContext
             entity.ToTable("Genre", "ReviewSite");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Description).HasMaxLength(1);
-            entity.Property(e => e.Title).HasMaxLength(1);
+            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Title).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Movie>(entity =>
@@ -102,11 +103,11 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.AgeRateId).HasColumnName("AgeRateID");
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.LastModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.Name).HasMaxLength(1);
+            entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.RealeaseDate).HasColumnType("datetime");
             entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.StreamId).HasColumnName("StreamID");
-            entity.Property(e => e.Synopsis).HasMaxLength(1);
+            entity.Property(e => e.Synopsis).HasMaxLength(200);
             entity.Property(e => e.TypeId).HasColumnName("TypeID");
         });
 
@@ -168,7 +169,7 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.HashPassword).HasMaxLength(1);
             entity.Property(e => e.LastPassword).HasMaxLength(1);
             entity.Property(e => e.Password1)
-                .HasMaxLength(1)
+                .HasMaxLength(50)
                 .HasColumnName("Password");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -228,8 +229,8 @@ public partial class ReviewSiteContext : DbContext
             entity.ToTable("Role", "ReviewSite");
 
             entity.Property(e => e.Code).ValueGeneratedNever();
-            entity.Property(e => e.Description).HasMaxLength(1);
-            entity.Property(e => e.Title).HasMaxLength(1);
+            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Title).HasMaxLength(50);
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -240,15 +241,19 @@ public partial class ReviewSiteContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BirthDate).HasColumnType("datetime");
-            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-            entity.Property(e => e.Email).HasMaxLength(1);
-            entity.Property(e => e.FirstName).HasMaxLength(1);
-            entity.Property(e => e.FullName).HasMaxLength(1);
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.FullName)
+                .HasMaxLength(101)
+                .HasComputedColumnSql("(concat([FirstName],' ',[LastName]))", false);
             entity.Property(e => e.LastModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.LastName).HasMaxLength(1);
+            entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.LockOutEnd).HasColumnType("datetime");
             entity.Property(e => e.PasswordId).HasColumnName("PasswordID");
-            entity.Property(e => e.UserName).HasMaxLength(1);
+            entity.Property(e => e.UserName).HasMaxLength(50);
 
             entity.HasOne(d => d.RoleCodeNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleCode)

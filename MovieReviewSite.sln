@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewSite", "MovieReviewSite\MovieReviewSite.csproj", "{B309FF6E-C79C-40E4-84A9-5258B4142032}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewSite.User", "MovieReviewSite.User\MovieReviewSite.User.csproj", "{B309FF6E-C79C-40E4-84A9-5258B4142032}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewSite.Data", "MovieReviewSite.Data\MovieReviewSite.Data.csproj", "{B296E45F-A404-47AC-87E8-03A6BEB781E1}"
 EndProject

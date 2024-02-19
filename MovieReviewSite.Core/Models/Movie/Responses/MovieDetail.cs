@@ -1,8 +1,7 @@
 ﻿using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Review;
-using MovieReviewSite.DataBase;
 
-namespace MovieReviewSite.Core.Models.Movie;
+namespace MovieReviewSite.Core.Models.Movie.Responses;
 
 public class MovieDetail
 {

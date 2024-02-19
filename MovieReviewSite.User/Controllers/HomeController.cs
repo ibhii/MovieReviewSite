@@ -9,23 +9,27 @@ namespace MovieReviewSite.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<MovieController> _logger;
-    private readonly IMovieService _movieService;
+    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<MovieController> logger,IMovieService movieService)
+    public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
-        _movieService = movieService;
     }
-    public IActionResult Movies()
+
+    public IActionResult Index()
     {
-        throw new NotImplementedException();
+        return View();
+    }
+
+    public IActionResult Privacy()
+    {
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
 }

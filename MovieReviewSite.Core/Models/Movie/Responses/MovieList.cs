@@ -1,4 +1,4 @@
-﻿namespace MovieReviewSite.Core.Models;
+﻿namespace MovieReviewSite.Core.Models.Movie.Responses;
 
 public class MovieList
 {

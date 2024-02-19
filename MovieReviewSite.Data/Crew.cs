@@ -13,13 +13,9 @@ public partial class Crew
 
     public string? LastName { get; set; }
 
-    public int? UserId { get; set; }
-
-    public bool? IsUser { get; set; }
+    public int? CreatedBy { get; set; }
 
     public DateTime? CreatedOn { get; set; }
-
-    public int? CreatedBy { get; set; }
 
     public DateTime? LastModifiedOn { get; set; }
 
@@ -33,9 +29,11 @@ public partial class Crew
 
     public bool? IsActive { get; set; }
 
+    public string CompleteFullName { get; set; } = null!;
+
+    public string FullName { get; set; } = null!;
+
     public virtual ICollection<MovieCrew> MovieCrewCrews { get; set; } = new List<MovieCrew>();
 
     public virtual ICollection<MovieCrew> MovieCrewMovies { get; set; } = new List<MovieCrew>();
-
-    public virtual User? User { get; set; }
 }
