@@ -6,7 +6,7 @@ namespace MovieReviewSite.Core.Repositories.Base;
 
 public class BaseRepository : IBaseRepository 
 {
-    private readonly ReviewSiteContext _context;
+    public readonly ReviewSiteContext _context;
 
     public BaseRepository(ReviewSiteContext context,DbContextOptions options) : base()
     {

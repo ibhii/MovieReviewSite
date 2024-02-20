@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models.Genre;
-using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Core.Models.Movie.Responses;
 using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.User;
