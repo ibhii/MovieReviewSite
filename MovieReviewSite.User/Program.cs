@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using MovieReviewSite.Core.Interfaces.Movie;
+using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Repositories.Comment;
+using MovieReviewSite.Core.Repositories.Genre;
 using MovieReviewSite.Core.Repositories.Movie;
-using MovieReviewSite.DataBase;
+using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.DataBase.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,10 @@ builder.Services.AddDbContext<ReviewSiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
 
 var app = builder.Build();
 

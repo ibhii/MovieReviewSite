@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieReviewSite.Core.Interfaces.Genre;
-using MovieReviewSite.Core.Interfaces.Movie;
+using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
@@ -33,19 +32,13 @@ public partial class MovieRepository : IMovieRepository
             Synopsis = movie.Synopsis,
         };
         await _context.Movies.AddAsync(newMovie);
-        var genre = new MovieGenre()
-        {
-            GenreId = movie.Genre!.Id,
-            MovieId = newMovie.Id
-        };
-        newMovie.MovieGenres.Add(genre);
         await _context.SaveChangesAsync();
     }
 
     //TODO : fix Genre update
-    public async Task UpdateMovie(int id, UpdateMovie movie)
+    public async Task UpdateMovie(UpdatedMovie movie)
     {
-        var updatedMovie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
+        var updatedMovie = await _context.Movies.Where(m => m.Id == movie.Id).SingleOrDefaultAsync();
 
         if (updatedMovie != null)
         {
@@ -59,7 +52,7 @@ public partial class MovieRepository : IMovieRepository
             updatedMovie.Synopsis = movie.Synopsis;
             // updatedMovie.MovieGenres.Where(mg => mg.GenreId == movie.DeletedGenre.Any());
 
-            _context.Update(movie);
+            _context.Update(updatedMovie);
             await _context.SaveChangesAsync();
         }
     }
@@ -67,10 +60,7 @@ public partial class MovieRepository : IMovieRepository
     public async Task DeleteMovie(int id)
     {
         var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
-        if (movie != null)
-        {
-         _context.Movies.Remove(movie);
-         await _context.SaveChangesAsync();
-        }
+        _context.Movies.Remove(movie);
+        await _context.SaveChangesAsync();
     }
 }

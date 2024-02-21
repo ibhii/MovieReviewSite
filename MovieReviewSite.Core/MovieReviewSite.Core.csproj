@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Repositories\Interfaces\" />
-      <Folder Include="Repositories\Review\" />
+      <Folder Include="Models\Comment\Responses\" />
       <Folder Include="Repositories\User\" />
       <Folder Include="ViewModels\" />
     </ItemGroup>

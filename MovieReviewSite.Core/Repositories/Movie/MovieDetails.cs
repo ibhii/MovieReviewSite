@@ -2,6 +2,7 @@
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Movie.Responses;
 using MovieReviewSite.Core.Models.Review;
+using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.User;
 
 namespace MovieReviewSite.Core.Repositories.Movie;
@@ -24,23 +25,8 @@ public partial class MovieRepository
                         Title = g.Title,
                     }).ToList(),
                 Duration = m.Duration,
-                Crew = new List<string>(),
-                ReviewList = m.Reviews.Where(r => r.MovieId == id)
-                    .Select(r => new ReviewList
-                    {
-                        Id = r.Id,
-                        Review = r.Review1,
-                        CommentsCount = r.Comments.Count,
-                        Title = r.Title,
-                        LikesCount = r.LikesCount,
-                        User = new BaseUser
-                        {
-                            Id = r.Author!.Id,
-                            Name = r.Author!.FirstName,
-                            UserName = r.Author.UserName,
-                            RoleCode = r.Author.RoleCode,
-                        },
-                    }).ToList()}).SingleOrDefaultAsync();
+                // Crew = new 
+                   }).SingleOrDefaultAsync();
         return query;
     }
 }

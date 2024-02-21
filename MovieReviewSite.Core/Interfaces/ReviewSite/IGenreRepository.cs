@@ -1,7 +1,7 @@
 ﻿using MovieReviewSite.Core.Interfaces.Base;
 using MovieReviewSite.Core.Models.Genre;
 
-namespace MovieReviewSite.Core.Interfaces.Genre;
+namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
 public interface IGenreRepository : IBaseRepository
 {

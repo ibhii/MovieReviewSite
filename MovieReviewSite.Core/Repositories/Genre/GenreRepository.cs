@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieReviewSite.Core.Interfaces.Genre;
+using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.DataBase.Contexts;
 

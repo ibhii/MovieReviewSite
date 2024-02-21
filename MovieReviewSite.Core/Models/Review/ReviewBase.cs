@@ -6,4 +6,5 @@ public class ReviewBase
 {
     public int Id { get; set; }
     public BaseUser? User { get; set; }
+    public string? Title { get; set; }
 }

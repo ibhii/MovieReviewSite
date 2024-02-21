@@ -1,5 +1,6 @@
 ﻿using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Review;
+using MovieReviewSite.Core.Models.Review.Responses;
 
 namespace MovieReviewSite.Core.Models.Movie.Responses;
 
@@ -14,5 +15,4 @@ public class MovieDetail
     public DateTimeOffset ReleaseDate { get; set; }
     public int Rating { get; set; }
     public int? Duration { get; set; }
-    public List<ReviewList> ReviewList { get; set; }
 }

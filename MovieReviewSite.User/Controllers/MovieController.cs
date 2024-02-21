@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewSite.Core.Interfaces.Movie;
+using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.Responses;
 
 namespace MovieReviewSite.Controllers;
 
+[Route("[controller]")]
+[ApiController]
 public class MovieController : Controller
 {
     private readonly ILogger<MovieController> _logger;
@@ -20,7 +22,7 @@ public class MovieController : Controller
     /// Return a list of movies
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("[action]")]
     public async Task<List<MovieList>> GetMoviesList()
     {
         return await _movieRepository.GetMovieList();
@@ -31,8 +33,8 @@ public class MovieController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("[action]/{id}")]
-    public async Task<MovieDetail?> GetMovieDetail(int id)
+    [HttpGet("[action]")]
+    public async Task<MovieDetail?> GetMovieDetail([FromQuery]int id)
     {
         return await _movieRepository.GetMovieDetails(id);
     }
@@ -40,9 +42,9 @@ public class MovieController : Controller
     /// <summary>
     /// Adds a new movie to the database 
     /// </summary>
-    /// <param name="movie"></param>
+    /// <param name="dto"></param>
     [HttpPost("[action]")]
-    public async Task AddMovie(NewMovie dto)
+    public async Task AddMovie([FromBody]NewMovie dto)
     {
         await _movieRepository.AddMovie(dto);
     }
@@ -50,20 +52,19 @@ public class MovieController : Controller
     /// <summary>
     /// updates a movie
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="movie"></param>
+    /// <param name="dto"></param>
     [HttpPut("[action]")]
-    public async Task UpdateMovie(int id,UpdateMovie dto)
+    public async Task UpdateMovie([FromBody]UpdatedMovie dto)
     {
-        await _movieRepository.UpdateMovie(id,dto);
+        await _movieRepository.UpdateMovie(dto);
     }
 
     /// <summary>
     /// deletes a movie
     /// </summary>
     /// <param name="id"></param>
-    [HttpDelete("[actionn")]
-    public async Task DeleteMovie(int id)
+    [HttpDelete("[action]")]
+    public async Task DeleteMovie([FromQuery]int id)
     {
         await _movieRepository.DeleteMovie(id);
     }

@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewSite.Core.Interfaces.Movie;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Models;
