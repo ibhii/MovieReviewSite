@@ -1,6 +1,8 @@
-﻿namespace MovieReviewSite.Core.Models.Movie.Responses;
+﻿using MovieReviewSite.Core.Interfaces.Base;
 
-public class MovieList
+namespace MovieReviewSite.Core.Models.Movie.Responses;
+
+public class MovieList : IBaseModel
 {
     public int Id { get; set; }
     public string? MovieName { get; set; }

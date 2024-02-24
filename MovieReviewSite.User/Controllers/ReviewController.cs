@@ -24,37 +24,37 @@ public class ReviewController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<List<ReviewPreview>> GetReviewByMovieId(int id)
+    public async Task<List<ReviewPreview>> GetReviewByMovieId([FromQuery]int id)
     {
         return await _repository.GetReviewsByMovieId(id);
     }
 
     [HttpGet("[action]")]
-    public async Task<ReviewDetailes> GetReviewById(int id)
+    public async Task<ReviewDetails> GetReviewById([FromQuery]int id)
     {
         return await _repository.GetReviewById(id);
     }
 
     [HttpPost("[action]")]
-    public async Task AddReview(AddReviewRequest dto)
+    public async Task AddReview([FromBody]AddReviewRequest dto)
     {
         await _repository.AddReview(dto);
     }
 
-    [HttpPost("[action]")]
-    public async Task LikeReview(int id)
+    [HttpPut("[action]")]
+    public async Task LikeReview([FromQuery]int id)
     {
         await _repository.LikeReview(id);
     }
 
     [HttpPut("[action]")]
-    public async Task UpdateReview(UpdateReviewRequest dto)
+    public async Task UpdateReview([FromBody]UpdateReviewRequest dto)
     {
         await _repository.UpdateReview(dto);
     }
 
     [HttpDelete("[action]")]
-    public async Task DeleteReview(int id)
+    public async Task DeleteReview([FromBody]int id)
     {
         await _repository.DeleteReview(id);
     }

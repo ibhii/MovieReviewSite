@@ -1,10 +1,9 @@
-﻿using MovieReviewSite.Core.Models.Genre;
-using MovieReviewSite.Core.Models.Review;
-using MovieReviewSite.Core.Models.Review.Responses;
+﻿using MovieReviewSite.Core.Interfaces.Base;
+using MovieReviewSite.Core.Models.Genre;
 
 namespace MovieReviewSite.Core.Models.Movie.Responses;
 
-public class MovieDetail
+public class MovieDetail : IBaseModel
 {
     public int Id { get; set; }
     public byte[]? Image { get; set; }

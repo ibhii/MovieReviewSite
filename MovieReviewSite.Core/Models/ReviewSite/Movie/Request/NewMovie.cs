@@ -1,6 +1,8 @@
-﻿namespace MovieReviewSite.Core.Models.Movie.Request;
+﻿using MovieReviewSite.Core.Interfaces.Base;
 
-public class NewMovie
+namespace MovieReviewSite.Core.Models.Movie.Request;
+
+public class NewMovie : IBaseModel
 {
     public string? Name { get; set; }
     public DateTime? ReleaseDate { get; set; }
@@ -9,5 +11,6 @@ public class NewMovie
     // public string? Poster { get; set; }
     public int? Duration { get; set; }
     public int? Type { get; set; }
+    public int? Status { get; set; }
      
 }

@@ -18,15 +18,10 @@ public partial class MovieRepository
                 Id = m.Id,
                 MovieName = m.Name,
                 Image = m.Poster,
-                Genre = m.MovieGenres.Where(mg => mg.MovieId == id)
-                    .Select(mg => mg.Genre).Select(g => new GenreBase
-                    {
-                        Id = g.Id,
-                        Title = g.Title,
-                    }).ToList(),
                 Duration = m.Duration,
                 // Crew = new 
                    }).SingleOrDefaultAsync();
+        query!.Genre = await _genreRepository.GetGenreByMovieId(id);
         return query;
     }
 }

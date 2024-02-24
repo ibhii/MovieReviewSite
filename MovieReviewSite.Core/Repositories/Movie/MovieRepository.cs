@@ -30,12 +30,12 @@ public partial class MovieRepository : IMovieRepository
             // Poster = movie,
             TypeId = movie.Type,
             Synopsis = movie.Synopsis,
+            StatusId = movie.Status
         };
         await _context.Movies.AddAsync(newMovie);
         await _context.SaveChangesAsync();
     }
 
-    //TODO : fix Genre update
     public async Task UpdateMovie(UpdatedMovie movie)
     {
         var updatedMovie = await _context.Movies.Where(m => m.Id == movie.Id).SingleOrDefaultAsync();
@@ -50,7 +50,6 @@ public partial class MovieRepository : IMovieRepository
             // updatedMovie.// Poster = movie;
             updatedMovie.TypeId = movie.Type;
             updatedMovie.Synopsis = movie.Synopsis;
-            // updatedMovie.MovieGenres.Where(mg => mg.GenreId == movie.DeletedGenre.Any());
 
             _context.Update(updatedMovie);
             await _context.SaveChangesAsync();

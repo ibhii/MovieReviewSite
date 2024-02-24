@@ -23,25 +23,25 @@ public class CommentController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<List<CommentBase>> GetCommentsByReviewId(int id)
+    public async Task<List<CommentBase>> GetCommentsByReviewId([FromQuery]int id)
     {
         return await _repository.GetCommentsByReviewId(id);
     }
 
     [HttpGet("[action]")]
-    public async Task<CommentBase?> GetCommentById(int id)
+    public async Task<CommentBase?> GetCommentById([FromQuery]int id)
     {
         return await _repository.GetCommentById(id);
     }
 
     [HttpPost("[action]")]
-    public async Task AddComment(CommentRequest dto)
+    public async Task AddComment([FromBody]CommentRequest dto)
     {
         await _repository.AddComment(dto);
     }
 
     [HttpDelete("[action]")]
-    public async Task DeleteComment(int id)
+    public async Task DeleteComment([FromBody]int id)
     {
         await _repository.DeleteComment(id);
     }

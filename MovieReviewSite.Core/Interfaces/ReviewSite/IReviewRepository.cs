@@ -9,7 +9,7 @@ public interface IReviewRepository : IBaseRepository
 {
     Task<List<ReviewBase>> GetAllReviews();
     Task<List<ReviewPreview>> GetReviewsByMovieId(int id);
-    Task<ReviewDetailes> GetReviewById(int id);
+    Task<ReviewDetails> GetReviewById(int id);
     Task LikeReview(int id);
     Task AddReview(AddReviewRequest dto);
     Task UpdateReview(UpdateReviewRequest dto);

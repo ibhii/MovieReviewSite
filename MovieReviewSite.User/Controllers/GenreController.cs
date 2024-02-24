@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Genre;
+using MovieReviewSite.Core.Models.Genre.Request;
 
 namespace MovieReviewSite.Controllers;
 
@@ -46,4 +47,36 @@ public class GenreController : Controller
     {
         await _genreRepository.DeleteGenre(id);
     }
+
+    /// <summary>
+    /// gets all genres gor a movie
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("[action]")]
+    public async Task<List<GenreBase>> GetGenreByMovieId([FromQuery] int id)
+    {
+        return await _genreRepository.GetGenreByMovieId(id);
+    }
+
+    /// <summary>
+    /// adds a list of genres to a movie
+    /// </summary>
+    /// <param name="dto"></param>
+    [HttpPost("[action]")]
+    public async Task AddGenreByMovieId([FromBody]MovieGenreRequest dto)
+    {
+        await _genreRepository.AddGenreByMovieId(dto);
+    }
+
+    /// <summary>
+    /// removes a list of genres from a movie
+    /// </summary>
+    /// <param name="dto"></param>
+    [HttpDelete("[action]")]
+    public async Task RemoveGenreByMovieId([FromBody] MovieGenreRequest dto)
+    {
+        await _genreRepository.RemoveGenreByMovieId(dto);
+    }
+    
 }

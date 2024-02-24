@@ -13,6 +13,8 @@ public partial class Comment
 
     public int? ReviewId { get; set; }
 
+    public DateTime? CreatedOn { get; set; }
+
     public virtual User? Author { get; set; }
 
     public virtual Review? Review { get; set; }

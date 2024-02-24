@@ -2,6 +2,7 @@
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Comment;
 using MovieReviewSite.Core.Models.Comment.Requests;
+using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.DataBase.Contexts;
 
@@ -26,11 +27,14 @@ public class CommentRepository : ICommentRepository
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,
-                RoleCode = c.Author.RoleCode,
+                Role = new BaseRole()
+                {
+                    RoleCode = c.Author.RoleCodeNavigation!.Code,
+                    Role = c.Author.RoleCodeNavigation.Title
+                },
                 UserName = c.Author.UserName
             },
-            // CreatedOn = c.
-            //TODO: after CreatedOn was added to the database addd it here
+            CreatedOn = c.CreatedOn
         }).ToListAsync();
     }
 
@@ -44,11 +48,14 @@ public class CommentRepository : ICommentRepository
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,
-                RoleCode = c.Author.RoleCode,
-                UserName = c.Author.UserName
+                Role = new BaseRole()
+                {
+                    RoleCode = c.Author.RoleCodeNavigation!.Code,
+                    Role = c.Author.RoleCodeNavigation.Title
+                },
+                UserName = c.Author.UserName,
             },
-            // CreatedOn = c.
-            //TODO: after CreatedOn was added to the database addd it here
+            CreatedOn = c.CreatedOn
         }).ToListAsync();
     }
 
@@ -62,18 +69,29 @@ public class CommentRepository : ICommentRepository
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,
-                RoleCode = c.Author.RoleCode,
+                Role = new BaseRole()
+                {
+                    RoleCode = c.Author.RoleCodeNavigation!.Code,
+                    Role = c.Author.RoleCodeNavigation.Title
+                },
                 UserName = c.Author.UserName
             },
-            // CreatedOn = c.
-            //TODO: after CreatedOn was added to the database addd it here
+            CreatedOn = c.CreatedOn,
         }).SingleOrDefaultAsync();
     }
 
 
-    public Task AddComment(CommentRequest dto)
+    public async Task AddComment(CommentRequest dto)
     {
-        throw new NotImplementedException();
+        var comment = new DataBase.Comment()
+        {
+            CreatedOn = DateTime.UtcNow,
+            Comment1 = dto.Comment,
+            ReviewId = dto.ReviewId,
+            AuthorId = dto.UserId,
+        };
+        await _context.Comments.AddAsync(comment);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteComment(int id)

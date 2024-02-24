@@ -30,9 +30,13 @@ public partial class ReviewSiteContext : DbContext
 
     public virtual DbSet<Review> Reviews { get; set; }
 
+    public virtual DbSet<ReviewScore> ReviewScores { get; set; }
+
     public virtual DbSet<ReviewTag> ReviewTags { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<Status> Statuses { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -46,9 +50,10 @@ public partial class ReviewSiteContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
-            entity.Property(e => e.Comment1)
-                .HasMaxLength(1)
-                .HasColumnName("Comment");
+            entity.Property(e => e.Comment1).HasColumnName("Comment");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
 
             entity.HasOne(d => d.Author).WithMany(p => p.Comments)
@@ -109,6 +114,10 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.StreamId).HasColumnName("StreamID");
             entity.Property(e => e.Synopsis).HasMaxLength(200);
             entity.Property(e => e.TypeId).HasColumnName("TypeID");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.Movies)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("Movie_Status_ID_fk");
         });
 
         modelBuilder.Entity<MovieCrew>(entity =>
@@ -187,11 +196,10 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.LastModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
-            entity.Property(e => e.Review1)
-                .HasMaxLength(1)
-                .HasColumnName("Review");
-            entity.Property(e => e.Title).HasMaxLength(1);
+            entity.Property(e => e.Review1).HasColumnName("Review");
+            entity.Property(e => e.Title).HasMaxLength(100);
 
             entity.HasOne(d => d.Author).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.AuthorId)
@@ -201,6 +209,17 @@ public partial class ReviewSiteContext : DbContext
                 .HasForeignKey(d => d.MovieId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Review_Movie_ID_fk");
+
+            entity.HasOne(d => d.ScoreCodeNavigation).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.ScoreCode)
+                .HasConstraintName("Review___fk");
+        });
+
+        modelBuilder.Entity<ReviewScore>(entity =>
+        {
+            entity.HasKey(e => e.Code).HasName("ReviewScore_pk");
+
+            entity.ToTable("ReviewScore", "ReviewSite");
         });
 
         modelBuilder.Entity<ReviewTag>(entity =>
@@ -230,6 +249,17 @@ public partial class ReviewSiteContext : DbContext
 
             entity.Property(e => e.Code).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Title).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Status>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Status_pk");
+
+            entity.ToTable("Status", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Title).HasMaxLength(50);
         });
 

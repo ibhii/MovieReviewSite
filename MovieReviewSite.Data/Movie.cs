@@ -36,4 +36,6 @@ public partial class Movie
     public virtual ICollection<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public virtual Status? Status { get; set; }
 }

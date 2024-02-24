@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore; 
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Genre;
 
-public class GenreRepository : IGenreRepository
+public partial class GenreRepository : IGenreRepository
 {
     private readonly ReviewSiteContext _context;
 
