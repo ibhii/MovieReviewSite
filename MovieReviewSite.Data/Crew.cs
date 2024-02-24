@@ -33,7 +33,5 @@ public partial class Crew
 
     public string FullName { get; set; } = null!;
 
-    public virtual ICollection<MovieCrew> MovieCrewCrews { get; set; } = new List<MovieCrew>();
-
-    public virtual ICollection<MovieCrew> MovieCrewMovies { get; set; } = new List<MovieCrew>();
+    public virtual ICollection<MovieCrew> MovieCrews { get; set; } = new List<MovieCrew>();
 }

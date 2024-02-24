@@ -6,6 +6,8 @@ using MovieReviewSite.Models;
 
 namespace MovieReviewSite.Controllers;
 
+[Route("[controller]")]
+[ApiController]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

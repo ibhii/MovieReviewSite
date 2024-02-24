@@ -130,13 +130,13 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.CrewId).HasColumnName("CrewID");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
-            entity.HasOne(d => d.Crew).WithMany(p => p.MovieCrewCrews)
+            entity.HasOne(d => d.Crew).WithMany(p => p.MovieCrews)
                 .HasForeignKey(d => d.CrewId)
-                .HasConstraintName("MovieCrew_Crew_ID_fk2");
-
-            entity.HasOne(d => d.Movie).WithMany(p => p.MovieCrewMovies)
-                .HasForeignKey(d => d.MovieId)
                 .HasConstraintName("MovieCrew_Crew_ID_fk");
+
+            entity.HasOne(d => d.Movie).WithMany(p => p.MovieCrews)
+                .HasForeignKey(d => d.MovieId)
+                .HasConstraintName("MovieCrew_Movie_ID_fk");
         });
 
         modelBuilder.Entity<MovieGenre>(entity =>

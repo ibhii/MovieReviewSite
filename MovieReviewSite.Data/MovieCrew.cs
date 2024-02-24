@@ -15,5 +15,5 @@ public partial class MovieCrew
 
     public virtual Crew? Crew { get; set; }
 
-    public virtual Crew? Movie { get; set; }
+    public virtual Movie? Movie { get; set; }
 }
