@@ -6,6 +6,8 @@ using MovieReviewSite.Core.Models.Crew.ResponseBase;
 
 namespace MovieReviewSite.Controllers;
 
+[Route("[controller]")]
+[ApiController]
 public class CrewController : Controller
 {
     private readonly ILogger<CrewController> _logger;
@@ -24,29 +26,31 @@ public class CrewController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<CrewDetailsResponse?> GetCrewById([FromQuery]int id)
+    public async Task<CrewDetailsResponse?> GetCrewById([FromQuery] int id)
     {
         return await _crewRepository.GetCrewById(id);
     }
-    public async Task<List<CrewDetailsResponse>> GetCrewByMovieId([FromQuery]int id)
+
+    [HttpGet("[action]")]
+    public async Task<List<CrewDetailsResponse>> GetCrewByMovieId([FromQuery] int id)
     {
         return await _crewRepository.GetCrewByMovieId(id);
     }
 
     [HttpPost("[action]")]
-    public async Task AddCrew([FromBody]NewCrewRequest dto)
+    public async Task AddCrew([FromBody] NewCrewRequest dto)
     {
         await _crewRepository.AddCrew(dto);
     }
 
     [HttpPut("[action]")]
-    public async Task UpdateCrew([FromBody]UpdateCrewRequest dto)
+    public async Task UpdateCrew([FromBody] UpdateCrewRequest dto)
     {
         await _crewRepository.UpdateCrew(dto);
     }
 
     [HttpDelete("[action]")]
-    public async Task DeleteCrew([FromBody]int id)
+    public async Task DeleteCrew([FromBody] int id)
     {
         await _crewRepository.DeleteCrew(id);
     }

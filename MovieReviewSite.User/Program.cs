@@ -6,7 +6,6 @@ using MovieReviewSite.Core.Repositories.Genre;
 using MovieReviewSite.Core.Repositories.Movie;
 using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.Core.Repositories.User;
-using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);

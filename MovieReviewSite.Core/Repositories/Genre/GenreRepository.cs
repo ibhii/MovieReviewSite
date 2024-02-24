@@ -21,7 +21,6 @@ public partial class GenreRepository : IGenreRepository
         {
             Id = genre!.Id,
             Title = genre.Title,
-            Description = genre.Description
         };
     }
 
@@ -40,7 +39,6 @@ public partial class GenreRepository : IGenreRepository
         var addedGenre = new DataBase.Genre
         {
             Title = genre.Title,
-            Description = genre.Description
         };
         await _context.Genres.AddAsync(addedGenre);
         await _context.SaveChangesAsync();
@@ -51,7 +49,6 @@ public partial class GenreRepository : IGenreRepository
         var updatedGenre = await _context.Genres.Where(g => g.Id == id).SingleOrDefaultAsync();
         if (updatedGenre != null)
         {
-            updatedGenre.Description = genre.Description;
             updatedGenre.Title = genre.Title;
             _context.Update(updatedGenre);
             await _context.SaveChangesAsync();
