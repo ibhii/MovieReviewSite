@@ -2,8 +2,7 @@
 
 namespace MovieReviewSite.Core.Models.Crew.ResponseBase;
 
-public class CrewDetailsResponse : BaseCrew
+public class CrewWithMoviesResponse : BaseCrew
 {
-    public int? CreatedBy { get; set; }
     public List<CrewMovieModel> Movies { get; set; }
 }

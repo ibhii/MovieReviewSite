@@ -1,3 +1,3 @@
-﻿dotnet ef dbcontext scaffold "Server=.;Database=ReviewSite;TrustServerCertificate=True;Integrated Security=SSPI;" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring --context-dir Contexts --context ReviewSiteContext --force --table Comment --table Crew --table Genre --table Movie --table MovieCrew --table MovieGenre --table MovieStatus --table Password --table Review --table ReviewTag --table Role --table User --table Status --table ReviewScore     
+﻿dotnet ef dbcontext scaffold "Server=.;Database=ReviewSite;TrustServerCertificate=True;Integrated Security=SSPI;" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring --context-dir Contexts --context ReviewSiteContext --force --table Comment --table Crew --table Genre --table Movie --table MovieCrew --table MovieGenre --table MovieStatus --table Password --table Review --table ReviewTag --table Role --table User --table Status --table ReviewScore --table Tag --table CrewType --table AgeRate     
 
 

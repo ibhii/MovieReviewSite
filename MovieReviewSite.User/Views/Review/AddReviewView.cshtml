@@ -1,0 +1,30 @@
+﻿@model MovieReviewSite.Core.Models.Review.Request.AddReviewRequest
+
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@* form for adding review *@
+@using (Html.BeginForm("AddReview", "Review", FormMethod.Post, new {id = "submitForm"}))
+{
+    @Html.LabelFor(r => r.Title)
+    <input asp-for="Title" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(r => r.Review)
+    <input asp-for="Review" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(r => r.GivenRate)
+    <input asp-for="GivenRate" type="text" class="form-control"/>
+    <br>
+
+    <button type="submit" class="btn btn-primary">Add Review</button>
+}
+
+@section Scripts
+{
+    <script src="~/js/Review/AddReview.js"></script>
+}

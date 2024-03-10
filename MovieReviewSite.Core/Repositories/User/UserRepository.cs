@@ -7,13 +7,15 @@ using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.User;
 
-public class UserRepository : IUserRepository
+public partial class UserRepository : IUserRepository
 {
     private readonly ReviewSiteContext _context;
+    private readonly IReviewRepository _reviewRepository;
 
-    public UserRepository(ReviewSiteContext context)
+    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository)
     {
         _context = context;
+        _reviewRepository = reviewRepository;
     }
 
     public async Task<List<BaseUser>> GetAllUsers()

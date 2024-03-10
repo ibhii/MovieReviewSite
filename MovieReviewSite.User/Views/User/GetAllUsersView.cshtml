@@ -1,0 +1,38 @@
+﻿@model List<MovieReviewSite.Core.Models.User.BaseUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+
+
+<br>
+<h2> List of all users </h2>
+<br>
+<table style="width:100% ; border: black; border-collapse: separate ">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            UserName
+        </th>
+        <th>
+            Role
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                <a asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@item.Id">@Html.DisplayFor(m => item.UserName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Role!.Role)
+            </td>
+        </tr>
+    }
+</table>

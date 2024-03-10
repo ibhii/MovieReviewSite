@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.Responses;
+using MovieReviewSite.Core.Models.Movie.ViewModels;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -11,19 +12,19 @@ public class MovieController : Controller
 {
     private readonly ILogger<MovieController> _logger;
     private readonly IMovieRepository _movieRepository;
-
     public MovieController(ILogger<MovieController> logger,IMovieRepository movieRepository)
     {
         _logger = logger;
         _movieRepository = movieRepository;
     }
+    
 
     /// <summary>
     /// Return a list of movies
     /// </summary>
     /// <returns></returns>
     [HttpGet("[action]")]
-    public async Task<List<MovieList>> GetMoviesList()
+    public async Task<List<Movies>> GetMoviesList()
     {
         return await _movieRepository.GetMovieList();
     }
@@ -44,7 +45,7 @@ public class MovieController : Controller
     /// </summary>
     /// <param name="dto"></param>
     [HttpPost("[action]")]
-    public async Task AddMovie([FromBody]NewMovie dto)
+    public async Task AddMovie([FromBody] NewMovie dto)
     {
         await _movieRepository.AddMovie(dto);
     }
@@ -69,4 +70,26 @@ public class MovieController : Controller
         await _movieRepository.DeleteMovie(id);
     }
 
+    /// <summary>
+    /// returns movie details view
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> MovieDetailsView(int id)
+    {
+        var movie = await _movieRepository.GetMovieDetails(id);
+        var reviews = await _movieRepository.GetMovieReviewsList(id);
+        var movieDetails = new MovieDetailsViewModel()
+        {
+            Movie = movie,
+            Reviews = reviews!
+        };
+        return View(movieDetails);
+    }
+    public IActionResult AddMovieView()
+    {
+        return View();
+    }    
+    
 }

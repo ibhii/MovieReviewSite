@@ -10,11 +10,13 @@ public partial class MovieRepository : IMovieRepository
 {
     private readonly ReviewSiteContext _context;
     private readonly IGenreRepository _genreRepository;
+    private readonly IReviewRepository _reviewRepository;
 
-    public MovieRepository(ReviewSiteContext context, IGenreRepository genreRepository)
+    public MovieRepository(ReviewSiteContext context, IGenreRepository genreRepository, IReviewRepository reviewRepository)
     {
         _context = context;
         _genreRepository = genreRepository;
+        _reviewRepository = reviewRepository;
     }
 
     public async Task AddMovie(NewMovie movie)

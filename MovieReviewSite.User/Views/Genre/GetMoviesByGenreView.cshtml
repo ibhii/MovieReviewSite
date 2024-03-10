@@ -1,0 +1,50 @@
+﻿@model MovieReviewSite.Core.Models.Genre.Response.GenreMovies?
+
+@{
+    ViewData["Title"] = @Html.DisplayFor(g => g.GenreTitle);
+}
+
+<h1>@Html.DisplayFor(g => g.GenreTitle)</h1>
+
+<table style="width:100% ;border-style: solid;border-color: dimgray;">
+     <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Rating
+            </th>
+            <th>
+                ReleaseDate
+            </th>
+            <th>
+                AgeRate
+            </th>
+        </tr>
+    @foreach (var item in Model!.MoviesList!)
+    {
+        <tr>
+            <td>
+                <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@item.Id">@Html.DisplayFor(m => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ReleaseDate, "{MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.AgeRating!.Title)
+            </td>
+            <td>
+                <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@item.Id">Review</a>
+            </td>
+        </tr>
+    }
+</table>

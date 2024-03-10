@@ -4,7 +4,7 @@ using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -26,13 +26,13 @@ public class CrewController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<CrewDetailsResponse?> GetCrewById([FromQuery] int id)
+    public async Task<CrewWithMoviesResponse?> GetCrewById([FromQuery] int id)
     {
         return await _crewRepository.GetCrewById(id);
     }
 
     [HttpGet("[action]")]
-    public async Task<List<CrewDetailsResponse>> GetCrewByMovieId([FromQuery] int id)
+    public async Task<List<BaseCrew>> GetCrewByMovieId([FromQuery] int id)
     {
         return await _crewRepository.GetCrewByMovieId(id);
     }
@@ -53,5 +53,17 @@ public class CrewController : Controller
     public async Task DeleteCrew([FromBody] int id)
     {
         await _crewRepository.DeleteCrew(id);
+    }
+    
+    /// <summary>
+    /// return crew details view
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetCrewDetailsView(int id)
+    {
+        var crew = await _crewRepository.GetCrewDetails(id);
+        return View(crew);
     }
 }

@@ -1,24 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
-using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Review;
 
-public class ReviewRepository : IReviewRepository
+public partial class ReviewRepository : IReviewRepository
 {
     private readonly ReviewSiteContext _context;
     private readonly ICommentRepository _commentRepository;
+    private readonly ITagRepository _tagRepository;
 
-    public ReviewRepository(ReviewSiteContext context,ICommentRepository commentRepository)
+    public ReviewRepository(ReviewSiteContext context,ICommentRepository commentRepository, ITagRepository tagRepository)
     {
         _context = context;
         _commentRepository = commentRepository;
+        _tagRepository = tagRepository;
     }
     
     public async Task<List<ReviewBase>> GetAllReviews()
@@ -57,11 +59,16 @@ public class ReviewRepository : IReviewRepository
                 },
                 UserName = r.Author.UserName
             },
+            Movie = new BaseIdTitleModel()
+            {
+                Id = r.MovieId,
+                Title = r.Movie.Name
+            },
             Title = r.Title,
             Review = r.Review1,
             CommentsCount = r.Comments.Count,
             CreatedOn = r.CreatedOn,
-            GivenRate = r.ScoreCodeNavigation!.Value,
+            Score = r.ScoreCodeNavigation!.Value,
             LastModified = r.LastModifiedOn,
             LikesCount = r.LikesCount
         }).ToListAsync();
@@ -74,7 +81,7 @@ public class ReviewRepository : IReviewRepository
             {
                 Id = r.Id,
                 CreatedOn = r.CreatedOn,
-                GivenRate = r.ScoreCodeNavigation!.Value,
+                Score = r.ScoreCodeNavigation!.Value,
                 LikesCount = r.LikesCount,
                 LastModified = r.LastModifiedOn,
                 Review = r.Review1,
@@ -92,7 +99,7 @@ public class ReviewRepository : IReviewRepository
                 },
                 Title = r.Title,
             }).SingleOrDefaultAsync();
-         // review.Tags =
+         review!.Tags = await _tagRepository.GetTagsByReviewId(id);
          review!.Comments = await _commentRepository.GetCommentsByReviewId(id);
         return review!;
     }
@@ -105,11 +112,11 @@ public class ReviewRepository : IReviewRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddReview(AddReviewRequest dto)
+    public async Task AddReview(AddReviewRequest dto,int id)
     {
         var review = new DataBase.Review()
         {
-            MovieId = dto.MovieId,
+            MovieId = id,
             Title = dto.Title,
             Review1 = dto.Review,
             CreatedOn = DateTime.UtcNow,

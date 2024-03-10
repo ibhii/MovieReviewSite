@@ -12,9 +12,13 @@ public partial class ReviewSiteContext : DbContext
     {
     }
 
+    public virtual DbSet<AgeRate> AgeRates { get; set; }
+
     public virtual DbSet<Comment> Comments { get; set; }
 
     public virtual DbSet<Crew> Crews { get; set; }
+
+    public virtual DbSet<CrewType> CrewTypes { get; set; }
 
     public virtual DbSet<Genre> Genres { get; set; }
 
@@ -38,10 +42,25 @@ public partial class ReviewSiteContext : DbContext
 
     public virtual DbSet<Status> Statuses { get; set; }
 
+    public virtual DbSet<Tag> Tags { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AgeRate>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("AgeRate_pk");
+
+            entity.ToTable("AgeRate", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description)
+                .HasMaxLength(50)
+                .HasColumnName("Description ");
+            entity.Property(e => e.Title).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Comment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Comment_pk");
@@ -87,6 +106,17 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.MiddleName).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<CrewType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("CrewType_pk");
+
+            entity.ToTable("CrewType", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Title).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Genre>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Genre_pk");
@@ -115,6 +145,10 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.Synopsis).HasMaxLength(200);
             entity.Property(e => e.TypeId).HasColumnName("TypeID");
 
+            entity.HasOne(d => d.AgeRate).WithMany(p => p.Movies)
+                .HasForeignKey(d => d.AgeRateId)
+                .HasConstraintName("Movie_AgeRate_ID_fk");
+
             entity.HasOne(d => d.Status).WithMany(p => p.Movies)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("Movie_Status_ID_fk");
@@ -133,6 +167,10 @@ public partial class ReviewSiteContext : DbContext
             entity.HasOne(d => d.Crew).WithMany(p => p.MovieCrews)
                 .HasForeignKey(d => d.CrewId)
                 .HasConstraintName("MovieCrew_Crew_ID_fk");
+
+            entity.HasOne(d => d.CrewTypeCodeNavigation).WithMany(p => p.MovieCrews)
+                .HasForeignKey(d => d.CrewTypeCode)
+                .HasConstraintName("MovieCrew_CrewType_ID_fk");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.MovieCrews)
                 .HasForeignKey(d => d.MovieId)
@@ -230,14 +268,14 @@ public partial class ReviewSiteContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.TagId).HasColumnName("TagID");
 
             entity.HasOne(d => d.Review).WithMany(p => p.ReviewTags)
                 .HasForeignKey(d => d.ReviewId)
                 .HasConstraintName("ReviewTags_Review_ID_fk");
 
-            entity.HasOne(d => d.User).WithMany(p => p.ReviewTags)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.Tag).WithMany(p => p.ReviewTags)
+                .HasForeignKey(d => d.TagId)
                 .HasConstraintName("ReviewTags_User_ID_fk");
         });
 
@@ -261,6 +299,23 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Title).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Tag>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Tag_pk");
+
+            entity.ToTable("Tag", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Title).HasMaxLength(50);
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Tags)
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("Tag_User_ID_fk");
         });
 
         modelBuilder.Entity<User>(entity =>

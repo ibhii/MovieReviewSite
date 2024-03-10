@@ -3,7 +3,7 @@ using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -25,25 +25,25 @@ public class UserController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<BaseUser?> GetUserById([FromQuery]int id)
+    public async Task<BaseUser?> GetUserById([FromQuery] int id)
     {
         return await _userRepository.GetUserById(id);
     }
 
     [HttpPost("[action]")]
-    public async Task AddUser([FromBody]NewUserRequest dto)
+    public async Task AddUser([FromBody] NewUserRequest dto)
     {
         await _userRepository.AddUser(dto);
     }
 
     [HttpPut("[action]")]
-    public async Task UpdateAddUserDetails([FromBody]UpdateUserRequest dto)
+    public async Task UpdateAddUserDetails([FromBody] UpdateUserRequest dto)
     {
         await _userRepository.UpdateAddUserDetails(dto);
     }
 
     [HttpDelete("[action]")]
-    public async Task DeleteUser([FromBody]int id)
+    public async Task DeleteUser([FromBody] int id)
     {
         await _userRepository.DeleteUser(id);
     }
@@ -53,8 +53,23 @@ public class UserController : Controller
     /// </summary>
     /// <param name="dto"></param>
     [HttpPut("[action]")]
-    public async Task ChangeUserRole([FromBody]UserRole dto)
+    public async Task ChangeUserRole([FromBody] UserRole dto)
     {
         await _userRepository.ChangeUserRole(dto);
     }
+
+    [Route("[action]")]
+    public async Task<ActionResult> GetAllUsersView()
+    {
+        var users= await _userRepository.GetAllUsers();
+        return View(users);
+    }
+
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetUserDetailView(int id)
+    {
+        var userDetails = await _userRepository.GetUserDetails(id);
+        return View(userDetails);
+    }
 }
+

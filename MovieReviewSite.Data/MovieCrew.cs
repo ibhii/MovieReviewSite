@@ -15,5 +15,7 @@ public partial class MovieCrew
 
     public virtual Crew? Crew { get; set; }
 
+    public virtual CrewType? CrewTypeCodeNavigation { get; set; }
+
     public virtual Movie? Movie { get; set; }
 }

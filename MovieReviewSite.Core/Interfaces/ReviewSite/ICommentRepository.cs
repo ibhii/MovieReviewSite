@@ -6,10 +6,11 @@ namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
 public interface ICommentRepository : IBaseRepository
 {
-    Task<List<CommentBase>> GetAllCommentsList();
-    Task<List<CommentBase>> GetCommentsByReviewId(int id);
-    Task<CommentBase?> GetCommentById(int id);
+    Task<List<BaseComment>> GetAllCommentsList();
+    Task<List<BaseComment>> GetCommentsByReviewId(int id);
+    Task<BaseComment?> GetCommentById(int id);
     Task AddComment(CommentRequest dto);
     Task DeleteComment(int id);
+    Task<List<BaseComment>> GetCommentsByUserId(int id);
 
 }

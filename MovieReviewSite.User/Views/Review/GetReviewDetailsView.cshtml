@@ -1,0 +1,40 @@
+﻿@model MovieReviewSite.Core.Models.Review.Responses.ReviewDetails
+
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h1>@Html.DisplayFor(r => r.Title)</h1>
+<h2 style="color: dimgray">@Html.DisplayFor(r => r.Movie.Title)</h2>
+
+<p>
+    <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@Model.User!.Id">@Html.DisplayFor(r => r.User!.UserName)</a>|Score: @Html.DisplayFor(r => r.Score)|@Html.DisplayFor(r => r.LikesCount) Likes
+</p>
+
+<span style="border-style: solid;border-color: dimgray">
+    @Html.DisplayFor(r => r.Review)
+</span>
+<br>
+<br>
+<h4>@Html.DisplayFor(r => r.CommentsCount)Comments</h4>
+<ul>
+    @foreach (var comment in Model.Comments!)
+    {
+        <div style="border-style: solid; padding: 10px">
+            <p style="font-style: oblique; font-size: large">
+                @Html.DisplayFor(r => comment.User!.Name)
+            </p>
+            <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@comment.User!.Id">
+               @Html.DisplayFor(r => comment.User.UserName)
+            </a>
+            <br>
+            <span style="border-style: solid;border-color: dimgray">
+                @Html.DisplayFor(r => comment.Comment)
+            </span>
+            <p style="color:dimgray "> Created On : @Html.DisplayFor(c => comment.CreatedOn, "{MM/dd/yyyy}")</p>
+        </div>
+    }
+</ul>
+<div>
+    <p style="color:dimgray "> Created On : @Html.DisplayFor(r => r.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(r => r.LastModified, "{MM/dd/yyyy}")</p>
+</div>

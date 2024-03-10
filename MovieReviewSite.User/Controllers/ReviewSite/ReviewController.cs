@@ -4,7 +4,7 @@ using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -35,10 +35,10 @@ public class ReviewController : Controller
         return await _repository.GetReviewById(id);
     }
 
-    [HttpPost("[action]")]
-    public async Task AddReview([FromBody]AddReviewRequest dto)
+    [HttpPost("[action]/{id}")]
+    public async Task AddReview(int id,[FromBody]AddReviewRequest dto)
     {
-        await _repository.AddReview(dto);
+        await _repository.AddReview(dto,id);
     }
 
     [HttpPut("[action]")]
@@ -57,6 +57,37 @@ public class ReviewController : Controller
     public async Task DeleteReview([FromBody]int id)
     {
         await _repository.DeleteReview(id);
+    }
+
+    /// <summary>
+    /// gets the average score for a movie from all reviews
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("[action]")]
+    public async Task<double?> GetAverageScore([FromQuery] int id)
+    {
+        return await _repository.GetScoreAverageByMovieId(id);
+    }
+    
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> AddReviewView(int id)
+    {
+        return View();
+    }
+    
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetReviewByMovieIdView(int id)
+    {
+        var reviews = await _repository.GetReviewsByMovieId(id);
+        return View(reviews);
+    }
+    
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetReviewDetailsView(int id)
+    {
+        var review = await _repository.GetReviewById(id);
+        return View(review);
     }
 
 }

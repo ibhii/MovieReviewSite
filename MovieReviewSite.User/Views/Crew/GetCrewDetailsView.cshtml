@@ -1,0 +1,77 @@
+﻿@model MovieReviewSite.Core.Models.Crew.ResponseBase.CrewDetails?
+
+@{
+    ViewData["Title"] = @Html.DisplayFor(c => c!.FullName);
+
+}
+<h1> @Html.DisplayFor(c => c.FullName) </h1>
+
+<div>
+    @* <br> *@
+    @* <h3>@Html.DisplayNameFor(c => c.Description) :</h3> *@
+    <p style="border-style: solid; padding: 10px">
+        @* @Html.DisplayFor(c => c.Synopsis) *@
+    </p>
+    <br>
+    <h3>Details: </h3>
+    <p style="border-style: solid; padding: 10px">
+        Birth Date : @Html.DisplayFor(m => m!.BirthDate)
+        <br>
+        @if (Model!.IsAlive == false)
+        {
+            <p>Death Date : @Html.DisplayFor(m => m!.DeathDate)</p>
+            <br>
+        }
+    </p>
+</div>
+<br>
+
+<h4> Movies: </h4>
+<table style="width:100% ; border: black; border-collapse: separate; border: solid;border-color: dimgray ">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Duration
+        </th>
+        <th>
+            Rating
+        </th>
+        <th>
+            ReleaseDate
+        </th>
+        <th>
+            AgeRate
+        </th>
+    </tr>
+    @foreach (var item in Model.MoviesList)
+    {
+        <tr>
+            <td>
+                <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@item.Id">@Html.DisplayFor(m => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(c => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(c => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(c => item.ReleaseDate, "{MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(c => item.AgeRating!.Title)
+            </td>
+            <td>
+                <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@item.Id">Review</a>
+            </td>
+        </tr>
+    }
+</table>
+<br>
+
+<div>
+    <p style="color:dimgray "> Created On : @Html.DisplayFor(c => c!.CreatedOn,"{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(c => c!.LastModifiedOn,"{MM/dd/yyyy}")</p>
+
+</div>

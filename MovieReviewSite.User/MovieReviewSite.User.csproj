@@ -12,6 +12,9 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min-darkly.css">
+        <DependentUpon>bootstrap-darkly.css</DependentUpon>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -34,8 +37,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\MovieDetail\MovieDetails.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="Pages\" />
-      <Folder Include="Views\Movie\" />
+      <Folder Include="Views\Shared\Components\" />
     </ItemGroup>
 
 </Project>

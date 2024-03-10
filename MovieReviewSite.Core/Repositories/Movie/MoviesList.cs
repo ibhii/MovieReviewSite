@@ -6,17 +6,25 @@ namespace MovieReviewSite.Core.Repositories.Movie;
 
 public partial class MovieRepository
 {
-    public async Task<List<MovieList>> GetMovieList()
+    public async Task<List<Movies>> GetMovieList()
     {
-        var query = await Queryable.Select<DataBase.Movie, MovieList>(_context.Movies, m => new MovieList
+        var query = await _context.Movies.Select(m => new Movies
         {
             Id = m.Id,
-            MovieName = m.Name,
+            Name = m.Name,
             ReleaseDate = m.RealeaseDate,
             Duration = m.Duration,
-            AgeRating = m.AgeRateId,
-            Image = m.Poster
+            AgeRating = new BaseIdTitleModel()
+            {
+                Id = m.AgeRateId,
+                Title = m.AgeRate!.Title
+            },
+            Image = m.Poster,
         }).ToListAsync();
+        foreach (var movie in query)
+        {
+            movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
+        }
         return query;
     }
     

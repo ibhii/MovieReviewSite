@@ -5,6 +5,7 @@ using MovieReviewSite.Core.Repositories.Crew;
 using MovieReviewSite.Core.Repositories.Genre;
 using MovieReviewSite.Core.Repositories.Movie;
 using MovieReviewSite.Core.Repositories.Review;
+using MovieReviewSite.Core.Repositories.Tag;
 using MovieReviewSite.Core.Repositories.User;
 using MovieReviewSite.DataBase.Contexts;
 
@@ -21,7 +22,7 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICrewRepository, CrewRepository>();
-
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 
 
 var app = builder.Build();
@@ -29,7 +30,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error ");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -41,8 +42,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=GetAllMoviesList}/{id?}");
 
 app.Run();

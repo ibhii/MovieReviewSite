@@ -9,5 +9,5 @@ public class UpdateCrewRequest
     public DateTime? LastModifiedOn { get; set; }
     public DateTime? BirthDate { get; set; }
     public bool? IsAlive { get; set; }
-    public DateTime? DeathDate { get; set; }
+    public DateTime DeathDate { get; set; }
 }

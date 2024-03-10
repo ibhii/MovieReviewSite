@@ -43,9 +43,9 @@ public partial class User
 
     public virtual ICollection<Password> Passwords { get; set; } = new List<Password>();
 
-    public virtual ICollection<ReviewTag> ReviewTags { get; set; } = new List<ReviewTag>();
-
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Role? RoleCodeNavigation { get; set; }
+
+    public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }

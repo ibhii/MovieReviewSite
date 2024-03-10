@@ -7,9 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\ReviewSite\Genre\Response\" />
-      <Folder Include="Models\ReviewSite\User\Response\" />
-      <Folder Include="ViewModels\" />
+      <Folder Include="Models\ReviewSite\Tag\Responses\" />
     </ItemGroup>
 
     <ItemGroup>

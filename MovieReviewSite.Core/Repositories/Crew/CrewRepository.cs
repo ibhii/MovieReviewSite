@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
+using MovieReviewSite.Core.Models.Movie.Responses;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Crew;
@@ -24,35 +26,31 @@ public class CrewRepository : ICrewRepository
         }).ToListAsync();
     }
 
-    public async Task<List<CrewDetailsResponse>> GetCrewByMovieId(int id)
+    public async Task<List<BaseCrew>> GetCrewByMovieId(int id)
     {
         return await _context.MovieCrews.Where(mc => mc.MovieId == id)
-            .Select(mc => new CrewDetailsResponse()
+            .Select(mc => new BaseCrew()
         {
             Id = mc.CrewId,
-            CreatedBy = mc.Crew!.CreatedBy,
-            FullName = mc.Crew.FullName,
-            Movies = mc.Crew.MovieCrews.Select(mc => new CrewMovieModel()
-            {
-                MovieId = mc.MovieId,
-                CrewType = mc.CrewTypeCode,
-                MovieName = mc.Movie!.Name
-            }).ToList()
+            FullName = mc.Crew!.FullName,
         }).ToListAsync();
         
     }
     
-    public async Task<CrewDetailsResponse?> GetCrewById(int id)
+    public async Task<CrewWithMoviesResponse?> GetCrewById(int id)
     {
-        return await _context.Crews.Where(c => c.Id == id).Select(c => new CrewDetailsResponse
+        return await _context.Crews.Where(c => c.Id == id).Select(c => new CrewWithMoviesResponse
         {
             Id = c.Id,
             FullName = c.FullName,
-            CreatedBy = c.CreatedBy,
             Movies = c.MovieCrews.Select(mc => new CrewMovieModel()
             {
                 MovieId = mc.MovieId,
-                CrewType = mc.CrewTypeCode,
+                CrewType = new BaseIdTitleModel()
+                {
+                    Id = mc.CrewTypeCode,
+                    Title = mc.CrewTypeCodeNavigation!.Title
+                },
                 MovieName = mc.Movie!.Name
             }).ToList()
         }).SingleOrDefaultAsync();
@@ -100,4 +98,33 @@ public class CrewRepository : ICrewRepository
         _context.Crews.Remove(crew!);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<CrewDetails?> GetCrewDetails(int id)
+    {
+        return await _context.Crews.Where(c => c.Id == id)
+            .Select(c => new CrewDetails()
+            {
+                IsAlive = c.IsAlive,
+                BirthDate = c.BirthDate,
+                // DeathDate = c.DeathDate,
+                CreatedOn = c.CreatedOn,
+                FullName = c.FullName,
+                LastModifiedOn = c.LastModifiedOn,
+                MoviesList = c.MovieCrews.Select(mc => new Movies()
+                {
+                    Id = (int) mc.MovieId!,
+                    Name = mc.Movie!.Name,
+                    Duration = mc.Movie.Duration,
+                    // Rating = mc.Movie.
+                    AgeRating = new BaseIdTitleModel()
+                    {
+                        Id = mc.Movie.AgeRateId,
+                        Title = mc.Movie.AgeRate!.Title
+                    },
+                    ReleaseDate = mc.Movie.RealeaseDate
+                    // Image = 
+                }).ToList()
+            }).SingleOrDefaultAsync();
+    
+}
 }

@@ -3,7 +3,7 @@ using MovieReviewSite.Core.Models.User;
 
 namespace MovieReviewSite.Core.Models.Comment;
 
-public class CommentBase : IBaseModel
+public class BaseComment : IBaseModel
 {
     public int Id { get; set; }
     public BaseUser? User { get; set; }

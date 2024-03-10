@@ -2,7 +2,7 @@
 
 namespace MovieReviewSite.Core.Models.Movie.Request;
 
-public class NewMovie : IBaseModel
+public class  NewMovie : IBaseModel
 {
     public string? Name { get; set; }
     public DateTime? ReleaseDate { get; set; }

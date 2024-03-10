@@ -3,7 +3,7 @@ using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Comment;
 using MovieReviewSite.Core.Models.Comment.Requests;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -17,19 +17,19 @@ public class CommentController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<List<CommentBase>> GetAllCommentsList()
+    public async Task<List<BaseComment>> GetAllCommentsList()
     {
         return await _repository.GetAllCommentsList();
     }
 
     [HttpGet("[action]")]
-    public async Task<List<CommentBase>> GetCommentsByReviewId([FromQuery]int id)
+    public async Task<List<BaseComment>> GetCommentsByReviewId([FromQuery]int id)
     {
         return await _repository.GetCommentsByReviewId(id);
     }
 
     [HttpGet("[action]")]
-    public async Task<CommentBase?> GetCommentById([FromQuery]int id)
+    public async Task<BaseComment?> GetCommentById([FromQuery]int id)
     {
         return await _repository.GetCommentById(id);
     }

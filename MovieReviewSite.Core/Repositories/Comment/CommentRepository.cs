@@ -8,7 +8,7 @@ using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Comment;
 
-public class CommentRepository : ICommentRepository
+public partial class CommentRepository : ICommentRepository
 {
     private readonly ReviewSiteContext _context;
 
@@ -17,9 +17,9 @@ public class CommentRepository : ICommentRepository
         _context = context;
     }
 
-    public async Task<List<CommentBase>> GetAllCommentsList()
+    public async Task<List<BaseComment>> GetAllCommentsList()
     {
-        return await _context.Comments.Select(c => new CommentBase()
+        return await _context.Comments.Select(c => new BaseComment()
         {
             Id = c.Id,
             Comment = c.Comment1,
@@ -38,9 +38,9 @@ public class CommentRepository : ICommentRepository
         }).ToListAsync();
     }
 
-    public async Task<List<CommentBase>> GetCommentsByReviewId(int id)
+    public async Task<List<BaseComment>> GetCommentsByReviewId(int id)
     {
-        return await _context.Comments.Where(c => c.ReviewId == id).Select(c => new CommentBase()
+        return await _context.Comments.Where(c => c.ReviewId == id).Select(c => new BaseComment()
         {
             Id = c.Id,
             Comment = c.Comment1,
@@ -59,9 +59,9 @@ public class CommentRepository : ICommentRepository
         }).ToListAsync();
     }
 
-    public async Task<CommentBase?> GetCommentById(int id)
+    public async Task<BaseComment?> GetCommentById(int id)
     {
-        return await _context.Comments.Where(c => c.Id == id).Select(c => new CommentBase()
+        return await _context.Comments.Where(c => c.Id == id).Select(c => new BaseComment()
         {
             Id = c.Id,
             Comment = c.Comment1,

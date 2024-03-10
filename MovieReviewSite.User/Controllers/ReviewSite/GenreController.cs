@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Genre.Request;
+using MovieReviewSite.Core.Models.Genre.Response;
 
-namespace MovieReviewSite.Controllers;
+namespace MovieReviewSite.Controllers.ReviewSite;
 
 [Route("[controller]")]
 [ApiController]
@@ -78,5 +80,19 @@ public class GenreController : Controller
     {
         await _genreRepository.RemoveGenreByMovieId(dto);
     }
+    
+    /// <summary>
+    /// returns all movies related to a genre view
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetMoviesByGenreView(int id)
+    {
+        var genreMovies = await _genreRepository.GetMoviesByGenreId(id);
+        return View(genreMovies);
+    }
+    
+    
     
 }

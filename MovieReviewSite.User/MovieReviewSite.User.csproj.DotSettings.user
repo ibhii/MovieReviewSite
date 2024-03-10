@@ -1,4 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=WWWROOT_005CMOVIEREVIEWSITE_002ESTYLES_002ECSS/@EntryIndexedValue">wwwroot\MovieReviewSite.styles.css</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/MappedPaths/=_002E_002E_005CWWWROOT_005CLIB_005CBOOTSTRAP_005CDIST_005CCSS_005CBOOTSTRAP_002DDARKLY_002ECSS/@EntryIndexedValue"></s:String>
 	
-	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=WWWROOT_005CMOVIEREVIEWSITE_002ESTYLES_002ECSS/@EntryIndexedValue">wwwroot\MovieReviewSite.styles.css</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=WWWROOT_005CMOVIEREVIEWSITE_002ESTYLES_002ECSS/@EntryIndexedValue">wwwroot\MovieReviewSite.styles.css</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=_002E_002E_005CWWWROOT_005CLIB_005CBOOTSTRAP_005CDIST_005CCSS_005CBOOTSTRAP_002DDARKLY_002ECSS/@EntryIndexedValue">..\wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css</s:String></wpf:ResourceDictionary>

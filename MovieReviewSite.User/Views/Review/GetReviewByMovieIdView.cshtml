@@ -1,0 +1,30 @@
+﻿@model System.Collections.Generic.List<MovieReviewSite.Core.Models.Review.Responses.ReviewPreview>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<h1>Reviews:</h1>
+<ul>
+    @foreach (var review in Model)
+    {
+        <div style="border-style: solid; padding: 10px">
+            <p style="font-style: oblique; font-size: large">
+                @Html.DisplayFor(r => review.Title)
+            </p>
+            <p>
+                @Html.DisplayNameFor(r => review.Score) : @Html.DisplayFor(r => review.Score!.Value)
+            </p>
+            <p style="border-style: solid;border-color: dimgray">
+                @Html.DisplayFor(r => review.Review)
+            </p>
+            <p>
+                @Html.DisplayFor(r => review!.LikesCount) Likes | <a asp-action="GetReviewDetailsView" asp-controller="Review" asp-route-id="@review.Id">@Html.DisplayFor(r => review!.CommentsCount) Comments</a>
+            </p>
+            <button style="background-color: #137354" class="btn btn-primary" asp-action="LikeReview" asp-controller="Review" asp-route-id="@review.Id"> Like </button>
+            <p style="color:dimgray "> Created On : @Html.DisplayFor(r => review.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(r => review.LastModified, "{MM/dd/yyyy}")</p>
+
+        </div>
+    }
+</ul>
+
