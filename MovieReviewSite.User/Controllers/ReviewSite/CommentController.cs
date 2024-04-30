@@ -34,14 +34,14 @@ public class CommentController : Controller
         return await _repository.GetCommentById(id);
     }
 
-    [HttpPost("[action]")]
-    public async Task AddComment([FromBody]CommentRequest dto)
+    [HttpPost("[action]/{id}")]
+    public async Task AddComment(int id,[FromBody]CommentRequest dto)
     {
-        await _repository.AddComment(dto);
+        await _repository.AddComment(id,dto);
     }
 
-    [HttpDelete("[action]")]
-    public async Task DeleteComment([FromBody]int id)
+    [HttpDelete("[action]/{id}")]
+    public async Task DeleteComment(int id)
     {
         await _repository.DeleteComment(id);
     }

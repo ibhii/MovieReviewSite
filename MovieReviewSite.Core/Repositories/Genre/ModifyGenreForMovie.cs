@@ -53,7 +53,7 @@ public partial class GenreRepository
 
     public async Task<GenreMovies?> GetMoviesByGenreId(int id)
     {
-        return await _context.Genres.Where(g => g.Id == id)
+        var result =  await _context.Genres.Where(g => g.Id == id)
             .Select(g => new GenreMovies()
             {
                 GenreTitle = g.Title,
@@ -62,7 +62,6 @@ public partial class GenreRepository
                     Id = (int) mg.MovieId!,
                     Name = mg.Movie!.Name,
                     Duration = mg.Movie.Duration,
-                    // Rating = mg.Movie.
                     AgeRating = new BaseIdTitleModel()
                     {
                         Id = mg.Movie.AgeRateId,
@@ -72,5 +71,10 @@ public partial class GenreRepository
                         // Image = 
                 }).ToList()
             }).SingleOrDefaultAsync();
+        // foreach (var movie in result!.MoviesList!)
+        // {
+        //     movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
+        // }
+        return result;
     }
 }

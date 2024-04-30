@@ -9,13 +9,11 @@ namespace MovieReviewSite.Core.Repositories.Movie;
 public partial class MovieRepository : IMovieRepository
 {
     private readonly ReviewSiteContext _context;
-    private readonly IGenreRepository _genreRepository;
     private readonly IReviewRepository _reviewRepository;
 
-    public MovieRepository(ReviewSiteContext context, IGenreRepository genreRepository, IReviewRepository reviewRepository)
+    public MovieRepository(ReviewSiteContext context, IReviewRepository reviewRepository)
     {
         _context = context;
-        _genreRepository = genreRepository;
         _reviewRepository = reviewRepository;
     }
 

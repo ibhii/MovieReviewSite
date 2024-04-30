@@ -9,7 +9,7 @@ public interface ICommentRepository : IBaseRepository
     Task<List<BaseComment>> GetAllCommentsList();
     Task<List<BaseComment>> GetCommentsByReviewId(int id);
     Task<BaseComment?> GetCommentById(int id);
-    Task AddComment(CommentRequest dto);
+    Task AddComment(int id,CommentRequest dto);
     Task DeleteComment(int id);
     Task<List<BaseComment>> GetCommentsByUserId(int id);
 

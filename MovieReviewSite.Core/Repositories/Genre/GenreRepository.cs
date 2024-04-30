@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore; 
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Genre;
+using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Genre;

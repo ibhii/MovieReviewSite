@@ -23,10 +23,10 @@ public class MovieController : Controller
     /// Return a list of movies
     /// </summary>
     /// <returns></returns>
-    [HttpGet("[action]")]
-    public async Task<List<Movies>> GetMoviesList()
+    [HttpGet("[action]")] 
+    public async Task<List<Movies>> GetMoviesList([FromBody]MovieListRequest dto)
     {
-        return await _movieRepository.GetMovieList();
+        return await _movieRepository.GetMovieList(dto);
     }
     
     /// <summary>

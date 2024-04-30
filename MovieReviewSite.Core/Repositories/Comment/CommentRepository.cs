@@ -81,13 +81,13 @@ public partial class CommentRepository : ICommentRepository
     }
 
 
-    public async Task AddComment(CommentRequest dto)
+    public async Task AddComment(int id,CommentRequest dto)
     {
         var comment = new DataBase.Comment()
         {
             CreatedOn = DateTime.UtcNow,
             Comment1 = dto.Comment,
-            ReviewId = dto.ReviewId,
+            ReviewId = id,
             AuthorId = dto.UserId,
         };
         await _context.Comments.AddAsync(comment);

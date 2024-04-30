@@ -4,6 +4,7 @@ namespace MovieReviewSite.Core.Models.Review.Request;
 
 public class AddReviewRequest : IBaseModel
 {
+    public int Id { get; set; }
     public int UserId { get; set; }
     public string? Title { get; set; }
     public string? Review { get; set; }

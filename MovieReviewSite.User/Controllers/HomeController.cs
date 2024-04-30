@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Movie;
+using MovieReviewSite.Core.Models.Movie.Request;
+using MovieReviewSite.Core.Models.Movie.ViewModels;
 using MovieReviewSite.Models;
 
 namespace MovieReviewSite.Controllers;
@@ -19,9 +21,9 @@ public class HomeController : Controller
         _movieRepository = movieRepository;
     }
 
-    public async Task<IActionResult> GetAllMoviesList()
+    public async Task<IActionResult> GetAllMoviesList(MovieListRequest dto)
     {
-        var movieList = await _movieRepository.GetMovieList();
+        var movieList = await _movieRepository.GetMovieList(dto);
         return View(movieList);
     }
 

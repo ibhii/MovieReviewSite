@@ -15,7 +15,7 @@ public partial class MovieRepository
     //TODO : join tables movie and genre to get genre and crew
     public async Task<MovieDetail?> GetMovieDetails(int id)
     {
-        return await _context.Movies.Where(m => m.Id == id)
+        var result = await _context.Movies.Where(m => m.Id == id)
             .Select(m => new MovieDetail
             {
                 Id = m.Id,
@@ -24,6 +24,7 @@ public partial class MovieRepository
                 Duration = m.Duration,
                 LastModifiedOn = m.LastModifiedOn,
                 CreatedOn = m.CreatedOn,
+                ReleaseDate = m.RealeaseDate,
                 AgeRating = new BaseIdTitleModel()
                 {
                     Id = m.AgeRateId,
@@ -46,6 +47,8 @@ public partial class MovieRepository
                 }).ToList()!,
                 ReviewsCount = m.Reviews.Count
             }).SingleOrDefaultAsync();
+        result!.Score = await _reviewRepository.GetScoreAverageByMovieId(result.Id);
+        return result;
     }
 
     public async Task<List<ReviewPreview>> GetMovieReviewsList(int id)

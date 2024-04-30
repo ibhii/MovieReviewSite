@@ -5,6 +5,7 @@
 }
 
 <h1>Reviews:</h1>
+<a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model.Select(m => m.Movie.Id).First()"></a>
 <ul>
     @foreach (var review in Model)
     {
@@ -12,6 +13,9 @@
             <p style="font-style: oblique; font-size: large">
                 @Html.DisplayFor(r => review.Title)
             </p>
+            <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@review.User!.Id">
+                @Html.DisplayFor(r => review.User!.UserName)
+            </a>
             <p>
                 @Html.DisplayNameFor(r => review.Score) : @Html.DisplayFor(r => review.Score!.Value)
             </p>
@@ -21,10 +25,14 @@
             <p>
                 @Html.DisplayFor(r => review!.LikesCount) Likes | <a asp-action="GetReviewDetailsView" asp-controller="Review" asp-route-id="@review.Id">@Html.DisplayFor(r => review!.CommentsCount) Comments</a>
             </p>
-            <button style="background-color: #137354" class="btn btn-primary" asp-action="LikeReview" asp-controller="Review" asp-route-id="@review.Id"> Like </button>
+            <button id="submitLike" type="submit" class="btn btn-primary" style="background-color: #137354" > Like </button>
             <p style="color:dimgray "> Created On : @Html.DisplayFor(r => review.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(r => review.LastModified, "{MM/dd/yyyy}")</p>
 
         </div>
     }
 </ul>
 
+@section Scripts
+{
+    <script src="~/js/Review/LikeReview.js"></script>
+}

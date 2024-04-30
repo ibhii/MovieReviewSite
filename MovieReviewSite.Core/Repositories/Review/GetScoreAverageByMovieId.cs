@@ -9,6 +9,7 @@ public partial class ReviewRepository
         var movieScores = await _context.Reviews.Where(r => r.MovieId == id)
             .Select(r => r.ScoreCodeNavigation!.Value).ToListAsync();
         var sum = movieScores.Aggregate<double?, double?>(0.0, (current, score) => score + current);
-        return sum / movieScores.Count;
+        var result = sum / movieScores.Count;
+        return Math.Round((double)result,1);
     }
 }

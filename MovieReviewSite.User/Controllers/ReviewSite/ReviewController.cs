@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Review;
+using MovieReviewSite.Core.Models.Review.ModelViews;
 using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 
@@ -42,7 +43,7 @@ public class ReviewController : Controller
     }
 
     [HttpPut("[action]")]
-    public async Task LikeReview([FromQuery]int id)
+    public async Task LikeReview([FromBody]int id)
     {
         await _repository.LikeReview(id);
     }
@@ -53,8 +54,8 @@ public class ReviewController : Controller
         await _repository.UpdateReview(dto);
     }
 
-    [HttpDelete("[action]")]
-    public async Task DeleteReview([FromBody]int id)
+    [HttpPost("[action]/{id}")]
+    public async Task DeleteReview(int id)
     {
         await _repository.DeleteReview(id);
     }
@@ -87,7 +88,11 @@ public class ReviewController : Controller
     public async Task<ActionResult> GetReviewDetailsView(int id)
     {
         var review = await _repository.GetReviewById(id);
-        return View(review);
+        var model = new ReviewDetailsModelView
+        {
+            Review = review
+        };
+        return View(model);
     }
 
 }

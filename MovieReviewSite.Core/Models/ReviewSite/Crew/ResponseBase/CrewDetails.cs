@@ -9,5 +9,5 @@ public class CrewDetails : BaseCrew
     public DateTime? BirthDate { get; set; }
     public bool? IsAlive { get; set; }
     public DateTime? DeathDate  { get; set; }
-    public List<Movies> MoviesList { get; set; }
+    public List<Movies>? MoviesList { get; set; }
 }
