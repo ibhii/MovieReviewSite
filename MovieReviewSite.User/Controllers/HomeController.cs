@@ -21,9 +21,15 @@ public class HomeController : Controller
         _movieRepository = movieRepository;
     }
 
-    public async Task<IActionResult> GetAllMoviesList(MovieListRequest dto)
+    public async Task<IActionResult> GetAllMoviesList()
     {
-        var movieList = await _movieRepository.GetMovieList(dto);
+        // var movies = await _movieRepository.GetMovieList(dto);
+        var movieList = new AllMoviesListVewModel();
+        var dto = new MovieListRequest
+        {
+            Search = ""
+        };
+        movieList.Movie = await _movieRepository.GetMovieList(dto);
         return View(movieList);
     }
 

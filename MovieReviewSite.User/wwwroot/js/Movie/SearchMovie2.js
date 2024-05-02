@@ -3,7 +3,7 @@ const searchTermInput = document.getElementById("searchTerm");
 const tableBody = document.getElementById("tableData");
 
 searchButton.addEventListener("submit", function() {
-    const search = searchTermInput.value;
+    const search = searchTermInput.value.trim() || "";
 
     const dto = {
         search: search,
@@ -22,16 +22,26 @@ searchButton.addEventListener("submit", function() {
                 const tableRow = document.createElement("tr");
                 const nameCell = document.createElement("td");
                 nameCell.innerText = item.Name;
-                const descriptionCell = document.createElement("td");
-                descriptionCell.innerText = item.Description;
+                const durationCell = document.createElement("td");
+                durationCell.innerText = item.Duration;
+                const ratingCell = document.createElement("td");
+                ratingCell.innerText = item.Rating;
+                const releaseDateCell = document.createElement("td");
+                releaseDateCell.innerText = item.ReleaseDate; // Assuming ReleaseDate is a string
+                const ageRateCell = document.createElement("td");
+                ageRateCell.innerText = item.AgeRate;
 
                 tableRow.appendChild(nameCell);
-                tableRow.appendChild(descriptionCell);
+                tableRow.appendChild(durationCell);
+                tableRow.appendChild(ratingCell);
+                tableRow.appendChild(releaseDateCell);
+                tableRow.appendChild(ageRateCell);
 
                 tableBody.appendChild(tableRow);
             }
         })
         .catch(error => {
-            // Handle errors
+            // Handle errors (e.g., display an error message)
+            console.error("Error fetching data:", error);
         });
 });

@@ -2,5 +2,5 @@
 
 public class MovieListRequest
 {
-    public string? Search { get; set; }
+    public string? Search { get; set; } = "";
 }

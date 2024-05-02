@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Movies List";
 }
-@model List<MovieReviewSite.Core.Models.Movie.Responses.Movies>
+@model MovieReviewSite.Core.Models.Movie.ViewModels.AllMoviesListVewModel
 
 
 <h1 class="display-4">Welcome</h1>
@@ -11,56 +11,51 @@
 
 @* search ber  *@
 <div>
-    <form id="submitForm" >
-    @* <input  type="text" placeholder="Search" aria-label="Search" id="searchTerm" @bind = "@Model."> *@
-    <button id="searchButton" type="submit" class="btn btn-primary">Search</button>
+    <form id="submitForm">
+        <input type="text" placeholder="Search" aria-label="Search" id="searchTerm">
+        <button id="searchButton" type="submit" class="btn btn-primary">Search</button>
     </form>
     <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
+        <thead>
         <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Duration
-            </th>
-            <th>
-                Rating
-            </th>
-            <th>
-                ReleaseDate
-            </th>
-            <th>
-                AgeRate
-            </th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Rating</th>
+            <th>ReleaseDate</th>
+            <th>AgeRate</th>
         </tr>
-        @foreach (var movie in Model)
+        </thead>
+        <tbody id="tableData">
+        @if (Model.Movie != null)
         {
-            <tr>
-                <tbody id="tableData">
-                <td>
-                    <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@movie.Id">@Html.DisplayFor(m => movie.Name)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(m => movie.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => movie.Score)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => movie.ReleaseDate, "{MM/dd/yyyy}")
-                </td>
-                <td>
-                    @Html.DisplayFor(m => movie.AgeRating!.Title)
-                </td>
-                <td>
-                    <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">Reviews</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary" style="background-color : #137354" asp-action="AddReviewView" asp-controller="Review" asp-route-id="@movie.Id">Review</a>
-                </td>
-                </tbody>
-            </tr>
+            @foreach (var movie in Model.Movie!)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@movie.Id">@Html.DisplayFor(m => movie.Name)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => movie.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => movie.Score)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => movie.ReleaseDate, "{MM/dd/yyyy}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => movie.AgeRating!.Title)
+                    </td>
+                    <td>
+                        <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">Reviews</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" style="background-color : #137354" asp-action="AddReviewView" asp-controller="Review" asp-route-id="@movie.Id">Review</a>
+                    </td>
+                </tr>
+            }
         }
+        </tbody>
     </table>
 </div>
 
