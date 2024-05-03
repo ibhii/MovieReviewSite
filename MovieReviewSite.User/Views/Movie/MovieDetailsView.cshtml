@@ -6,12 +6,19 @@
 }
 <h1> @Html.DisplayFor(m => m.Movie!.MovieName) </h1>
 
-<a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id">Review</a>
+@* link to movie reviews *@
+<a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@Model.Movie!.Id">@Model.Movie.ReviewsCount Reviews</a>
+
+@* buttons to review or edit movie *@
+<span>
+    <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary" style="background-color: #137354">Review</a>
+    <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
+</span>
 
 @* movie details *@
 <div>
     <br>
-    <h3>@Html.DisplayNameFor(m => m.Movie!.Synopsis) :</h3>
+    <p>@Html.DisplayNameFor(m => m.Movie!.Synopsis) :</p>
     <p style="border-style: solid; padding: 10px">
         @Html.DisplayFor(m => m.Movie!.Synopsis)
     </p>
@@ -21,7 +28,7 @@
         <br>
         @Html.DisplayNameFor(m => m.Movie!.ReleaseDate) : @Html.DisplayFor(m => m!.Movie!.ReleaseDate)
         <br>
-        @Html.DisplayNameFor(m => m.Movie!.Duration) : @Html.DisplayFor(m => m!.Movie!.Duration) minutes 
+        @Html.DisplayNameFor(m => m.Movie!.Duration) : @Html.DisplayFor(m => m!.Movie!.Duration) minutes
         <br>
         @Html.DisplayNameFor(m => m.Movie!.AgeRating) : @Html.DisplayFor(m => m!.Movie!.AgeRating!.Title)
         <br>
@@ -51,38 +58,6 @@
                 </ul>
             }
         </div>
-        <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@Model.Movie.Id">Reviews</a>
     </div>
     <br>
 </div>
-
-
-@* <h4>@Html.DisplayFor(m => m.Movie!.ReviewsCount) Reviews</h4> *@
-@* <ul> *@
-@*     @foreach (var review in Model.Reviews) *@
-@*     { *@
-@*         <div style="border-style: solid; padding: 10px"> *@
-@*             <p style="font-style: oblique; font-size: large"> *@
-@*                 @Html.DisplayFor(r => review!.Title) *@
-@*             </p> *@
-@*             <a asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@review.User!.Id"> *@
-@*                 @Html.DisplayFor(r => review.User.UserName) *@
-@*             </a> *@
-@*             <p> *@
-@*                 @Html.DisplayNameFor(r => review!.Score) : @Html.DisplayFor(r => review!.Score!.Value) *@
-@*             </p> *@
-@*             <p style="border-style: solid;border-color: dimgray"> *@
-@*                 @Html.DisplayFor(r => review!.Review) *@
-@*             </p> *@
-@*             <p> *@
-@*                 @Html.DisplayFor(r => review!.LikesCount) Likes | <a asp-action="GetReviewDetailsView" asp-controller="Review" asp-route-id="@review.Id">@Html.DisplayFor(r => review!.CommentsCount) Comments</a> *@
-@*             </p> *@
-@*             <button style="background-color: #137354" class="btn btn-primary" asp-action="LikeReview" asp-controller="Review" asp-route-id="@review!.Id"> Like </button> *@
-@*             <p style="color:dimgray "> Created On : @Html.DisplayFor(r => review.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(r => review.LastModified, "{MM/dd/yyyy}")</p> *@
-@*         </div> *@
-@*     } *@
-@* </ul> *@
-@* <div> *@
-@*     <p style="color:dimgray "> Created On : @Html.DisplayFor(c => c.Movie!.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(c => c.Movie!.LastModifiedOn, "{MM/dd/yyyy}")</p> *@
-@* *@
-@* </div> *@

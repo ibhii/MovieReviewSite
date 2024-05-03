@@ -4,6 +4,7 @@ using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.Review.ModelViews;
 using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
+using MovieReviewSite.Core.Models.Review.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
@@ -48,7 +49,7 @@ public class ReviewController : Controller
         await _repository.LikeReview(id);
     }
 
-    [HttpPut("[action]")]
+    [HttpPost("[action]")]
     public async Task UpdateReview([FromBody]UpdateReviewRequest dto)
     {
         await _repository.UpdateReview(dto);
@@ -71,11 +72,17 @@ public class ReviewController : Controller
         return await _repository.GetScoreAverageByMovieId(id);
     }
     
+    /// <summary>
+    /// returns view for adding reviews
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [Route("[action]/{id}")]
     public async Task<ActionResult> AddReviewView(int id)
     {
         return View();
     }
+    
     
     [Route("[action]/{id}")]
     public async Task<ActionResult> GetReviewByMovieIdView(int id)
@@ -84,6 +91,11 @@ public class ReviewController : Controller
         return View(reviews);
     }
     
+    /// <summary>
+    /// returns reviews details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [Route("[action]/{id}")]
     public async Task<ActionResult> GetReviewDetailsView(int id)
     {
@@ -94,5 +106,18 @@ public class ReviewController : Controller
         };
         return View(model);
     }
+    
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> UpdateReviewView(int id)
+    {
+        var review = await _repository.GetReviewById(id);
+        var model = new UpdateReviewViewModel
+        {
+            Review = review
+        };
+        return View(model);
+    }
+    
+    
 
 }

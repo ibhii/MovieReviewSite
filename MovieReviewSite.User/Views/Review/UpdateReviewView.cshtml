@@ -1,0 +1,31 @@
+﻿@model MovieReviewSite.Core.Models.Review.ViewModels.UpdateReviewViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Edit Review</h2>
+
+@using (Html.BeginForm("AddReview", "Review", FormMethod.Post, new {id = "submitForm"}))
+{
+    @Html.LabelFor(r => r.DTO!.Title)
+    <input placeholder="@Model.Review!.Title" asp-for="DTO!.Title" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(r => r.DTO!.Review)
+    <input placeholder="@Model.Review!.Review "asp-for="DTO!.Review" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(r => r.DTO!.GivenRate)
+    <input placeholder="@Model.Review!.Score " asp-for="DTO!.GivenRate" type="text" class="form-control"/>
+    <br>
+
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Accept Changes</button>  
+}
+
+@section Scripts
+{
+    <script src="~/js/Review/UpdateReview.js"></script>
+}
+
+

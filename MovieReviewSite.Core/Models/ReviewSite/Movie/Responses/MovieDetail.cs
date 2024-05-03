@@ -16,5 +16,4 @@ public class MovieDetail : Movies
     [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
     public DateTime? CreatedOn { get; set; }
     public DateTime? LastModifiedOn { get; set; }
-    public int? ReviewsCount { get; set; }
 }

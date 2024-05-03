@@ -79,11 +79,25 @@ public class MovieController : Controller
     public async Task<ActionResult> MovieDetailsView(int id)
     {
         var movie = await _movieRepository.GetMovieDetails(id);
-        var reviews = await _movieRepository.GetMovieReviewsList(id);
         var movieDetails = new MovieDetailsViewModel()
         {
             Movie = movie,
-            Reviews = reviews!
+        };
+        return View(movieDetails);
+    }
+    
+    /// <summary>
+    /// returns view for updating movie
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> UpdateMovieView(int id)
+    {
+        var movie = await _movieRepository.GetMovieDetails(id);
+        var movieDetails = new UpdateMovieViewModel()
+        {
+            Movie = movie,
         };
         return View(movieDetails);
     }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
+using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.User;
@@ -11,11 +13,13 @@ public partial class UserRepository : IUserRepository
 {
     private readonly ReviewSiteContext _context;
     private readonly IReviewRepository _reviewRepository;
+    private readonly IPasswordRepository _passwordRepository;
 
-    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository)
+    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository, IPasswordRepository passwordRepository)
     {
         _context = context;
         _reviewRepository = reviewRepository;
+        _passwordRepository = passwordRepository;
     }
 
     public async Task<List<BaseUser>> GetAllUsers()
@@ -49,17 +53,9 @@ public partial class UserRepository : IUserRepository
         }).SingleOrDefaultAsync();
     }
 
-    public async Task AddUser(NewUserRequest dto)
-    {
-        var user = new DataBase.User()
-        {
-            UserName = dto.UserName,
-            RoleCode = 2,
-            // PasswordId = 
-        };
-    }
+    
 
-    public async Task UpdateAddUserDetails(UpdateUserRequest dto)
+    public async Task UpdateUser(UpdateUserRequest dto)
     {
         var user = await _context.Users.Where(u => u.Id == dto.Id).SingleOrDefaultAsync();
         user!.LastModifiedOn = DateTime.UtcNow;
@@ -68,25 +64,26 @@ public partial class UserRepository : IUserRepository
         user.Email = dto.Email;
         user.IsActive = true;
         user.IsVisible = true;
-        user.IsEmailConfirmed = false;
         user.BirthDate = dto.BirthDate;
 
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
     }
     
-    public async Task DeleteUser(int id)
+    public async Task DeactivateUser(int id)
     {
         var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
-        _context.Users.Remove(user!);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task ChangeUserRole(UserRole dto)
-    {
-        var user = await _context.Users.Where(u => u.Id == dto.UserId).SingleOrDefaultAsync();
-        user!.RoleCode = dto.RoleCode;
-        _context.Users.Update(user);
+        
+        //checks if user is not admin
+        if (user!.RoleCode != 1)
+        {
+            user!.IsActive = false;
+            _context.Users.Update(user);
+        }
+        else
+        {
+            throw new ArgumentException("the user is an Admin and cant be deactivated");
+        }
         await _context.SaveChangesAsync();
     }
 }

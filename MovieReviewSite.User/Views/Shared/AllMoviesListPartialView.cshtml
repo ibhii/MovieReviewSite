@@ -9,12 +9,13 @@
 
 <h2> List of all available movies </h2>
 
-@* search ber  *@
+@* search bar  *@
 <div>
-    <form id="submitForm">
+    @using (Html.BeginForm( new {id = "searchRequest"}))
+    {
         <input type="text" placeholder="Search" aria-label="Search" id="searchTerm">
         <button id="searchButton" type="submit" class="btn btn-primary">Search</button>
-    </form>
+    }
     <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
         <thead>
         <tr>
@@ -35,7 +36,7 @@
                         <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@movie.Id">@Html.DisplayFor(m => movie.Name)</a>
                     </td>
                     <td>
-                        @Html.DisplayFor(m => movie.Duration)
+                        @Html.DisplayFor(m => movie.Duration) min
                     </td>
                     <td>
                         @Html.DisplayFor(m => movie.Score)
@@ -46,8 +47,9 @@
                     <td>
                         @Html.DisplayFor(m => movie.AgeRating!.Title)
                     </td>
+                     @* buttons for reviews *@
                     <td>
-                        <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">Reviews</a>
+                        <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</a>
                     </td>
                     <td>
                         <a class="btn btn-primary" style="background-color : #137354" asp-action="AddReviewView" asp-controller="Review" asp-route-id="@movie.Id">Review</a>
@@ -61,6 +63,6 @@
 
 @section Scripts
 {
-    @* <script src="~/js/Movie/SearchMovie.js"></script> *@
-    <script src="~/js/Movie/SearchMovie2.js"></script>
+    <script src="~/js/Movie/SearchMovie.js"></script >
+
 }

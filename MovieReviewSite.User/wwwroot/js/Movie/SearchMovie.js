@@ -1,8 +1,9 @@
-﻿const searchButton = document.getElementById("searchButton");
+﻿const searchButton = document.getElementById("searchRequest");
 const searchTermInput = document.getElementById("searchTerm");
 const tableBody = document.getElementById("tableData");
 
 searchButton.addEventListener("submit", function() {
+    
     const search = searchTermInput.value.trim() || "";
 
     const dto = {

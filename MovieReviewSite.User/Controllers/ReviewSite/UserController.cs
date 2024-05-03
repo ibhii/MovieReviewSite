@@ -39,13 +39,13 @@ public class UserController : Controller
     [HttpPut("[action]")]
     public async Task UpdateAddUserDetails([FromBody] UpdateUserRequest dto)
     {
-        await _userRepository.UpdateAddUserDetails(dto);
+        await _userRepository.UpdateUser(dto);
     }
 
     [HttpDelete("[action]")]
     public async Task DeleteUser([FromBody] int id)
     {
-        await _userRepository.DeleteUser(id);
+        await _userRepository.DeactivateUser(id);
     }
 
     /// <summary>
@@ -58,6 +58,21 @@ public class UserController : Controller
         await _userRepository.ChangeUserRole(dto);
     }
 
+    /// <summary>
+    /// checks if entered information is correct then logs user in
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    public async Task<bool> LoginUser([FromBody] LoginUserRequest dto)
+    {
+        return await _userRepository.LoginUser(dto);
+    }
+
+    /// <summary>
+    /// returns a view with the list of all users 
+    /// </summary>
+    /// <returns></returns>
     [Route("[action]")]
     public async Task<ActionResult> GetAllUsersView()
     {
@@ -65,6 +80,11 @@ public class UserController : Controller
         return View(users);
     }
 
+    /// <summary>
+    /// returns view with users details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [Route("[action]/{id}")]
     public async Task<ActionResult> GetUserDetailView(int id)
     {

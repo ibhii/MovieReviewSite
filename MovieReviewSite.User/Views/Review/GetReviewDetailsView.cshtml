@@ -20,11 +20,18 @@
 <br>
 <br>
 
-@* delete review button *@
-@using (Html.BeginForm("DeleteReview", "Review", FormMethod.Post, new {id = "deleteReview"}))
-{
-    <button type="submit" class="btn btn-primary" style="background-color: red">Delete</button>
-}
+<span>
+    @* edit button *@
+    <a asp-action="UpdateReviewView" asp-controller="Review" asp-route-id="@Model.Review.Id" type="submit" class="btn btn-primary">Edit</a>
+    <br>
+    @* delete review button *@
+    @using (Html.BeginForm("DeleteReview", "Review", FormMethod.Post, new {id = "deleteReview"}))
+    {
+        <button type="submit" class="btn btn-primary" style="background-color: #730c1d">Delete</button>
+    }
+</span>
+
+<br>
 
 
 @* Comments List *@

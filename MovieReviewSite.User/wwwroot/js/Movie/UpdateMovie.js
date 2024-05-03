@@ -1,5 +1,4 @@
 const submitButton = document.getElementById("submitForm"); // Get the form by its ID
-
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
     const name = document.getElementById("Name").value;
@@ -7,21 +6,22 @@ submitButton.addEventListener("submit", function(event) {
     const duration = document.getElementById("Duration").value;
     const releaseDate = document.getElementById("ReleaseDate").value;
     const ageRate = document.getElementById("AgeRate").value;
+    const id = window.location.pathname.split('/')[3];
 
     const dto = {
-        name: name,
-        synopsis: synopsis,
-        Duration: duration,
-        ReleaseDate: releaseDate,
-        ageRating: ageRate,
+        Name: name || "",
+        Synopsis: synopsis || "",
+        Duration: duration || 0,
+        ReleaseDate: releaseDate || "",
+        AgeRating: ageRate || 0,
     };
 
-    fetch("/Movie/AddMovie", { // Assuming an API endpoint for adding movies
+    fetch("/Movie/UpdateMovie/" + id , { // Assuming an API endpoint for adding movies
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(dto)
     })
-        .then(response => response.json()) 
+        .then(response => response.json())
 });

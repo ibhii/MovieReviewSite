@@ -8,6 +8,7 @@ using MovieReviewSite.Core.Repositories.Movie;
 using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.Core.Repositories.Tag;
 using MovieReviewSite.Core.Repositories.User;
+using UserRepository = MovieReviewSite.Core.Repositories.User.UserRepository;
 
 namespace MovieReviewSite.Core.Repositories.Base;
 

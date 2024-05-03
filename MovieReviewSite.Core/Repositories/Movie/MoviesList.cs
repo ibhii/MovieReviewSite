@@ -22,12 +22,14 @@ public partial class MovieRepository
                 Title = m.AgeRate!.Title
             },
             Image = m.Poster,
+            ReviewsCount = m.Reviews.Count
         }).ToListAsync();
+        
         foreach (var movie in query)
         {
             movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
         }
         return query;
     }
-    
+
 }

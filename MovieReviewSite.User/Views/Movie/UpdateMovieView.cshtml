@@ -1,0 +1,44 @@
+﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.UpdateMovieViewModel
+
+@{
+    ViewBag.Title = @Model.Movie!.MovieName!;
+    Layout = "_Layout";
+}
+
+<h1>Edit @ViewData["Title"]</h1>
+
+@using (Html.BeginForm("UpdateMovie", "Movie", new { id = "submitForm" }))
+{
+
+    @Html.LabelFor(m => m.DTO.Name)
+    <input placeholder="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(m => m.DTO.Synopsis)
+    <input placeholder="@Model.Movie.Synopsis" asp-for="DTO.Synopsis" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(m => m.DTO.Duration)
+    <input placeholder="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(m => m.DTO.ReleaseDate)
+    <input placeholder="@Html.DisplayFor(m => Model.Movie.ReleaseDate, "{MM/dd/yyyy}")" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
+    <br>
+    
+
+    @Html.LabelFor(m => m.DTO.AgeRate)
+    <input placeholder="@Model.Movie.AgeRating" asp-for="DTO.AgeRate" type="text" class="form-control"> 
+    @* @Html.DropDownListFor(m => m.DTO.AgeRate, new SelectList(new[] *@
+    @*                                                            { *@
+    @*                                                                MovieType.Animation, MovieType.Series, MovieType.MiniSeries , MovieType.FeatureFilm , MovieType.ShortFilm *@
+    @*                                                            })) *@
+    <br>
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316" >Accept Changes</button>
+
+}
+
+@section Scripts{
+    
+<script src="~/js/Movie/UpdateMovie.js"></script>
+}

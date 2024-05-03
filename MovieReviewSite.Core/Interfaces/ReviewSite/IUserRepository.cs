@@ -10,8 +10,11 @@ public interface IUserRepository : IBaseRepository
     Task<List<BaseUser>> GetAllUsers();
     Task<BaseUser?> GetUserById(int id);
     Task AddUser(NewUserRequest dto);
-    Task UpdateAddUserDetails(UpdateUserRequest dto);
-    Task DeleteUser(int id);
+    Task UpdateUser(UpdateUserRequest dto);
+    Task DeactivateUser(int id);
+    Task<bool> LoginUser(LoginUserRequest dto);
     Task ChangeUserRole(UserRole dto);
     Task<UserDetailsViewModel> GetUserDetails(int id);
+    Task<bool> AuthorizeUsername(string username);
+    Task<int> GetUserIdByByUsername(string username);
 }

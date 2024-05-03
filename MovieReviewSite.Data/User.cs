@@ -48,4 +48,6 @@ public partial class User
     public virtual Role? RoleCodeNavigation { get; set; }
 
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
+
+    public virtual ICollection<UserPassword> UserPasswords { get; set; } = new List<UserPassword>();
 }

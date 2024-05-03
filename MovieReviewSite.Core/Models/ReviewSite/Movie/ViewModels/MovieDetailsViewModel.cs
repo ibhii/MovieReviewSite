@@ -6,5 +6,4 @@ namespace MovieReviewSite.Core.Models.Movie.ViewModels;
 public class MovieDetailsViewModel
 {
     public MovieDetail? Movie { get; set; }
-    public List<ReviewPreview?> Reviews { get; set; }
 }

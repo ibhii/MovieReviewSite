@@ -46,6 +46,8 @@ public partial class ReviewSiteContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserPassword> UserPasswords { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AgeRate>(entity =>
@@ -142,7 +144,6 @@ public partial class ReviewSiteContext : DbContext
             entity.Property(e => e.RealeaseDate).HasColumnType("datetime");
             entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.StreamId).HasColumnName("StreamID");
-            entity.Property(e => e.Synopsis).HasMaxLength(200);
             entity.Property(e => e.TypeId).HasColumnName("TypeID");
 
             entity.HasOne(d => d.AgeRate).WithMany(p => p.Movies)
@@ -343,6 +344,27 @@ public partial class ReviewSiteContext : DbContext
             entity.HasOne(d => d.RoleCodeNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleCode)
                 .HasConstraintName("User_Role_Code_fk");
+        });
+
+        modelBuilder.Entity<UserPassword>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("ID");
+
+            entity.ToTable("UserPassword", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.PasswordId).HasColumnName("PasswordID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Password).WithMany(p => p.UserPasswords)
+                .HasForeignKey(d => d.PasswordId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("UserPassword_Password_ID_fk");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserPasswords)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("UserPassword_User_ID_fk");
         });
 
         OnModelCreatingPartial(modelBuilder);

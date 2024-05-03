@@ -3,7 +3,7 @@ using MovieReviewSite.Core.Interfaces.Base;
 
 namespace MovieReviewSite.Core.Models.Movie.Responses;
 
-public class Movies : IBaseModel
+public class Movies : BaseModel
 {
     public int Id { get; set; }
     public string? Name { get; set; }
@@ -14,4 +14,6 @@ public class Movies : IBaseModel
     public double? Score { get; set; }
     public BaseIdTitleModel? AgeRating { get; set; }
     public byte[]? Image { get; set; }
+
+    public int ReviewsCount { get; set; }
 }

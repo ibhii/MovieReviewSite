@@ -8,9 +8,7 @@ public class  NewMovie : IBaseModel
     public DateTime? ReleaseDate { get; set; }
     public int? AgeRate { get; set; }
     public string? Synopsis { get; set; }
-    // public string? Poster { get; set; }
     public int? Duration { get; set; }
-    public int? Type { get; set; }
-    public int? Status { get; set; }
-     
+    // public int? Type { get; set; }
+    
 }

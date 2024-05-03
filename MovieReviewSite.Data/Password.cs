@@ -16,4 +16,6 @@ public partial class Password
     public string? LastPassword { get; set; }
 
     public virtual User? User { get; set; }
+
+    public virtual ICollection<UserPassword> UserPasswords { get; set; } = new List<UserPassword>();
 }

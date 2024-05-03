@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Review;
@@ -131,9 +132,10 @@ public partial class ReviewRepository : IReviewRepository
     public async Task UpdateReview(UpdateReviewRequest dto)
     {
         var review = await _context.Reviews.Where(r => r.Id == dto.Id).SingleOrDefaultAsync();
-        review!.Title = dto.Title;
-        review.Review1 = dto.Review;
-        review.ScoreCode = dto.GivenRate;
+        
+        review!.Title = dto.Title.IsNullOrEmpty() ? review.Title : dto.Title;
+        review.Review1 = dto.Review.IsNullOrEmpty() ? review!.Review1 : dto.Review;
+        review.ScoreCode = dto.GivenRate == 0 ? review.ScoreCode : dto.GivenRate;
         review.LastModifiedOn = DateTime.UtcNow;
         _context.Reviews.Update(review);
         await _context.SaveChangesAsync();

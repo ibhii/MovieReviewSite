@@ -4,10 +4,12 @@ using MovieReviewSite.Core.Repositories.Comment;
 using MovieReviewSite.Core.Repositories.Crew;
 using MovieReviewSite.Core.Repositories.Genre;
 using MovieReviewSite.Core.Repositories.Movie;
+using MovieReviewSite.Core.Repositories.Password;
 using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.Core.Repositories.Tag;
 using MovieReviewSite.Core.Repositories.User;
 using MovieReviewSite.DataBase.Contexts;
+using UserRepository = MovieReviewSite.Core.Repositories.User.UserRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICrewRepository, CrewRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
 
 
 var app = builder.Build();

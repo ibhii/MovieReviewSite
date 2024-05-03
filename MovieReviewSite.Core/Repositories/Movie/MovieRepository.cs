@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie.Request;
-using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Movie;
@@ -22,36 +22,33 @@ public partial class MovieRepository : IMovieRepository
         var newMovie = new DataBase.Movie()
         {
             Name = movie.Name,
-            CreatedOn = DateTime.UtcNow,
-            Duration = movie.Duration,
-            RealeaseDate = movie.ReleaseDate,
-            LastModifiedOn = DateTime.UtcNow,
-            AgeRateId = movie.AgeRate,
-            // Poster = movie,
-            TypeId = movie.Type,
             Synopsis = movie.Synopsis,
-            StatusId = movie.Status
+            Duration = movie.Duration,
+            AgeRateId = movie.AgeRate,
+            // TypeId = movie.Type,
+            StatusId = 1,
+            CreatedOn = DateTime.UtcNow,
+            LastModifiedOn = DateTime.UtcNow,
+            RealeaseDate = movie.ReleaseDate,
         };
         await _context.Movies.AddAsync(newMovie);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateMovie(UpdatedMovie movie)
+    public async Task UpdateMovie(UpdatedMovie dto)
     {
-        var updatedMovie = await _context.Movies.Where(m => m.Id == movie.Id).SingleOrDefaultAsync();
+        var movie = await _context.Movies.Where(m => m.Id == dto.Id).SingleOrDefaultAsync();
 
-        if (updatedMovie != null)
+        if (movie != null)
         {
-            updatedMovie.Name = movie.Name;
-            updatedMovie.Duration = movie.Duration;
-            updatedMovie.RealeaseDate = movie.ReleaseDate;
-            updatedMovie.LastModifiedOn = DateTime.UtcNow;
-            updatedMovie.AgeRateId = movie.AgeRate;
-            // updatedMovie.// Poster = movie;
-            updatedMovie.TypeId = movie.Type;
-            updatedMovie.Synopsis = movie.Synopsis;
+            movie.Name = dto.Name.IsNullOrEmpty() ? movie.Name : dto.Name ;
+            movie.Duration = dto.Duration == 0 ? movie.Duration : dto.Duration;
+            movie.RealeaseDate = dto.ReleaseDate;
+            movie.LastModifiedOn = DateTime.UtcNow;
+            movie.AgeRateId = dto.AgeRate == 0 ? movie.AgeRateId : dto.AgeRate;
+            movie.Synopsis = dto.Synopsis.IsNullOrEmpty() ? movie.Synopsis : dto.Synopsis;
 
-            _context.Update(updatedMovie);
+            _context.Update(movie);
             await _context.SaveChangesAsync();
         }
     }
@@ -59,7 +56,7 @@ public partial class MovieRepository : IMovieRepository
     public async Task DeleteMovie(int id)
     {
         var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
-        _context.Movies.Remove(movie);
+        _context.Movies.Remove(movie!);
         await _context.SaveChangesAsync();
     }
 }
