@@ -23,8 +23,9 @@ public partial class GenreRepository
 
     public async Task AddGenreByMovieId(MovieGenreRequest dto)
     {
-        var movie = await GetGenreByMovieId(dto.MovieId);
-        if (dto.GenreIds.Any(g => movie.Any(m => g!.Value != m.Id)))
+        var movieGenreList = await GetGenreByMovieId(dto.MovieId);
+        var movie = await _context.Movies.Where(m => m.Id == dto.MovieId).SingleOrDefaultAsync();
+        if (dto.GenreIds.Any(g => movieGenreList.Any(m => g!.Value != m.Id)))
         {
             foreach (var movieGenres in dto.GenreIds.Select(genreId => new MovieGenre()
                      {
@@ -34,9 +35,13 @@ public partial class GenreRepository
             {
                 _context.Add(movieGenres);
             }
-
             await _context.SaveChangesAsync();
+            
+            //changes movie's last modified on field 
+            await _movieRepository.UpdateMovieLastModifiedOnById(dto.MovieId); 
         }
+
+        throw new ArgumentException("this genre already belongs to this movie!");
     }
 
     public async Task RemoveGenreByMovieId(MovieGenreRequest dto)
@@ -71,10 +76,10 @@ public partial class GenreRepository
                         // Image = 
                 }).ToList()
             }).SingleOrDefaultAsync();
-        // foreach (var movie in result!.MoviesList!)
-        // {
-        //     movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
-        // }
+        foreach (var movie in result!.MoviesList!)
+        {
+            movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
+        }
         return result;
     }
 }

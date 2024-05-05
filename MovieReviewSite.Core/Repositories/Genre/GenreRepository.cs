@@ -9,10 +9,14 @@ namespace MovieReviewSite.Core.Repositories.Genre;
 public partial class GenreRepository : IGenreRepository
 {
     private readonly ReviewSiteContext _context;
+    private readonly IMovieRepository _movieRepository;
+    private readonly IReviewRepository _reviewRepository;
 
-    public GenreRepository(ReviewSiteContext context)
+    public GenreRepository(ReviewSiteContext context, IMovieRepository movieRepository, IReviewRepository reviewRepository)
     {
         _context = context;
+        _movieRepository = movieRepository;
+        _reviewRepository = reviewRepository;
     }
 
     public async Task<GenreBase> GetGenre(int id)

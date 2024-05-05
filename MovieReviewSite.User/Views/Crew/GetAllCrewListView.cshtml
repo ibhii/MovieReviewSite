@@ -1,0 +1,36 @@
+﻿@model System.Collections.Generic.List<MovieReviewSite.Core.Models.Crew.BaseCrew>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div>
+    <a asp-controller="Crew" asp-action="AddCrewView" class="btn btn-primary">Add Crew</a>
+</div>
+<br>
+
+<h2>All Crew :</h2>
+
+<div>
+    <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody id="tableData">
+        @foreach (var crew in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Crew" asp-action="GetCrewDetailsView" asp-route-id="@crew.Id">@Html.DisplayFor(m => crew.FullName)</a>
+                </td>
+                <td>
+                    <a asp-action="UpdateCrewView" asp-controller="Crew" asp-route-id="@crew.Id" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

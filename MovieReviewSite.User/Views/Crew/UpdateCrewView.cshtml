@@ -1,0 +1,29 @@
+﻿@model MovieReviewSite.Core.Models.Crew.ViewModels.UpdateCrewViewModel
+
+@{
+    ViewBag.Title = @Model.Crew!.FullName!;
+    Layout = "_Layout";
+}
+
+<h2> Update @ViewData["Title"]:</h2>
+
+@using (Html.BeginForm("UpdateCrew", "Crew", FormMethod.Post, new {id = "submitForm"}))
+{
+    @Html.LabelFor(c => c.Crew!.FirstName)
+    <input placeholder="@Model.Crew.FirstName" asp-for="DTO!.FirstName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(c => c.Crew!.LastName)
+    <input placeholder="@Model.Crew.LastName" asp-for="DTO!.LastName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(c => c.Crew!.MiddleName)
+    <input placeholder="@Model.Crew.MiddleName" asp-for="DTO!.MiddleName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(c => c.Crew!.BirthDate)
+    <input placeholder="@Model.Crew.BirthDate" asp-for="DTO!.BirthDate" type="text" class="form-control"/>
+    <br>
+}
+<br>
+<button type="submit" class="btn btn-primary">Apply Changes</button>

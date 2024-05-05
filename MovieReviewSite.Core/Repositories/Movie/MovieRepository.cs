@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.DataBase.Contexts;
 
@@ -17,6 +18,20 @@ public partial class MovieRepository : IMovieRepository
         _reviewRepository = reviewRepository;
     }
 
+    public async Task<MovieBase?> GetMovieById(int id)
+    {
+        return await _context.Movies.Where(m => m.Id == id).Select(m => new MovieBase()
+        {
+            Id = m.Id,
+            Name = m.Name
+        }).SingleOrDefaultAsync();
+    }
+    
+    public  async Task<DataBase.Movie?> GetById(int id)
+    {
+        return await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
+    }
+
     public async Task AddMovie(NewMovie movie)
     {
         var newMovie = new DataBase.Movie()
@@ -25,7 +40,6 @@ public partial class MovieRepository : IMovieRepository
             Synopsis = movie.Synopsis,
             Duration = movie.Duration,
             AgeRateId = movie.AgeRate,
-            // TypeId = movie.Type,
             StatusId = 1,
             CreatedOn = DateTime.UtcNow,
             LastModifiedOn = DateTime.UtcNow,

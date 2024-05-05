@@ -7,8 +7,13 @@
 <h1> @Html.DisplayFor(c => c.FullName) </h1>
 
 <div>
+    <a asp-controller="crew" asp-action="UpdateCrewView" asp-route-id="@Model!.Id" class="btn btn-primary">Edit</a>
+    <btn id="delete" type="submit" class="btn btn-danger">Delete</btn>
+</div>
+
+<div>
     <h3>Details: </h3>
-    <p style="border-style: solid; padding: 10px">
+    <span style="border-style: solid; padding: 10px">
         Birth Date : @Html.DisplayFor(m => m!.BirthDate)
         <br>
         @if (Model!.IsAlive == false)
@@ -16,7 +21,7 @@
             <p>Death Date : @Html.DisplayFor(m => m!.DeathDate)</p>
             <br>
         }
-    </p>
+    </span>
 </div>
 <br>
 
@@ -25,6 +30,9 @@
     <tr>
         <th>
             Name
+        </th>
+        <th>
+            Credit
         </th>
         <th>
             Duration
@@ -46,6 +54,9 @@
                 <a asp-action="MovieDetailsView" asp-controller="Movie" asp-route-id="@item.Id">@Html.DisplayFor(m => item.Name)</a>
             </td>
             <td>
+                @Html.DisplayFor(c => item.CrewType!.Title)
+            </td>
+            <td>
                 @Html.DisplayFor(c => item.Duration)
             </td>
             <td>
@@ -58,7 +69,7 @@
                 @Html.DisplayFor(c => item.AgeRating!.Title)
             </td>
             <td>
-                <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@item.Id">Review</a>
+                <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@item.Id" class="btn-primary">Review</a>
             </td>
         </tr>
     }
@@ -66,6 +77,6 @@
 <br>
 
 <div>
-    <p style="color:dimgray "> Created On : @Html.DisplayFor(c => c!.CreatedOn,"{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(c => c!.LastModifiedOn,"{MM/dd/yyyy}")</p>
+    <p style="color:dimgray "> Created On : @Html.DisplayFor(c => c!.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(c => c!.LastModifiedOn, "{MM/dd/yyyy}")</p>
 
 </div>

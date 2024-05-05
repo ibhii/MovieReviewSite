@@ -29,7 +29,16 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetAllUsersView">Users</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Crew" asp-action="GetAllCrewListView">Crew</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <li class="nav-link">
+                    <a asp-action="LoginView" asp-controller="User">Login</a>
+                    </li>
+                    <li class="nav-link">
+                    <a  asp-action="RegisterView" asp-controller="User">Register</a>
                     </li>
                 </ul>
             </div>

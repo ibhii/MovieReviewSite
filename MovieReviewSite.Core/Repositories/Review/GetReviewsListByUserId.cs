@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.Role;
@@ -8,6 +9,8 @@ namespace MovieReviewSite.Core.Repositories.Review;
 
 public partial class ReviewRepository
 {
+    private IReviewRepository _reviewRepositoryImplementation;
+
     public async Task<List<ReviewPreview>> GetReviewsListByUserId(int id)
     {
         return await _context.Reviews.Where(r => r.AuthorId == id)

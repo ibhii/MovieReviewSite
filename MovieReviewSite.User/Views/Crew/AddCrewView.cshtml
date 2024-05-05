@@ -1,0 +1,31 @@
+﻿@model MovieReviewSite.Core.Models.Crew.Requests.NewCrewRequest
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Add Crew Details</h2>
+
+@using (Html.BeginForm("AddCrew", "Crew", FormMethod.Post, new { id = "submitForm" }))
+{
+
+    @Html.LabelFor(c =>c.FirstName)
+    <input asp-for="FirstName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(c =>c.LastName)
+    <input asp-for="LastName" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(c =>c.MiddleName)
+    <input asp-for="MiddleName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(c =>c.BirthDate)
+    <input asp-for="BirthDate" type="text" class="form-control"/>
+    <br>
+
+    }
+    <br>
+    <button type="submit" class="btn btn-primary"  >Add Crew</button>
+

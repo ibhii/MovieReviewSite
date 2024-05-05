@@ -1,0 +1,51 @@
+﻿@model MovieReviewSite.Core.Models.Crew.ViewModels.ModifyCrewForMovieViewModel
+
+@{
+    ViewBag.Title = @Model.Movie!.Name!;
+    Layout = "_Layout";
+}
+
+<h2> @ViewData["Title"] Crew :</h2>
+
+@* movies genres *@
+<div style="border-style: solid; border-color: dimgray ; padding: 5px ;">
+    @foreach (var item in Model.MovieCrew!)
+    {
+        <br>
+        <ul style="padding: 5px ; justify-content: left ;display:inline-block;">
+            <btn id="@item!.Id" class="btn btn-primary" style="background-color: #34496a" type="button"> @Html.DisplayFor(m => item.FullName) | @Html.DisplayFor(m => item.CrewType.Title)</btn>
+        </ul>
+        <br>
+    }
+</div>
+
+<div>
+    <br>
+    @* database genres *@
+    <h3>All Crew :</h3>
+    <br>
+    <div style="border-style: solid; border-color: dimgray ; padding: 5px ;">
+        @foreach (var item in Model.AllCrew!.Where(item => Model.MovieCrew.All(mg => mg.Id != item.Id)))
+        {
+            <ul style="padding: 5px ; justify-content: left ;display:inline-block;">
+                <btn id="@item.Id" class="btn btn-primary" style="background-color: #34496a" type="button"> @Html.DisplayFor(m => item.FullName)</btn>
+            </ul>
+        }
+    </div>
+    
+    <br>
+    <h3>Crew Types:</h3>
+    <div style="border-style: solid; border-color: dimgray ; padding: 5px ;">
+        @foreach (var item in Model.CrewType!)
+        {
+            <ul style="padding: 5px ; justify-content: left ;display:inline-block;">
+                <btn id="@item.Id" class="btn btn-primary" style="background-color: #34496a" type="button"> @Html.DisplayFor(m => item.Title)</btn>
+            </ul>
+        }
+    </div>
+</div>
+<br>
+<div>
+    <btn id="add" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Crew</btn>
+    <btn id="delete" class="btn btn-danger" type="submit">Delete Crew</btn>
+</div>

@@ -91,5 +91,27 @@ public class UserController : Controller
         var userDetails = await _userRepository.GetUserDetails(id);
         return View(userDetails);
     }
+
+    /// <summary>
+    /// returns view for users to sign in
+    /// </summary>
+    /// <returns></returns>
+    [Route("[action]")]
+    public async Task<ActionResult> LoginView()
+    {
+        var dto = new LoginUserRequest();
+        return View(dto);
+    }
+    
+    /// <summary>
+    /// returns view for users to sign up
+    /// </summary>
+    /// <returns></returns>
+    [Route("[action]")]
+    public async Task<ActionResult> RegisterView()
+    {
+        var dto = new NewUserRequest();
+        return View(dto);
+    }
 }
 

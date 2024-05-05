@@ -86,4 +86,14 @@ public partial class UserRepository : IUserRepository
         }
         await _context.SaveChangesAsync();
     }
+
+    private async Task<bool> DoesUsernameExist(string username)
+    {
+        return await _context.Users.AnyAsync(u => u.UserName == username);
+    }
+    
+    private async Task<bool> DoesEmailExist(string email)
+    {
+        return await _context.Users.AnyAsync(u => u.Email == email);
+    }
 }

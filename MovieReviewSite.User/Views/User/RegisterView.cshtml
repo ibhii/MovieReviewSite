@@ -1,0 +1,33 @@
+﻿@model MovieReviewSite.Core.Models.User.Request.NewUserRequest
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Sign Up</h2>
+
+@using (Html.BeginForm("AddUser", "User", FormMethod.Post, new {id = "submitForm"}))
+{
+    @Html.LabelFor(u => u.FirstName)
+    <input asp-for="FirstName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(u => u.LastName)
+    <input asp-for="LastName" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(u => u.Email)
+    <input asp-for="Email" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(u => u.UserName)
+    <input asp-for="UserName" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(u => u.Password)
+    <input asp-for="Password" type="text" class="form-control"/>
+    <br>
+    
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Register</button>  
+}

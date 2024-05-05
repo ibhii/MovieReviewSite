@@ -4,6 +4,8 @@ using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Genre.Request;
 using MovieReviewSite.Core.Models.Genre.Response;
+using MovieReviewSite.Core.Models.Genre.ViewModel;
+using MovieReviewSite.Core.Models.Movie;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
@@ -13,11 +15,13 @@ public class GenreController : Controller
 {
     private readonly ILogger<GenreController> _logger;
     private readonly IGenreRepository _genreRepository;
+    private readonly IMovieRepository _movieRepository;
 
-    public GenreController(ILogger<GenreController> logger, IGenreRepository genreRepository)
+    public GenreController(ILogger<GenreController> logger, IGenreRepository genreRepository, IMovieRepository movieRepository)
     {
         _logger = logger;
         _genreRepository = genreRepository;
+        _movieRepository = movieRepository;
     }
 
     [HttpGet]
@@ -91,6 +95,33 @@ public class GenreController : Controller
     {
         var genreMovies = await _genreRepository.GetMoviesByGenreId(id);
         return View(genreMovies);
+    }
+
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> ModifyMovieGenreView(int id)
+    {
+        var movieGenres = await _genreRepository.GetGenreByMovieId(id);
+        var movie = await _movieRepository.GetMovieById(id);
+        var allGenres = await _genreRepository.GetGenreList();
+        var result = new ModifyMovieGenreViewModel()
+        {
+            Movie = new MovieBase()
+            {
+                Id = movie!.Id,
+                Name = movie.Name
+            },
+            MovieGenres =  movieGenres.Select(mg => new GenreBase()
+            {
+                Id = mg.Id,
+                Title = mg.Title
+            }).ToList(),
+            AllGenres = allGenres.Select(g => new GenreBase()
+            {
+                Id = g.Id,
+                Title = g.Title
+            }).ToList()
+        };
+        return View(result);
     }
     
     

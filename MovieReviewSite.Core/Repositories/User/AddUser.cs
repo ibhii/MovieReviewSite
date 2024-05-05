@@ -10,16 +10,21 @@ public partial class UserRepository
     public async Task AddUser(NewUserRequest dto)
     {
         //gets all users list to check username
-        var allUsers = await GetAllUsers();
+        var isUsernameDuplicate = await DoesUsernameExist(dto.UserName);
+        var isEmailDuplicate = await DoesEmailExist(dto.Email);
         
         //checks to see if input parameters are correct
         if (dto.Password.IsNullOrEmpty() || dto.Password.Length < 4)
         {
             throw new ArgumentException("the password you have entered is invalid!");
         }
-        if (Enumerable.Any<BaseUser>(allUsers, u => u.UserName == dto.UserName) || dto.UserName.IsNullOrEmpty())
+        if (isUsernameDuplicate || dto.UserName.IsNullOrEmpty())
         {
-            throw new ArgumentException("this username you  have entered is invalid!");
+            throw new ArgumentException("this username you  have entered is invalid or already exists!");
+        }
+        if (isEmailDuplicate || dto.Email.IsNullOrEmpty())
+        {
+            throw new ArgumentException("this email you  have entered is invalid or already exists!");
         }
         
         //creating user
@@ -29,6 +34,7 @@ public partial class UserRepository
             RoleCode = 2,
             FirstName = dto.FirstName,
             LastName = dto.LastName,
+            Email = dto.Email,
             IsActive = true,
             IsVisible = true,
             IsEmailConfirmed = false,
@@ -44,6 +50,7 @@ public partial class UserRepository
             UserId = user.Entity.Id,
             Password1 = dto.Password
         };
+        
         var password = await _context.Passwords.AddAsync(newPassword);
         user.Entity.PasswordId = password.Entity.Id;
         _context.Users.Update(user.Entity);

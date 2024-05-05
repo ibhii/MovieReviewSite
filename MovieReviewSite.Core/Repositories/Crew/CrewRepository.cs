@@ -9,13 +9,17 @@ using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Crew;
 
-public class CrewRepository : ICrewRepository
+public partial class CrewRepository : ICrewRepository
 {
     private readonly ReviewSiteContext _context;
+    private readonly IMovieRepository _movieRepository;
+    private readonly IReviewRepository _reviewRepository;
 
-    public CrewRepository(ReviewSiteContext context)
+    public CrewRepository(ReviewSiteContext context, IMovieRepository movieRepository, IReviewRepository reviewRepository)
     {
         _context = context;
+        _movieRepository = movieRepository;
+        _reviewRepository = reviewRepository;
     }
     public async Task<List<BaseCrew>> GetAllCrew()
     {
@@ -26,20 +30,11 @@ public class CrewRepository : ICrewRepository
         }).ToListAsync();
     }
 
-    public async Task<List<BaseCrew>> GetCrewByMovieId(int id)
-    {
-        return await _context.MovieCrews.Where(mc => mc.MovieId == id)
-            .Select(mc => new BaseCrew()
-        {
-            Id = mc.CrewId,
-            FullName = mc.Crew!.FullName,
-        }).ToListAsync();
-        
-    }
     
-    public async Task<CrewWithMoviesResponse?> GetCrewById(int id)
+    
+    public async Task<MoviesForCrew?> GetCrewById(int id)
     {
-        return await _context.Crews.Where(c => c.Id == id).Select(c => new CrewWithMoviesResponse
+        return await _context.Crews.Where(c => c.Id == id).Select(c => new MoviesForCrew
         {
             Id = c.Id,
             FullName = c.FullName,
@@ -67,9 +62,7 @@ public class CrewRepository : ICrewRepository
             MiddleName = dto.MiddleName,
             IsActive = true,
             IsVisible = true,
-            IsAlive = dto.IsAlive,
             BirthDate = dto.BirthDate,
-            DeathDate = dto.DeathDate,
             LastModifiedOn = DateTime.UtcNow,
             CreatedOn = DateTime.UtcNow,
             CreatedBy = dto.CreatedBy
@@ -98,33 +91,5 @@ public class CrewRepository : ICrewRepository
         _context.Crews.Remove(crew!);
         await _context.SaveChangesAsync();
     }
+}
 
-    public async Task<CrewDetails?> GetCrewDetails(int id)
-    {
-        return await _context.Crews.Where(c => c.Id == id)
-            .Select(c => new CrewDetails()
-            {
-                IsAlive = c.IsAlive,
-                BirthDate = c.BirthDate,
-                // DeathDate = c.DeathDate,
-                CreatedOn = c.CreatedOn,
-                FullName = c.FullName,
-                LastModifiedOn = c.LastModifiedOn,
-                MoviesList = c.MovieCrews.Select(mc => new Movies()
-                {
-                    Id = (int) mc.MovieId!,
-                    Name = mc.Movie!.Name,
-                    Duration = mc.Movie.Duration,
-                    // Rating = mc.Movie.
-                    AgeRating = new BaseIdTitleModel()
-                    {
-                        Id = mc.Movie.AgeRateId,
-                        Title = mc.Movie.AgeRate!.Title
-                    },
-                    ReleaseDate = mc.Movie.RealeaseDate
-                    // Image = 
-                }).ToList()
-            }).SingleOrDefaultAsync();
-    
-}
-}

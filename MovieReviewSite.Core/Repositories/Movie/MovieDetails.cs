@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
