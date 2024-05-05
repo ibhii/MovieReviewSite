@@ -97,6 +97,11 @@ public class GenreController : Controller
         return View(genreMovies);
     }
 
+    /// <summary>
+    /// returns view to modify genre for a movie
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [Route("[action]/{id}")]
     public async Task<ActionResult> ModifyMovieGenreView(int id)
     {
