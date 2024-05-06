@@ -45,14 +45,14 @@ public class CrewController : Controller
         await _crewRepository.AddCrew(dto);
     }
 
-    [HttpPut("[action]")]
-    public async Task UpdateCrew([FromBody] UpdateCrewRequest dto)
+    [HttpPost("[action]/{id}")]
+    public async Task UpdateCrew(int id,[FromBody] UpdateCrewRequest dto)
     {
-        await _crewRepository.UpdateCrew(dto);
+        await _crewRepository.UpdateCrew(id,dto);
     }
 
-    [HttpDelete("[action]")]
-    public async Task DeleteCrew([FromBody] int id)
+    [HttpPost("[action]/{id}")]
+    public async Task DeleteCrew(int id)
     {
         await _crewRepository.DeleteCrew(id);
     }

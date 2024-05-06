@@ -6,9 +6,14 @@
 }
 <h1> @Html.DisplayFor(c => c.FullName) </h1>
 
+@* buttons to edit or delete crew *@
 <div>
     <a asp-controller="crew" asp-action="UpdateCrewView" asp-route-id="@Model!.Id" class="btn btn-primary">Edit</a>
-    <btn id="delete" type="submit" class="btn btn-danger">Delete</btn>
+    @using (Html.BeginForm("DeleteCrew", "Crew", FormMethod.Post, new {id = "deleteCrew"}))
+    {
+        <button type="submit" class="btn btn-primary" style="background-color: #730c1d">Delete</button>
+    }
+
 </div>
 
 <div>
@@ -80,3 +85,8 @@
     <p style="color:dimgray "> Created On : @Html.DisplayFor(c => c!.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(c => c!.LastModifiedOn, "{MM/dd/yyyy}")</p>
 
 </div>
+
+@section Scripts
+{
+    <script src="~/js/Crew/DeleteCrew.js"></script>
+}

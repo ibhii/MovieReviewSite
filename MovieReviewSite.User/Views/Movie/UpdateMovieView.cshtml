@@ -7,9 +7,8 @@
 
 <h1>Edit @ViewData["Title"]</h1>
 
-@using (Html.BeginForm("UpdateMovie", "Movie", new { id = "submitForm" }))
+@using (Html.BeginForm("UpdateMovie", "Movie", FormMethod.Post, new {id = "submitForm"}))
 {
-
     @Html.LabelFor(m => m.DTO.Name)
     <input placeholder="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
     <br>
@@ -25,20 +24,15 @@
     @Html.LabelFor(m => m.DTO.ReleaseDate)
     <input placeholder="@Html.DisplayFor(m => Model.Movie.ReleaseDate, "{MM/dd/yyyy}")" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
     <br>
-    
+
 
     @Html.LabelFor(m => m.DTO.AgeRate)
-    <input placeholder="@Model.Movie.AgeRating" asp-for="DTO.AgeRate" type="text" class="form-control"> 
-    @* @Html.DropDownListFor(m => m.DTO.AgeRate, new SelectList(new[] *@
-    @*                                                            { *@
-    @*                                                                MovieType.Animation, MovieType.Series, MovieType.MiniSeries , MovieType.FeatureFilm , MovieType.ShortFilm *@
-    @*                                                            })) *@
+    <input placeholder="@Model.Movie.AgeRating!.Title" asp-for="DTO.AgeRate" type="text" class="form-control">
     <br>
-    <button type="submit" class="btn btn-primary" style="background-color: #1e7316" >Accept Changes</button>
-
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Accept Changes</button>
 }
 
 @section Scripts{
-    
-<script src="~/js/Movie/UpdateMovie.js"></script>
+
+    <script src="~/js/Movie/UpdateMovie.js"></script>
 }

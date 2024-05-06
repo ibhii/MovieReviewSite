@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Review;
-using MovieReviewSite.Core.Models.Review.ModelViews;
 using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.Review.ViewModels;

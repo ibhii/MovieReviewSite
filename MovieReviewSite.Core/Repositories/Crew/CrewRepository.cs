@@ -71,15 +71,13 @@ public partial class CrewRepository : ICrewRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateCrew(UpdateCrewRequest dto)
+    public async Task UpdateCrew(int id,UpdateCrewRequest dto)
     {
-        var crew = await _context.Crews.Where(c => c.Id == dto.Id).SingleOrDefaultAsync();
+        var crew = await _context.Crews.Where(c => c.Id == id).SingleOrDefaultAsync();
         crew!.FirstName = dto.FirstName;
         crew.LastName = dto.LastName;
         crew.MiddleName = dto.MiddleName;
         crew.BirthDate = dto.BirthDate;
-        crew.DeathDate = dto.DeathDate;
-        crew.IsAlive = dto.IsAlive;
         crew.LastModifiedOn = DateTime.UtcNow;
         _context.Crews.Update(crew);
         await _context.SaveChangesAsync();

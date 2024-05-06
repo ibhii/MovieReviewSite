@@ -53,11 +53,12 @@ public class MovieController : Controller
     /// <summary>
     /// updates a movie
     /// </summary>
+    /// <param name="id"></param>
     /// <param name="dto"></param>
-    [HttpPut("[action]")]
-    public async Task UpdateMovie([FromBody]UpdatedMovie dto)
+    [HttpPost("[action]/{id}")]
+    public async Task UpdateMovie(int id,[FromBody]UpdatedMovie dto)
     {
-        await _movieRepository.UpdateMovie(dto);
+        await _movieRepository.UpdateMovie(id,dto);
     }
 
     /// <summary>

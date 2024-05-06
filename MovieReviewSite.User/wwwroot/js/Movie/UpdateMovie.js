@@ -1,11 +1,11 @@
 const submitButton = document.getElementById("submitForm"); // Get the form by its ID
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
-    const name = document.getElementById("Name").value;
-    const synopsis = document.getElementById("Synopsis").value;
-    const duration = document.getElementById("Duration").value;
-    const releaseDate = document.getElementById("ReleaseDate").value;
-    const ageRate = document.getElementById("AgeRate").value;
+    const name = document.getElementById("DTO.Name").value;
+    const synopsis = document.getElementById("DTO.Synopsis").value;
+    const duration = document.getElementById("DTO.Duration").value;
+    const releaseDate = document.getElementById("DTO.ReleaseDate").value;
+    const ageRate = document.getElementById("DTO.AgeRate").value;
     const id = window.location.pathname.split('/')[3];
 
     const dto = {

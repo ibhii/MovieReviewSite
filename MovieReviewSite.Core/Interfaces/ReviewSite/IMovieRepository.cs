@@ -12,7 +12,7 @@ public interface  IMovieRepository : IBaseRepository
     Task<MovieDetail?> GetMovieDetails(int id);
     Task<MovieBase?> GetMovieById(int id);
     Task AddMovie(NewMovie movie);
-    Task UpdateMovie(UpdatedMovie dto);
+    Task UpdateMovie(int id,UpdatedMovie dto);
     Task DeleteMovie(int id);
     Task<List<ReviewPreview>> GetMovieReviewsList(int id);
     Task<List<Movies>> GetMoviesByCrewId(int id);

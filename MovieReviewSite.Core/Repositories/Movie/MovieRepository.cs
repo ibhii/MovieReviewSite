@@ -44,14 +44,15 @@ public partial class MovieRepository : IMovieRepository
             CreatedOn = DateTime.UtcNow,
             LastModifiedOn = DateTime.UtcNow,
             RealeaseDate = movie.ReleaseDate,
+            CreatedBy = movie.CreatedById
         };
         await _context.Movies.AddAsync(newMovie);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateMovie(UpdatedMovie dto)
+    public async Task UpdateMovie(int id,UpdatedMovie dto)
     {
-        var movie = await _context.Movies.Where(m => m.Id == dto.Id).SingleOrDefaultAsync();
+        var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
 
         if (movie != null)
         {

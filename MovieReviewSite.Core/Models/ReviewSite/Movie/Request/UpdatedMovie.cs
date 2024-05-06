@@ -2,5 +2,4 @@
 
 public class UpdatedMovie : NewMovie
 {
-    public int Id { get; set; }
 }

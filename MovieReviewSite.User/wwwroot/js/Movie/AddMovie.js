@@ -1,6 +1,6 @@
-const submitButton = document.getElementById("submitForm"); // Get the form by its ID
+const submitButton = document.getElementById("submitForm"); //// Get the form by its ID
 
-submitButton.addEventListener("submit", function(event) {
+submitButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const name = document.getElementById("Name").value;
     const synopsis = document.getElementById("Synopsis").value;
@@ -14,6 +14,7 @@ submitButton.addEventListener("submit", function(event) {
         Duration: duration,
         ReleaseDate: releaseDate,
         ageRating: ageRate,
+        createdById : 6,
     };
 
     fetch("/Movie/AddMovie", { // Assuming an API endpoint for adding movies
