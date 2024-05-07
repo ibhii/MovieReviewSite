@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("LoginUser", "User", FormMethod.Post, new {id = "submitForm"}))
 {
-    @Html.LabelFor(u => u.Username)
+    <p>Username Or Email</p>
     <input asp-for="Username" type="text" class="form-control"/>
     <br>
 
@@ -18,4 +18,9 @@
     <br>
     
     <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Login</button>  
+}
+
+@section Scripts
+{
+    <script src="~/js/User/LoginUser.js"></script>
 }

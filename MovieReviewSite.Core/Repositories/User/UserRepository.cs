@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Interfaces.Services;
 using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
@@ -14,12 +15,14 @@ public partial class UserRepository : IUserRepository
     private readonly ReviewSiteContext _context;
     private readonly IReviewRepository _reviewRepository;
     private readonly IPasswordRepository _passwordRepository;
+    private readonly IAuthServices _authServices;
 
-    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository, IPasswordRepository passwordRepository)
+    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository, IPasswordRepository passwordRepository, IAuthServices authServices)
     {
         _context = context;
         _reviewRepository = reviewRepository;
         _passwordRepository = passwordRepository;
+        _authServices = authServices;
     }
 
     public async Task<List<BaseUser>> GetAllUsers()

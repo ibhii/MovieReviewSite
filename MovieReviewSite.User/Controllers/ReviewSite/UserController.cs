@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
 
@@ -64,7 +65,7 @@ public class UserController : Controller
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost("[action]")]
-    public async Task<bool> LoginUser([FromBody] LoginUserRequest dto)
+    public async Task<LoginResponse> LoginUser([FromBody] LoginUserRequest dto)
     {
         return await _userRepository.LoginUser(dto);
     }

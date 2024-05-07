@@ -1,5 +1,10 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MovieReviewSite.Core.ConfigServices;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Interfaces.Services;
 using MovieReviewSite.Core.Repositories.Comment;
 using MovieReviewSite.Core.Repositories.Crew;
 using MovieReviewSite.Core.Repositories.Genre;
@@ -26,6 +31,26 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICrewRepository, CrewRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
+builder.Services.AddScoped<IAuthServices, AuthServices>();
+
+
+//adding jwt auth
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            //define which claim requires to check
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            //store the value in appsettings.json
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
 
 
 var app = builder.Build();
@@ -42,6 +67,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+//adding UseAuthentication
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAuthorization();
 

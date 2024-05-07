@@ -1,4 +1,6 @@
-﻿using MovieReviewSite.Core.Interfaces.Base;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieReviewSite.Core.Interfaces.Base;
+using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
 using MovieReviewSite.Core.Models.User.ViewModel;
@@ -12,9 +14,11 @@ public interface IUserRepository : IBaseRepository
     Task AddUser(NewUserRequest dto);
     Task UpdateUser(UpdateUserRequest dto);
     Task DeactivateUser(int id);
-    Task<bool> LoginUser(LoginUserRequest dto);
+    Task<LoginResponse> LoginUser(LoginUserRequest dto);
     Task ChangeUserRole(UserRole dto);
     Task<UserDetailsViewModel> GetUserDetails(int id);
     Task<bool> AuthorizeUsername(string username);
+    Task<bool> AuthorizeEmail(string email);
     Task<int> GetUserIdByByUsername(string username);
+    Task<BaseUser?> GetUserByUsername(string username);
 }
