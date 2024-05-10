@@ -14,7 +14,7 @@ public partial class CommentRepository
             {
                 Id = c.Id,
                 Comment = c.Comment1,
-                User = new BaseUser()
+                User = new BaseUserModel()
                 {
                     Id = c.Author!.Id,
                     Name = c.Author.FullName,

@@ -26,7 +26,6 @@ submitButton.addEventListener("submit", function (event) {
             Id: localStorage.getItem("userId"),
             Username: localStorage.getItem("userName"),
             Name: localStorage.getItem("name"),
-            role: localStorage.getItem("role"),
             roleCode: localStorage.getItem("roleCode"),
 
 

@@ -6,6 +6,6 @@ namespace MovieReviewSite.Core.Interfaces.Services;
 public interface IAuthServices
 {
     void ConfigureServices(IServiceCollection services);
-    string GenerateJsonWebToken(BaseUser userInfo);
+    string GenerateJsonWebToken(BaseUserModel userModelInfo);
 
 }

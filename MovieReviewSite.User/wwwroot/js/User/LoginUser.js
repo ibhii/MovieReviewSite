@@ -24,8 +24,7 @@ submitButton.addEventListener("submit", function (event) {
             localStorage.setItem('userId', user.id);
             localStorage.setItem('name', user.name);
             localStorage.setItem('userName', user.username);
-            localStorage.setItem('role', user.role.role);
-            localStorage.setItem('roleCode', user.role.roleCode);
+            localStorage.setItem('roleCode', user.roleCode);
 
             // Alternatively, store user object in a more structured way:
             localStorage.setItem('user', JSON.stringify(user));

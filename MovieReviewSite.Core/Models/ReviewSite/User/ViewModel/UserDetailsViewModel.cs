@@ -5,7 +5,7 @@ namespace MovieReviewSite.Core.Models.User.ViewModel;
 
 public class UserDetailsViewModel
 {
-    public UserDetails? UserBaseInfo { get; set; }
+    public UserModelDetails? UserBaseInfo { get; set; }
     public List<ReviewPreview> UserReviews  { get; set; }
     
 }

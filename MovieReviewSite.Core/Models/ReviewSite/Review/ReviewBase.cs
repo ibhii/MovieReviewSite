@@ -4,6 +4,6 @@ namespace MovieReviewSite.Core.Models.Review;
 
 public class ReviewBase : BaseModel
 {
-    public BaseUser? User { get; set; }
+    public BaseUserModel? User { get; set; }
     public string? Title { get; set; }
 }

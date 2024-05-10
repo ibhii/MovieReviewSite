@@ -25,9 +25,9 @@ public partial class UserRepository : IUserRepository
         _authServices = authServices;
     }
 
-    public async Task<List<BaseUser>> GetAllUsers()
+    public async Task<List<BaseUserModel>> GetAllUsers()
     {
-        return await _context.Users.Select(u => new BaseUser()
+        return await _context.Users.Select(u => new BaseUserModel()
         {
             Id = u.Id,
             Name = u.FullName,
@@ -41,9 +41,9 @@ public partial class UserRepository : IUserRepository
     }
 
 
-    public async Task<BaseUser?> GetUserById(int id)
+    public async Task<BaseUserModel?> GetUserById(int id)
     {
-        return await _context.Users.Where(u => u.Id == id).Select(u => new BaseUser()
+        return await _context.Users.Where(u => u.Id == id).Select(u => new BaseUserModel()
         {
             Id = u.Id,
             Name = u.FullName,

@@ -18,14 +18,16 @@ public partial class UserRepository
         {
             throw new ArgumentException("please enter a value for both username and password fields!");
         }
+
         var usernameExists = await AuthorizeUsername(dto.Username!);
         // var emailExists = await AuthorizeEmail(dto.Username!);
-        
+
         //checks if username exists
-        if (!usernameExists )
+        if (!usernameExists)
         {
             throw new ArgumentException("the username you've entered is invalid!");
         }
+
         var user = await GetUserByUsername(dto.Username!);
         var isPasswordOk = await _passwordRepository.AuthorizeUserPassword(dto.Password!, user!.Id);
         //checks if password is correct
@@ -33,21 +35,18 @@ public partial class UserRepository
         {
             throw new ArgumentException("the password you've entered is invalid!");
         }
+
         var tokenString = _authServices.GenerateJsonWebToken(user);
 
         var result = new LoginResponse()
         {
             Token = tokenString,
-            User = new BaseUser()
+            User = new BaseUserInfo()
             {
                 Id = user.Id,
-                UserName = user.UserName,
+                UserName = user.UserName!,
                 Name = user.Name,
-                Role = new BaseRole
-                {
-                    RoleCode = user.Role!.RoleCode,
-                    Role = user.Role.Role
-                }
+                RoleCode = user.Role!.RoleCode,
             }
         };
         return result; // Ensure you use curly braces
@@ -57,21 +56,22 @@ public partial class UserRepository
     {
         return await _context.Users.AnyAsync(u => u.UserName == username);
     }
-    
+
     public async Task<bool> AuthorizeEmail(string email)
     {
-        return await _context.Users.AnyAsync(u => u.Email == email );
-    }
-    
-    public async Task<int> GetUserIdByByUsername(string username)
-    {
-        return await _context.Users.Where(u => u.UserName == username || u.Email == username).Select(u => u.Id).SingleOrDefaultAsync();
+        return await _context.Users.AnyAsync(u => u.Email == email);
     }
 
-    public async Task<BaseUser?> GetUserByUsername(string username)
+    public async Task<int> GetUserIdByByUsername(string username)
+    {
+        return await _context.Users.Where(u => u.UserName == username || u.Email == username).Select(u => u.Id)
+            .SingleOrDefaultAsync();
+    }
+
+    public async Task<BaseUserModel?> GetUserByUsername(string username)
     {
         return await _context.Users.Where(u => u.UserName == username || u.Email == username)
-            .Select(u => new BaseUser()
+            .Select(u => new BaseUserModel()
             {
                 Id = u.Id,
                 UserName = u.UserName,
@@ -79,7 +79,7 @@ public partial class UserRepository
                 Role = new BaseRole()
                 {
                     RoleCode = (int) u.RoleCode!,
-                    Role= u.RoleCodeNavigation!.Title
+                    Role = u.RoleCodeNavigation!.Title
                 }
             }).SingleOrDefaultAsync();
     }

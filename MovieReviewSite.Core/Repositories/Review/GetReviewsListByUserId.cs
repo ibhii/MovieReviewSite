@@ -28,7 +28,7 @@ public partial class ReviewRepository
                     Id = r.MovieId,
                     Title = r.Movie.Name
                 },
-                User = new BaseUser()
+                User = new BaseUserModel()
                 {
                     Id = r.Author!.Id,
                     Name = r.Author.FullName,

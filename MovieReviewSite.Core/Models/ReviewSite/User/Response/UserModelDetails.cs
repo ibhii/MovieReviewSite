@@ -1,6 +1,6 @@
 ﻿namespace MovieReviewSite.Core.Models.User.Response;
 
-public class UserDetails : BaseUser
+public class UserModelDetails : BaseUserModel
 {
     public DateTime? CreatedOn { get; set; }
     public DateTime? LastModifiedOn { get; set; }

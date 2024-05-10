@@ -6,5 +6,5 @@ namespace MovieReviewSite.Core.Models.Services;
 public class LoginResponse
 {
     public string? Token { get; set; }
-    public BaseUser? User { get; set; }
+    public BaseUserInfo? User { get; set; }
 }

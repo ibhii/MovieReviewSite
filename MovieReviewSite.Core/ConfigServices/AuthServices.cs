@@ -40,7 +40,7 @@ public class AuthServices : IAuthServices
         services.AddMvc();
     }
     
-    public string GenerateJsonWebToken(BaseUser userInfo)
+    public string GenerateJsonWebToken(BaseUserModel userModelInfo)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

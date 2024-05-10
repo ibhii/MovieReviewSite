@@ -23,7 +23,7 @@ public partial class CommentRepository : ICommentRepository
         {
             Id = c.Id,
             Comment = c.Comment1,
-            User = new BaseUser()
+            User = new BaseUserModel()
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,
@@ -44,7 +44,7 @@ public partial class CommentRepository : ICommentRepository
         {
             Id = c.Id,
             Comment = c.Comment1,
-            User = new BaseUser()
+            User = new BaseUserModel()
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,
@@ -65,7 +65,7 @@ public partial class CommentRepository : ICommentRepository
         {
             Id = c.Id,
             Comment = c.Comment1,
-            User = new BaseUser()
+            User = new BaseUserModel()
             {
                 Id = c.Author!.Id,
                 Name = c.Author.FullName,

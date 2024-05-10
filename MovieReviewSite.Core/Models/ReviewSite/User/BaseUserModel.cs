@@ -2,7 +2,7 @@
 
 namespace MovieReviewSite.Core.Models.User;
 
-public class BaseUser : BaseModel
+public class BaseUserModel : BaseModel
 {
     public string? Name { get; set; }
     public string? UserName { get; set; }

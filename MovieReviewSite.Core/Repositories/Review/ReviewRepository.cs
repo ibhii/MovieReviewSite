@@ -30,7 +30,7 @@ public partial class ReviewRepository : IReviewRepository
         return await _context.Reviews.Select(r => new ReviewBase()
         {
             Id = r.Id,
-            User = new BaseUser()
+            User = new BaseUserModel()
             {
                 Id = r.Author!.Id,
                 Name = r.Author.FullName,
@@ -50,7 +50,7 @@ public partial class ReviewRepository : IReviewRepository
         return await _context.Reviews.Where(r => r.MovieId == id).Select(r => new ReviewPreview()
         {
             Id = r.Id,
-            User = new BaseUser()
+            User = new BaseUserModel()
             {
                 Id = r.Author!.Id,
                 Name = r.Author.FullName,
@@ -88,7 +88,7 @@ public partial class ReviewRepository : IReviewRepository
                 LastModified = r.LastModifiedOn,
                 Review = r.Review1,
                 CommentsCount = r.Comments.Count,
-                User = new BaseUser()
+                User = new BaseUserModel()
                 {
                     Id = r.Author!.Id,
                     Name = r.Author.FullName,

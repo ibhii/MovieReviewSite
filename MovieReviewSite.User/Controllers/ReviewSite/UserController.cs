@@ -20,13 +20,13 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public async Task<List<BaseUser>> GetAllUsers()
+    public async Task<List<BaseUserModel>> GetAllUsers()
     {
         return await _userRepository.GetAllUsers();
     }
 
     [HttpGet("[action]")]
-    public async Task<BaseUser?> GetUserById([FromQuery] int id)
+    public async Task<BaseUserModel?> GetUserById([FromQuery] int id)
     {
         return await _userRepository.GetUserById(id);
     }

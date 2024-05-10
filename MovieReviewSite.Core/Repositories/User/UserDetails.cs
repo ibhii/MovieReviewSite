@@ -9,7 +9,7 @@ public partial class UserRepository
 {
     public async Task<UserDetailsViewModel> GetUserDetails(int id)
     {
-        var user = await _context.Users.Where(u => u.Id == id).Select(u => new UserDetails()
+        var user = await _context.Users.Where(u => u.Id == id).Select(u => new UserModelDetails()
         {
             Id = u.Id,
             Name = u.FullName,

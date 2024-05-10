@@ -9,8 +9,8 @@ namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
 public interface IUserRepository : IBaseRepository
 {
-    Task<List<BaseUser>> GetAllUsers();
-    Task<BaseUser?> GetUserById(int id);
+    Task<List<BaseUserModel>> GetAllUsers();
+    Task<BaseUserModel?> GetUserById(int id);
     Task AddUser(NewUserRequest dto);
     Task UpdateUser(UpdateUserRequest dto);
     Task DeactivateUser(int id);
@@ -20,5 +20,5 @@ public interface IUserRepository : IBaseRepository
     Task<bool> AuthorizeUsername(string username);
     Task<bool> AuthorizeEmail(string email);
     Task<int> GetUserIdByByUsername(string username);
-    Task<BaseUser?> GetUserByUsername(string username);
+    Task<BaseUserModel?> GetUserByUsername(string username);
 }
