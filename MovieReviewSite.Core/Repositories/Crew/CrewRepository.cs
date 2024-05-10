@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew;
@@ -15,12 +16,14 @@ public partial class CrewRepository : ICrewRepository
     private readonly IMovieRepository _movieRepository;
     private readonly IReviewRepository _reviewRepository;
 
-    public CrewRepository(ReviewSiteContext context, IMovieRepository movieRepository, IReviewRepository reviewRepository)
+    public CrewRepository(ReviewSiteContext context, IMovieRepository movieRepository,
+        IReviewRepository reviewRepository)
     {
         _context = context;
         _movieRepository = movieRepository;
         _reviewRepository = reviewRepository;
     }
+
     public async Task<List<BaseCrew>> GetAllCrew()
     {
         return await _context.Crews.Select(c => new BaseCrew()
@@ -30,8 +33,7 @@ public partial class CrewRepository : ICrewRepository
         }).ToListAsync();
     }
 
-    
-    
+
     public async Task<MoviesForCrew?> GetCrewById(int id)
     {
         return await _context.Crews.Where(c => c.Id == id).Select(c => new MoviesForCrew
@@ -49,20 +51,23 @@ public partial class CrewRepository : ICrewRepository
                 MovieName = mc.Movie!.Name
             }).ToList()
         }).SingleOrDefaultAsync();
-
     }
 
 
     public async Task AddCrew(NewCrewRequest dto)
     {
+        if (dto.FirstName.IsNullOrEmpty())
+        {
+            throw new ArgumentException("the crew must at least have a firstname!");
+        }
         var crew = new DataBase.Crew()
         {
             FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            MiddleName = dto.MiddleName,
+            LastName = !dto.LastName.IsNullOrEmpty() ? dto.LastName : null,
+            MiddleName = !dto.MiddleName.IsNullOrEmpty() ? dto.MiddleName : null,
             IsActive = true,
             IsVisible = true,
-            BirthDate = dto.BirthDate,
+            BirthDate = dto.BirthDate == null ? null : dto.BirthDate,
             LastModifiedOn = DateTime.UtcNow,
             CreatedOn = DateTime.UtcNow,
             CreatedBy = dto.CreatedBy
@@ -71,13 +76,14 @@ public partial class CrewRepository : ICrewRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateCrew(int id,UpdateCrewRequest dto)
+    public async Task UpdateCrew(int id, UpdateCrewRequest dto)
     {
         var crew = await _context.Crews.Where(c => c.Id == id).SingleOrDefaultAsync();
-        crew!.FirstName = dto.FirstName;
-        crew.LastName = dto.LastName;
-        crew.MiddleName = dto.MiddleName;
-        crew.BirthDate = dto.BirthDate;
+        if (crew == null) throw new ArgumentException("crew does not exist!");
+        crew!.FirstName = dto.FirstName.IsNullOrEmpty() ? crew.FirstName : dto.FirstName;
+        crew.LastName = dto.LastName.IsNullOrEmpty() ? crew.LastName : dto.LastName;
+        crew.MiddleName = dto.MiddleName.IsNullOrEmpty() ? crew.MiddleName : dto.MiddleName;
+        crew.BirthDate = dto.BirthDate ?? crew.BirthDate;
         crew.LastModifiedOn = DateTime.UtcNow;
         _context.Crews.Update(crew);
         await _context.SaveChangesAsync();
@@ -90,4 +96,3 @@ public partial class CrewRepository : ICrewRepository
         await _context.SaveChangesAsync();
     }
 }
-

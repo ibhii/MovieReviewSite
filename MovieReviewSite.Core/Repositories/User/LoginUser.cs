@@ -38,6 +38,17 @@ public partial class UserRepository
         var result = new LoginResponse()
         {
             Token = tokenString,
+            User = new BaseUser()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Name = user.Name,
+                Role = new BaseRole
+                {
+                    RoleCode = user.Role!.RoleCode,
+                    Role = user.Role.Role
+                }
+            }
         };
         return result; // Ensure you use curly braces
     }

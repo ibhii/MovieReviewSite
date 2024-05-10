@@ -1,27 +1,40 @@
 const submitButton = document.getElementById("submitForm"); // Get the form by its ID
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
-    const name = document.getElementById("DTO.Name").value;
-    const synopsis = document.getElementById("DTO.Synopsis").value;
-    const duration = document.getElementById("DTO.Duration").value;
-    const releaseDate = document.getElementById("DTO.ReleaseDate").value;
-    const ageRate = document.getElementById("DTO.AgeRate").value;
+    alert("Changes Applied!");
+    
+    const name = document.getElementById("Name").value;
+    const synopsis = document.getElementById("Synopsis").value;
+    const duration = document.getElementById("Duration").value;
+    const releaseDate = document.getElementById("ReleaseDate").value;
+    const ageRate = document.getElementById("AgeRate").value;
     const id = window.location.pathname.split('/')[3];
 
     const dto = {
-        Name: name || "",
-        Synopsis: synopsis || "",
+        Name: name || null,
+        Synopsis: synopsis || null,
         Duration: duration || 0,
-        ReleaseDate: releaseDate || "",
-        AgeRating: ageRate || 0,
+        ReleaseDate: releaseDate || null,
+        AgeRating: ageRate || null,
     };
+    
 
-    fetch("/Movie/UpdateMovie/" + id , { // Assuming an API endpoint for adding movies
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dto)
-    })
-        .then(response => response.json())
+// //getting authorizing token
+// const token = localStorage.getItem('accessToken');
+// if (!token) {
+//     console.error("Missing access token for authorized request");
+//     return; // Handle missing token scenario
+// }
+
+$.ajax({
+    type: 'POST',
+    url: '/Movie/UpdateMovie/' + id,
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(dto),
+    // headers: {
+    //    Authorization:  "bearer " + localStorage.getItem("token")
+    // }
+}).done(function (data) {
+    self.result("Done!");
+})
 });

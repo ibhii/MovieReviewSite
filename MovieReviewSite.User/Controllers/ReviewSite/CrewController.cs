@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
@@ -39,6 +40,7 @@ public class CrewController : Controller
         return await _crewRepository.GetCrewByMovieId(id);
     }
 
+    // [Authorize]
     [HttpPost("[action]")]
     public async Task AddCrew([FromBody] NewCrewRequest dto)
     {

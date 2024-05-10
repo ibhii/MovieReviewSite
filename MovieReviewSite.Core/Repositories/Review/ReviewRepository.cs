@@ -17,13 +17,14 @@ public partial class ReviewRepository : IReviewRepository
     private readonly ICommentRepository _commentRepository;
     private readonly ITagRepository _tagRepository;
 
-    public ReviewRepository(ReviewSiteContext context,ICommentRepository commentRepository, ITagRepository tagRepository)
+    public ReviewRepository(ReviewSiteContext context, ICommentRepository commentRepository,
+        ITagRepository tagRepository)
     {
         _context = context;
         _commentRepository = commentRepository;
         _tagRepository = tagRepository;
     }
-    
+
     public async Task<List<ReviewBase>> GetAllReviews()
     {
         return await _context.Reviews.Select(r => new ReviewBase()
@@ -77,7 +78,7 @@ public partial class ReviewRepository : IReviewRepository
 
     public async Task<ReviewDetails> GetReviewById(int id)
     {
-         var review = await _context.Reviews.Where(r => r.Id == id)
+        var review = await _context.Reviews.Where(r => r.Id == id)
             .Select(r => new ReviewDetails()
             {
                 Id = r.Id,
@@ -100,8 +101,8 @@ public partial class ReviewRepository : IReviewRepository
                 },
                 Title = r.Title,
             }).SingleOrDefaultAsync();
-         review!.Tags = await _tagRepository.GetTagsByReviewId(id);
-         review!.Comments = await _commentRepository.GetCommentsByReviewId(id);
+        review!.Tags = await _tagRepository.GetTagsByReviewId(id);
+        review!.Comments = await _commentRepository.GetCommentsByReviewId(id);
         return review!;
     }
 
@@ -113,7 +114,7 @@ public partial class ReviewRepository : IReviewRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddReview(AddReviewRequest dto,int id)
+    public async Task AddReview(AddReviewRequest dto, int id)
     {
         var review = new DataBase.Review()
         {
@@ -132,13 +133,16 @@ public partial class ReviewRepository : IReviewRepository
     public async Task UpdateReview(UpdateReviewRequest dto)
     {
         var review = await _context.Reviews.Where(r => r.Id == dto.Id).SingleOrDefaultAsync();
-        
-        review!.Title = dto.Title.IsNullOrEmpty() ? review.Title : dto.Title;
-        review.Review1 = dto.Review.IsNullOrEmpty() ? review!.Review1 : dto.Review;
-        review.ScoreCode = dto.GivenRate == 0 ? review.ScoreCode : dto.GivenRate;
-        review.LastModifiedOn = DateTime.UtcNow;
-        _context.Reviews.Update(review);
-        await _context.SaveChangesAsync();
+
+        if(review != null)
+        {
+            review!.Title = dto.Title.IsNullOrEmpty() ? review.Title : dto.Title;
+            review.Review1 = dto.Review.IsNullOrEmpty() ? review!.Review1 : dto.Review;
+            review.ScoreCode = dto.GivenRate == 0 ? review.ScoreCode : dto.GivenRate;
+            review.LastModifiedOn = DateTime.UtcNow;
+            _context.Reviews.Update(review);
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task DeleteReview(int id)

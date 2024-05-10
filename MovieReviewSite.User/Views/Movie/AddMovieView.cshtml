@@ -5,9 +5,8 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new { id = "submitForm" }))
+@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new {id = "submitForm"}))
 {
-
     @Html.LabelFor(m => m.Name)
     <input asp-for="Name" type="text" class="form-control"/>
     <br>
@@ -23,17 +22,17 @@
     @Html.LabelFor(m => m.ReleaseDate)
     <input asp-for="ReleaseDate" type="text" class="form-control"/>
     <br>
-    
+
 
     @Html.LabelFor(m => m.AgeRate)
-    <input asp-for="AgeRate" type="text" class="form-control"> 
+    <input asp-for="AgeRate" type="text" class="form-control">
     <br>
-    
+
     <button type="submit" class="btn btn-primary">Add Movie</button>
 }
 
 
 @section Scripts{
-    
-<script src="~/js/Movie/AddMovie.js"></script>
+
+    <script src="~/js/Movie/AddMovie.js"></script>
 }

@@ -36,14 +36,14 @@ public partial class MovieRepository : IMovieRepository
     {
         var newMovie = new DataBase.Movie()
         {
-            Name = movie.Name,
-            Synopsis = movie.Synopsis,
-            Duration = movie.Duration,
-            AgeRateId = movie.AgeRate,
+            Name = !movie.Name.IsNullOrEmpty() ? movie.Name : null,
+            Synopsis = !movie.Synopsis.IsNullOrEmpty() ? movie.Synopsis : null,
+            Duration = movie.Duration == 0 ? movie.Duration : 0,
+            AgeRateId = movie.AgeRate == 0 ? movie.AgeRate : 0,
             StatusId = 1,
             CreatedOn = DateTime.UtcNow,
             LastModifiedOn = DateTime.UtcNow,
-            RealeaseDate = movie.ReleaseDate,
+            RealeaseDate = movie.ReleaseDate == null ? null : movie.ReleaseDate,
             CreatedBy = movie.CreatedById
         };
         await _context.Movies.AddAsync(newMovie);
@@ -54,18 +54,17 @@ public partial class MovieRepository : IMovieRepository
     {
         var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
 
-        if (movie != null)
-        {
-            movie.Name = dto.Name.IsNullOrEmpty() ? movie.Name : dto.Name ;
-            movie.Duration = dto.Duration == 0 ? movie.Duration : dto.Duration;
-            movie.RealeaseDate = dto.ReleaseDate;
-            movie.LastModifiedOn = DateTime.UtcNow;
-            movie.AgeRateId = dto.AgeRate == 0 ? movie.AgeRateId : dto.AgeRate;
-            movie.Synopsis = dto.Synopsis.IsNullOrEmpty() ? movie.Synopsis : dto.Synopsis;
+        if (movie == null) throw new ArgumentException("this movie does not exist!");
+        movie.Name = dto.Name.IsNullOrEmpty() ? movie.Name : dto.Name ;
+        movie.Duration = dto.Duration == 0 ? movie.Duration : dto.Duration;
+        movie.RealeaseDate = dto.ReleaseDate ?? movie.RealeaseDate;
+        movie.LastModifiedOn = DateTime.UtcNow;
+        movie.AgeRateId = dto.AgeRate == 0 ? movie.AgeRateId : dto.AgeRate;
+        movie.Synopsis = dto.Synopsis.IsNullOrEmpty() ? movie.Synopsis : dto.Synopsis;
 
-            _context.Update(movie);
-            await _context.SaveChangesAsync();
-        }
+        _context.Update(movie);
+        await _context.SaveChangesAsync();
+
     }
 
     public async Task DeleteMovie(int id)

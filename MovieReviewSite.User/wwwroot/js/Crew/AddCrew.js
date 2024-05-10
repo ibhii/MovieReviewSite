@@ -6,20 +6,33 @@ submitButton.addEventListener("submit", function (event) {
     const lastName = document.getElementById("LastName").value;
     const birthDate = document.getElementById("BirthDate").value;
 
+
     const dto = {
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,
         createdBy: 6,
-        birthDate: birthDate,
+        birthDate: birthDate || null,
     }
 
-    fetch("/Crew/AddCrew", { // Assuming an API endpoint for adding movies
-        method: "POST",
+
+    $.ajax({
+        type: 'POST',
+        url: '/Crew/AddCrew',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(dto),
         headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dto)
+
+            Id: localStorage.getItem("userId"),
+            Username: localStorage.getItem("userName"),
+            Name: localStorage.getItem("name"),
+            role: localStorage.getItem("role"),
+            roleCode: localStorage.getItem("roleCode"),
+
+
+            Authorization: "bearer " + localStorage.getItem("token")
+        }
+    }).done(function (data) {
+        self.result("Done!");
     })
-        .then(response => response.json())
 });

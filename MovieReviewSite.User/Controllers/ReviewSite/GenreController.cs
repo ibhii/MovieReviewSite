@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Genre;
@@ -17,7 +18,8 @@ public class GenreController : Controller
     private readonly IGenreRepository _genreRepository;
     private readonly IMovieRepository _movieRepository;
 
-    public GenreController(ILogger<GenreController> logger, IGenreRepository genreRepository, IMovieRepository movieRepository)
+    public GenreController(ILogger<GenreController> logger, IGenreRepository genreRepository,
+        IMovieRepository movieRepository)
     {
         _logger = logger;
         _genreRepository = genreRepository;
@@ -25,7 +27,7 @@ public class GenreController : Controller
     }
 
     [HttpGet]
-    public async Task<GenreBase> GetGenre([FromQuery]int id)
+    public async Task<GenreBase> GetGenre([FromQuery] int id)
     {
         return await _genreRepository.GetGenre(id);
     }
@@ -37,19 +39,19 @@ public class GenreController : Controller
     }
 
     [HttpPost]
-    public async Task AddGenre([FromBody]GenreBase dto)
+    public async Task AddGenre([FromBody] GenreBase dto)
     {
         await _genreRepository.AddGenre(dto);
     }
 
     [HttpPut]
-    public async Task UpdateGenre([FromQuery]int id,[FromBody] GenreBase dto)
+    public async Task UpdateGenre([FromQuery] int id, [FromBody] GenreBase dto)
     {
         await _genreRepository.UpdateGenre(id, dto);
     }
 
     [HttpDelete]
-    public async Task DeleteGenre([FromQuery]int id)
+    public async Task DeleteGenre([FromQuery] int id)
     {
         await _genreRepository.DeleteGenre(id);
     }
@@ -70,7 +72,7 @@ public class GenreController : Controller
     /// </summary>
     /// <param name="dto"></param>
     [HttpPost("[action]")]
-    public async Task AddGenreByMovieId([FromBody]MovieGenreRequest dto)
+    public async Task AddGenreByMovieId([FromBody] MovieGenreRequest dto)
     {
         await _genreRepository.AddGenreByMovieId(dto);
     }
@@ -84,7 +86,7 @@ public class GenreController : Controller
     {
         await _genreRepository.RemoveGenreByMovieId(dto);
     }
-    
+
     /// <summary>
     /// returns all movies related to a genre view
     /// </summary>
@@ -115,7 +117,7 @@ public class GenreController : Controller
                 Id = movie!.Id,
                 Name = movie.Name
             },
-            MovieGenres =  movieGenres.Select(mg => new GenreBase()
+            MovieGenres = movieGenres.Select(mg => new GenreBase()
             {
                 Id = mg.Id,
                 Title = mg.Title
@@ -128,7 +130,4 @@ public class GenreController : Controller
         };
         return View(result);
     }
-    
-    
-    
 }

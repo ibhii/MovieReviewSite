@@ -13,12 +13,32 @@ submitButton.addEventListener("submit", function(event) {
         userId:6,
     }
 
-    fetch("/Movie/UpdateMovie/" + id , { // Assuming an API endpoint for adding movies
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(reviewData)
+//     fetch("/Movie/UpdateMovie/" + id , { // Assuming an API endpoint for adding movies
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(reviewData)
+//     })
+//         .then(response => response.json())
+// });
+
+// //getting authorizing token
+// const token = localStorage.getItem('accessToken');
+// if (!token) {
+//     console.error("Missing access token for authorized request");
+//     return; // Handle missing token scenario
+// }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Movie/UpdateMovie/' + id,
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(dto),
+        // headers: {
+        //    Authorization:  "bearer " + localStorage.getItem("token")
+        // }
+    }).done(function (data) {
+        self.result("Done!");
     })
-        .then(response => response.json())
 });

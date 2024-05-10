@@ -6,7 +6,7 @@
 
 <h2>Edit Review</h2>
 
-@using (Html.BeginForm("AddReview", "Review", FormMethod.Post, new {id = "submitForm"}))
+@using (Html.BeginForm("UpdateReview", "Review", FormMethod.Post, new {id = "submitForm"}))
 {
     @Html.LabelFor(r => r.DTO!.Title)
     <input placeholder="@Model.Review!.Title" asp-for="DTO!.Title" type="text" class="form-control"/>

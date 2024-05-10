@@ -35,10 +35,13 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                     <li class="nav-link">
-                    <a asp-action="LoginView" asp-controller="User">Login</a>
+                        <a asp-action="LoginView" asp-controller="User">Login</a>
                     </li>
                     <li class="nav-link">
-                    <a  asp-action="RegisterView" asp-controller="User">Register</a>
+                        <a asp-action="RegisterView" asp-controller="User">Register</a>
+                    </li>
+                    <li class="nav-link">
+                        <button type="button" id="logout">Logout</button>
                     </li>
                 </ul>
             </div>
@@ -57,6 +60,7 @@
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/User/Logout.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)

@@ -11,7 +11,7 @@
 
 @* search bar  *@
 <div>
-    @using (Html.BeginForm( new {id = "searchRequest"}))
+    @using (Html.BeginForm(new {id = "searchRequest"}))
     {
         <input type="text" placeholder="Search" aria-label="Search" id="searchTerm">
         <button id="searchButton" type="submit" class="btn btn-primary">Search</button>
@@ -47,8 +47,12 @@
                     <td>
                         @Html.DisplayFor(m => movie.AgeRating!.Title)
                     </td>
-                     @* buttons for reviews *@
+                    @* buttons for reviews *@
                     <td>
+                        @if (movie.ReviewsCount == 0)
+                        {
+                            <p class="link-primary" style="text-underline: auto" asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</p>
+                        }
                         <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</a>
                     </td>
                     <td>

@@ -10,24 +10,24 @@
 @using (Html.BeginForm("UpdateMovie", "Movie", FormMethod.Post, new {id = "submitForm"}))
 {
     @Html.LabelFor(m => m.DTO.Name)
-    <input placeholder="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
+    <input id="Name" placeholder="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.Synopsis)
-    <input placeholder="@Model.Movie.Synopsis" asp-for="DTO.Synopsis" type="text" class="form-control"/>
+    <input id="Synopsis" placeholder="@Model.Movie.Synopsis" asp-for="DTO.Synopsis" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.Duration)
-    <input placeholder="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
+    <input id="Duration" placeholder="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.ReleaseDate)
-    <input placeholder="@Html.DisplayFor(m => Model.Movie.ReleaseDate, "{MM/dd/yyyy}")" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
+    <input id="ReleaseDate" placeholder="@Html.DisplayFor(m => Model.Movie.ReleaseDate, "{MM/dd/yyyy}")" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
     <br>
 
 
     @Html.LabelFor(m => m.DTO.AgeRate)
-    <input placeholder="@Model.Movie.AgeRating!.Title" asp-for="DTO.AgeRate" type="text" class="form-control">
+    <input id="AgeRate" placeholder="@Model.Movie.AgeRating!.Title" asp-for="DTO.AgeRate" type="text" class="form-control">
     <br>
     <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Accept Changes</button>
 }
