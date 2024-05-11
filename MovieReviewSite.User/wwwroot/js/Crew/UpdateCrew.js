@@ -12,24 +12,18 @@ submitButton.addEventListener("submit", function (event) {
         middleName: middleName || null,
         lastName: lastName || null,
         birthDate: birthDate || null,
-        createdBy: 6,
     }
     
-// //getting authorizing token
-// const token = localStorage.getItem('accessToken');
-// if (!token) {
-//     console.error("Missing access token for authorized request");
-//     return; // Handle missing token scenario
-// }
 
     $.ajax({
         type: 'POST',
         url: '/Crew/UpdateCrew/' + id,
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        // headers: {
-        //     'Authorization': `Bearer ${token}`
-        // }
+        headers: {
+            User: localStorage.getItem("user"),
+            Authorization: "bearer " + localStorage.getItem("token")
+        }
     }).done(function (data) {
         self.result("Done!");
     })

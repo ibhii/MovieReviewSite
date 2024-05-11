@@ -10,7 +10,7 @@ submitButton.addEventListener("submit", function (event) {
         title: title,
         review: review,
         givenRate: givenRate,
-        userId: 6,
+        userId: localStorage.getItem("userId"),
     }
     
     $.ajax({
@@ -19,7 +19,8 @@ submitButton.addEventListener("submit", function (event) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
         headers: {
-           Authorization:  "bearer " + localStorage.getItem("token")
+            User: localStorage.getItem("user"),
+            Authorization: "bearer " + localStorage.getItem("token")
         }
     }).done(function (data) {
         self.result("Done!");

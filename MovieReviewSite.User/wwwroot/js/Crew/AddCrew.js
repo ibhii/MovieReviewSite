@@ -11,7 +11,7 @@ submitButton.addEventListener("submit", function (event) {
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,
-        createdBy: 6,
+        createdBy: localStorage.getItem("userId"),
         birthDate: birthDate || null,
     }
 
@@ -22,13 +22,7 @@ submitButton.addEventListener("submit", function (event) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
         headers: {
-
-            Id: localStorage.getItem("userId"),
-            Username: localStorage.getItem("userName"),
-            Name: localStorage.getItem("name"),
-            roleCode: localStorage.getItem("roleCode"),
-
-
+            User: localStorage.getItem("user"),
             Authorization: "bearer " + localStorage.getItem("token")
         }
     }).done(function (data) {

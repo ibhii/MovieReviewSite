@@ -18,22 +18,17 @@ submitButton.addEventListener("submit", function(event) {
         AgeRating: ageRate || null,
     };
     
-
-// //getting authorizing token
-// const token = localStorage.getItem('accessToken');
-// if (!token) {
-//     console.error("Missing access token for authorized request");
-//     return; // Handle missing token scenario
-// }
+    
 
 $.ajax({
     type: 'POST',
     url: '/Movie/UpdateMovie/' + id,
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify(dto),
-    // headers: {
-    //    Authorization:  "bearer " + localStorage.getItem("token")
-    // }
+    headers: {
+        User: localStorage.getItem("user"),
+        Authorization: "bearer " + localStorage.getItem("token")
+    }
 }).done(function (data) {
     self.result("Done!");
 })

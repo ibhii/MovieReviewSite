@@ -6,5 +6,5 @@ namespace MovieReviewSite.Core.Models.Crew.ViewModels;
 public class UpdateCrewViewModel
 {
     public CrewDetails? Crew { get; set; }
-    public NewCrewRequest? DTO { get; set; }
+    public UpdateCrewRequest? DTO { get; set; }
 }
