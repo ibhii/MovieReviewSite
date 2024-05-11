@@ -54,9 +54,9 @@ public class CrewController : Controller
     }
 
     [HttpPost("[action]/{id}")]
-    public async Task DeleteCrew(int id)
+    public async Task DeleteCrew(int id,[FromBody]int userId)
     {
-        await _crewRepository.DeleteCrew(id);
+        await _crewRepository.DeleteCrew(id,userId);
     }
 
     /// <summary>

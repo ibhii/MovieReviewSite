@@ -55,9 +55,9 @@ public class ReviewController : Controller
     }
 
     [HttpPost("[action]/{id}")]
-    public async Task DeleteReview(int id)
+    public async Task DeleteReview(int id,[FromBody]int userId)
     {
-        await _repository.DeleteReview(id);
+        await _repository.DeleteReview(id,userId);
     }
 
     /// <summary>

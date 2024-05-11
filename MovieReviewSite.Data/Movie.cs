@@ -33,6 +33,8 @@ public partial class Movie
 
     public int? StatusId { get; set; }
 
+    public int? LastModifiedby { get; set; }
+
     public virtual AgeRate? AgeRate { get; set; }
 
     public virtual ICollection<MovieCrew> MovieCrews { get; set; } = new List<MovieCrew>();

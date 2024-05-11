@@ -16,6 +16,7 @@ submitButton.addEventListener("submit", function(event) {
         Duration: duration || 0,
         ReleaseDate: releaseDate || null,
         AgeRating: ageRate || null,
+        UserId: localStorage.getItem("userId"),
     };
     
     

@@ -41,9 +41,9 @@ public class CommentController : Controller
     }
 
     [HttpDelete("[action]/{id}")]
-    public async Task DeleteComment(int id)
+    public async Task DeleteComment(int id,[FromBody]int userId)
     {
-        await _repository.DeleteComment(id);
+        await _repository.DeleteComment(id,userId);
     }
 
 }

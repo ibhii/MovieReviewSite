@@ -12,6 +12,7 @@ submitButton.addEventListener("submit", function (event) {
         middleName: middleName || null,
         lastName: lastName || null,
         birthDate: birthDate || null,
+        userId : localStorage.getItem("userId")
     }
     
 

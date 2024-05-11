@@ -65,10 +65,11 @@ public class MovieController : Controller
     /// deletes a movie
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="userId"></param>
     [HttpDelete("[action]")]
-    public async Task DeleteMovie([FromQuery]int id)
+    public async Task DeleteMovie([FromQuery]int id,[FromBody]int userId)
     {
-        await _movieRepository.DeleteMovie(id);
+        await _movieRepository.DeleteMovie(id,userId);
     }
 
     /// <summary>

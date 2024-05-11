@@ -10,6 +10,7 @@ submitButton.addEventListener("submit", function(event) {
         title: title || "",
         review: review || "",
         givenRate: givenRate || 0,
+        userId : localStorage.getItem("userId"),
     }
     
 

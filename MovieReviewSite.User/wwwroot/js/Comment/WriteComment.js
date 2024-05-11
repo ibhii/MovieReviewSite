@@ -13,7 +13,7 @@ submitButton.addEventListener("submit", function (event) {
         type: 'POST',
         url: '/Comment/AddComment/' + id,
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(dto)
+        data: JSON.stringify(dto),
         headers: {
             User: localStorage.getItem("user"),
             Authorization: "bearer " + localStorage.getItem("token")

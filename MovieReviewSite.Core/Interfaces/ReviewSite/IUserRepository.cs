@@ -21,4 +21,7 @@ public interface IUserRepository : IBaseRepository
     Task<bool> AuthorizeEmail(string email);
     Task<int> GetUserIdByByUsername(string username);
     Task<BaseUserModel?> GetUserByUsername(string username);
+    Task<int?> GetUserRoleCodeById(int id);
+    Task<bool> IsUserAdminOrVIP(int id);
+    Task<bool> IsUserAdmin(int id);
 }

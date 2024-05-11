@@ -16,7 +16,7 @@ public interface ICrewRepository : IBaseRepository
     Task<List<BaseCrewWithType>> GetCrewByMovieId(int id);
     Task AddCrew(NewCrewRequest dto);
     Task UpdateCrew(int id,UpdateCrewRequest dto);
-    Task DeleteCrew(int id);
+    Task DeleteCrew(int id,int userId);
     Task<CrewDetails?> GetCrewDetails(int id);
     Task AddCrewToMovie(CrewMovieRequest dto);
     Task RemoveCrewFromMovie(CrewMovieRequest dto);

@@ -133,9 +133,13 @@ public partial class ReviewRepository : IReviewRepository
     public async Task UpdateReview(UpdateReviewRequest dto)
     {
         var review = await _context.Reviews.Where(r => r.Id == dto.Id).SingleOrDefaultAsync();
-
-        if(review != null)
+        if (review != null)
         {
+            //checks to see that the user making changes is either an admin or the user that created the review
+            if (review.Author!.RoleCode != 1 || review.Author.Id != dto.UserId)
+            {
+                throw new ArgumentException("user is not authorized to perform this action!");
+            }
             review!.Title = dto.Title.IsNullOrEmpty() ? review.Title : dto.Title;
             review.Review1 = dto.Review.IsNullOrEmpty() ? review!.Review1 : dto.Review;
             review.ScoreCode = dto.GivenRate == 0 ? review.ScoreCode : dto.GivenRate;
@@ -145,9 +149,14 @@ public partial class ReviewRepository : IReviewRepository
         }
     }
 
-    public async Task DeleteReview(int id)
+    public async Task DeleteReview(int id,int userId)
     {
         var review = await _context.Reviews.Where(r => r.Id == id).SingleOrDefaultAsync();
+        //checks to see that the user making changes is either an admin or the user that created the review
+        if (review!.Author!.RoleCode != 1 || review.Author.Id != userId)
+        {
+            throw new ArgumentException("user is not authorized to perform this action!");
+        }
         _context.Reviews.Remove(review!);
         await _context.SaveChangesAsync();
     }

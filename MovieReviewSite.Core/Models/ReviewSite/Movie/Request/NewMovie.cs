@@ -9,6 +9,6 @@ public class  NewMovie : IBaseModel
     public int? AgeRate { get; set; }
     public string? Synopsis { get; set; }
     public int? Duration { get; set; }
-    public int CreatedById { get; set; }
+    public int UserId { get; set; }
     
 }

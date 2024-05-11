@@ -13,7 +13,7 @@ public interface IReviewRepository : IBaseRepository
     Task LikeReview(int id);
     Task AddReview(AddReviewRequest dto,int id);
     Task UpdateReview(UpdateReviewRequest dto);
-    Task DeleteReview(int id);
+    Task DeleteReview(int id,int userId);
     Task<List<ReviewPreview>> GetReviewsListByUserId(int id);
     Task<double?> GetScoreAverageByMovieId(int id);
 

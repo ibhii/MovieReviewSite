@@ -94,9 +94,15 @@ public partial class CommentRepository : ICommentRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteComment(int id)
+    public async Task DeleteComment(int id,int userId)
     {
         var comment = await _context.Comments.Where(c => c.Id == id).SingleOrDefaultAsync();
+        
+        //checks to see that the user making changes is either an admin or the user that created the review
+        if (comment!.Author!.RoleCode != 1 || comment.Author.Id != userId)
+        {
+            throw new ArgumentException("user is not authorized to perform this action!");
+        }
         _context.Comments.Remove(comment!);
         await _context.SaveChangesAsync();
     }
