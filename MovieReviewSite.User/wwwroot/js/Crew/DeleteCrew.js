@@ -2,7 +2,7 @@
 deleteButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
     const id = window.location.pathname.split('/')[3];
-    const userId = localStorage.getItem("userId")  
+    const userId = localStorage.getItem("userId");
     
 $.ajax({
     type: 'POST',

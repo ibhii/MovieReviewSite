@@ -1,11 +1,10 @@
-﻿using MovieReviewSite.Core.Models;
+﻿using MovieReviewSite.Core.Interfaces.Base;
 using MovieReviewSite.Core.Models.Password;
 using MovieReviewSite.Core.Models.Password.Requests;
-using MovieReviewSite.DataBase;
 
 namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
-public interface IPasswordRepository
+public interface IPasswordRepository : IBaseRepository
 {
     Task<string?> GetById(int id);
     Task<List<BasePassword>> GetPasswordsByUserId(int id);

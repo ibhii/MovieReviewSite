@@ -97,9 +97,14 @@ public partial class CommentRepository : ICommentRepository
     public async Task DeleteComment(int id,int userId)
     {
         var comment = await _context.Comments.Where(c => c.Id == id).SingleOrDefaultAsync();
+        var author = await _context.Comments.Where(c => c.Id == id).Select(c => new
+        {
+            Id = c.Author!.Id,
+            RoleCode = c.Author.RoleCode
+        }).SingleOrDefaultAsync();
         
         //checks to see that the user making changes is either an admin or the user that created the review
-        if (comment!.Author!.RoleCode != 1 || comment.Author.Id != userId)
+        if (author!.RoleCode != 1 || author.Id != userId)
         {
             throw new ArgumentException("user is not authorized to perform this action!");
         }

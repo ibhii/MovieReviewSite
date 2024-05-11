@@ -152,8 +152,13 @@ public partial class ReviewRepository : IReviewRepository
     public async Task DeleteReview(int id,int userId)
     {
         var review = await _context.Reviews.Where(r => r.Id == id).SingleOrDefaultAsync();
+        var author = await _context.Reviews.Where(r => r.Id == id).Select(r => new
+        {
+            Id = r.Author!.Id,
+            RoleCode =r.Author!.RoleCode
+        }).SingleOrDefaultAsync();
         //checks to see that the user making changes is either an admin or the user that created the review
-        if (review!.Author!.RoleCode != 1 || review.Author.Id != userId)
+        if (author!.RoleCode != 1 || author.Id != userId)
         {
             throw new ArgumentException("user is not authorized to perform this action!");
         }
