@@ -13,6 +13,7 @@
 <span>
     <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary" style="background-color: #137354">Review</a>
     <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
+    <button type="submit" id="deleteMovie" class="btn btn-danger" style="background-color: #730c1d">Delete</button>
 </span>
 
 @* movie details *@
@@ -24,7 +25,7 @@
     </p>
     <br>
     <p style="border-style: solid; padding: 10px">
-        @Html.DisplayNameFor(m => m.Movie!.Score) : @Html.DisplayFor(m => m!.Movie!.Score)
+        Average Score :@Html.DisplayFor(m => m!.Movie!.Score)
         <br>
         @Html.DisplayNameFor(m => m.Movie!.ReleaseDate) : @Html.DisplayFor(m => m!.Movie!.ReleaseDate)
         <br>
@@ -33,7 +34,7 @@
         @Html.DisplayNameFor(m => m.Movie!.AgeRating) : @Html.DisplayFor(m => m!.Movie!.AgeRating!.Title)
         <br>
     </p>
-    
+
     @* movie Genres *@
     <div>
         <h4>
@@ -44,11 +45,12 @@
             <br>
             <ul style="border-style: solid; border-color: dimgray ; padding: 5px ; justify-content: left ;display:inline-block;">
                 <a asp-action="GetMoviesByGenreView" asp-controller="Genre" asp-route-id="@item!.Id"> @Html.DisplayFor(m => item.Title)</a>
-            </ul> <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id" >Add Genres</a>
+            </ul>
+            <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id">Add Genres</a>
             <br>
         }
     </div>
-    
+
     @* crew for movie *@
     <div>
         <h4>
@@ -67,3 +69,8 @@
     </div>
     <br>
 </div>
+
+@section Scripts{
+
+    <script src="~/js/Movie/DeleteMovie.js"></script>
+}

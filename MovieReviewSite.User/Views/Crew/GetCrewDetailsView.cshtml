@@ -11,7 +11,7 @@
     <a asp-controller="crew" asp-action="UpdateCrewView" asp-route-id="@Model!.Id" class="btn btn-primary">Edit</a>
     @using (Html.BeginForm("DeleteCrew", "Crew", FormMethod.Post, new {id = "deleteCrew"}))
     {
-        <button type="submit" class="btn btn-primary" style="background-color: #730c1d">Delete</button>
+        <button class="btn btn-outline-danger" type="submit">Delete</button>
     }
 
 </div>
@@ -31,8 +31,8 @@
 <br>
 
 <h4> Movies: </h4>
-<table style="width:100% ; border: black; border-collapse: separate; border: solid;border-color: dimgray ">
-    <tr>
+<table  style="width:100% ; border: black; border-collapse: separate; border: solid;border-color: dimgray ">
+    <tr class="table-primary">
         <th>
             Name
         </th>

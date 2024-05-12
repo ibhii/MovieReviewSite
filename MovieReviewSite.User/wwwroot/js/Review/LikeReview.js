@@ -4,6 +4,7 @@ submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
     const id = document.getElementById("Id").value;
 
+
     const reviewData = {
         id: id
     }

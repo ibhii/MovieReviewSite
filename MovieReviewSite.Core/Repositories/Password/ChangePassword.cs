@@ -6,7 +6,7 @@ namespace MovieReviewSite.Core.Repositories.Password;
 
 public partial class PasswordRepository
 {
-    public async Task ChangePassword(UpdatePasswordRequest dto)
+    public async Task ChangePasswordByUserId(int id,UpdatePasswordRequest dto)
     {
         if (dto.CurrentPassword.IsNullOrEmpty() || dto.NewPassword.IsNullOrEmpty() )
         {
@@ -16,9 +16,13 @@ public partial class PasswordRepository
         {
             throw new ArgumentException("the new password shouldn't be the same as your current password!");
         }
-        
+
+        if (id != dto.ModifierId)
+        {
+            throw new ArgumentException("you are not allowed to change other users passwords!");
+        }
         //checks if the current password is correct 
-        var isCurrentCorrect = await AuthorizeUserPassword(dto.CurrentPassword!, dto.UserId);
+        var isCurrentCorrect = await AuthorizeUserPassword(dto.CurrentPassword!, id);
         if (!isCurrentCorrect)
         {
             throw new ArgumentException("the password you entered as your current password is invalid!");
@@ -27,7 +31,7 @@ public partial class PasswordRepository
         //adds the ne password to passwords table
         var newPassword = new DataBase.Password()
         {
-            UserId = dto.UserId,
+            UserId = id,
             Password1 = dto.NewPassword
         };
         await _context.Passwords.AddAsync(newPassword);
@@ -36,7 +40,7 @@ public partial class PasswordRepository
         //adds the new password to userPassword table
         var userPassword = new UserPassword()
         {
-            UserId = dto.UserId,
+            UserId = id,
             PasswordId = newPassword.Id,
         };
         await _context.UserPasswords.AddAsync(userPassword);

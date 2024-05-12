@@ -1,4 +1,5 @@
-﻿@model System.Collections.Generic.List<MovieReviewSite.Core.Models.Crew.BaseCrew>
+﻿@using Microsoft.IdentityModel.Tokens
+@model System.Collections.Generic.List<MovieReviewSite.Core.Models.Crew.BaseCrew>
 
 @{
     ViewBag.Title = "title";
@@ -24,6 +25,10 @@
         {
             <tr>
                 <td>
+                    @if (crew.FullName.IsNullOrEmpty())
+                    {
+                        <a asp-controller="Crew" asp-action="GetCrewDetailsView" asp-route-id="@crew.Id">Untitled</a>
+                    }
                     <a asp-controller="Crew" asp-action="GetCrewDetailsView" asp-route-id="@crew.Id">@Html.DisplayFor(m => crew.FullName)</a>
                 </td>
                 <td>
@@ -34,3 +39,8 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/Crew/DeleteCrew.js"></script>
+}

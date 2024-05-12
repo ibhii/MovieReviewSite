@@ -17,11 +17,26 @@
     <input asp-for="Review" type="text" class="form-control"/>
     <br>
 
-    @Html.LabelFor(r => r.GivenRate)
-    <input asp-for="GivenRate" type="text" class="form-control"/>
+        @* @Html.LabelFor(r => r.GivenRate) *@
+        @* <input asp-for="GivenRate" type="text" class="form-control"/> *@
+    <label for="GivenRate">Rate: </label>
+    <select class="form-select" name="GivenRate" id="GivenRate">
+        <option value="11">⭐⭐⭐⭐⭐</option>
+        <option value="10">⭐⭐⭐⭐.5</option>
+        <option value="9">⭐⭐⭐⭐</option>
+        <option value="8">⭐⭐⭐.5</option>
+        <option value="7">⭐⭐⭐</option>
+        <option value="6">⭐⭐.5</option>
+        <option value="5">⭐⭐</option>
+        <option value="4">⭐.5</option>
+        <option value="3">⭐</option>
+        <option value="2">0.5</option>
+        <option value="1">0</option>
+    </select>
     <br>
 
-    <button type="submit" class="btn btn-primary">Add Review</button>  
+    <br>
+    <button type="submit" class="btn btn-primary">Add Review</button>
 }
 
 @section Scripts

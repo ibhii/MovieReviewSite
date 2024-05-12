@@ -2,9 +2,11 @@
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Password;
 using MovieReviewSite.Core.Models.Password.Requests;
+using MovieReviewSite.Core.Models.Password.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Route("[controller]")]
 public class PasswordController : Controller
 {
     private readonly IPasswordRepository _repository;
@@ -61,11 +63,27 @@ public class PasswordController : Controller
     /// <summary>
     /// updates users password
     /// </summary>
+    /// <param name="id"></param>
     /// <param name="dto"></param>
-    [HttpPost("[action]")]
-    public async Task ChangePassword([FromBody] UpdatePasswordRequest dto)
+    [HttpPost("[action]/{id}")]
+    public async Task ChangePasswordByUserId(int id,[FromBody] UpdatePasswordRequest dto)
     {
-        await _repository.ChangePassword(dto);
+        await _repository.ChangePasswordByUserId(id,dto);
     }
     
+    /// <summary>
+    /// returns a view that changes user password
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> ChangeUserPasswordView(int id)
+    {
+        var password = await _repository.GetPasswordForUserDetailsByUserId(id);
+        var result = new ChangeUserPasswordViewModel()
+        {
+            Password = password
+        };
+        return View(result);
+    }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Password;
+using MovieReviewSite.Core.Models.Password.Responses;
 using MovieReviewSite.DataBase.Contexts;
+using UserPassword = MovieReviewSite.DataBase.UserPassword;
 
 namespace MovieReviewSite.Core.Repositories.Password;
 
@@ -24,7 +26,7 @@ public partial class PasswordRepository : IPasswordRepository
         return await _context.Passwords.Where(p => p.UserId == id).Select(p => new BasePassword()
         {
             Id = p.Id,
-            Password = p.Password1
+            Password= p.Password1,
         }).ToListAsync();
     }
 
@@ -48,4 +50,13 @@ public partial class PasswordRepository : IPasswordRepository
         var lastPassword = orderedList[1];
         return lastPassword;
     }
+
+    public async Task<PasswordForUser?> GetPasswordForUserDetailsByUserId(int userId)
+    {
+        return await _context.Passwords.OrderByDescending(p => p.Id).Select(p => new PasswordForUser()
+        {
+            Id = p.Id,
+            Password = p.Password1,
+            UserId = p.UserId
+        }).FirstOrDefaultAsync();    }
 }

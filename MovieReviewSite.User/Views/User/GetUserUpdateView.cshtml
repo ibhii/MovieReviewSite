@@ -1,0 +1,39 @@
+﻿@model MovieReviewSite.Core.Models.User.ViewModel.UpdateUserViewModel
+
+@{
+    ViewData["Title"] = @Model.User.Name;
+}
+
+<h1>Edit @ViewData["Title"]</h1>
+
+@* form for adding review *@
+@using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new {id = "submitForm"}))
+{
+    @Html.LabelFor(u => u.DTO.Username)
+    <input placeholder="@Model.User.UserName" id="Username" asp-for="DTO.Username" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(u => u.DTO.FirstName)
+    <input id="FirstName" asp-for="DTO.FirstName" type="text" class="form-control"/>
+    <br>
+
+    @Html.LabelFor(u => u.DTO.LastName)
+    <input id="LastName" asp-for="DTO.LastName" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(u => u.DTO.Email)
+    <input placeholder="@Model.User.Email" id="Email" asp-for="DTO.Email" type="text" class="form-control"/>
+    <br>
+    
+    @Html.LabelFor(u => u.DTO.BirthDate)
+    <input id="BirthDate" asp-for="DTO.BirthDate" type="text" class="form-control"/>
+    <br>
+
+    <button style="background-color: #1e7316" type="submit" class="btn btn-primary">Apply Changes</button>  
+}
+
+@section Scripts
+{
+    <script src="~/js/User/UpdateUser.js"></script>
+}
+

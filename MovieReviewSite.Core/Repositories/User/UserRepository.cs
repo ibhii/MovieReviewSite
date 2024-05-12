@@ -17,7 +17,8 @@ public partial class UserRepository : IUserRepository
     private readonly IPasswordRepository _passwordRepository;
     private readonly IAuthServices _authServices;
 
-    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository, IPasswordRepository passwordRepository, IAuthServices authServices)
+    public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository,
+        IPasswordRepository passwordRepository, IAuthServices authServices)
     {
         _context = context;
         _reviewRepository = reviewRepository;
@@ -27,7 +28,7 @@ public partial class UserRepository : IUserRepository
 
     public async Task<List<BaseUserModel>> GetAllUsers()
     {
-        return await _context.Users.Select(u => new BaseUserModel()
+        return await _context.Users.Where(u => u.IsActive == true).Select(u => new BaseUserModel()
         {
             Id = u.Id,
             Name = u.FullName,
@@ -56,27 +57,44 @@ public partial class UserRepository : IUserRepository
         }).SingleOrDefaultAsync();
     }
 
-    
 
-    public async Task UpdateUser(UpdateUserRequest dto)
+    public async Task UpdateUser(int id, UpdateUserRequest dto)
     {
-        var user = await _context.Users.Where(u => u.Id == dto.Id).SingleOrDefaultAsync();
+        var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
+        if (id != dto.ModifierId && dto.ModifierRoleCode != 1)
+            throw new ArgumentException("this user is not authorized to preform this action");
+        if (!dto.Username.IsNullOrEmpty())
+        {
+            var isUsernameUnique = await AuthorizeUsername(dto.Username!);
+
+            if (!isUsernameUnique)
+            {
+                throw new ArgumentException("this user name already exists!");
+            }
+        }
+
         user!.LastModifiedOn = DateTime.UtcNow;
-        user.FirstName = dto.FirstName;
-        user.LastName = dto.LastName;
-        user.Email = dto.Email;
-        user.IsActive = true;
-        user.IsVisible = true;
-        user.BirthDate = dto.BirthDate;
+        user.UserName = dto.Username.IsNullOrEmpty() ? user.UserName : dto.Username;
+        user.FirstName = dto.FirstName.IsNullOrEmpty() ? user.FirstName : dto.FirstName;
+        user.LastName = dto.LastName.IsNullOrEmpty() ? user.LastName : dto.LastName;
+        user.Email = dto.Email.IsNullOrEmpty() ? user.Email : dto.Email;
+        user.BirthDate = dto.BirthDate == null ? user.BirthDate : dto.BirthDate;
 
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
+
     }
-    
-    public async Task DeactivateUser(int id)
+
+
+    public async Task DeactivateUser(int id, BaseModifier modifier)
     {
         var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
-        
+
+        if (user!.Id != modifier.Id || modifier.Id != 1 || modifier.Id != 2)
+        {
+            throw new ArgumentException("this user is not authorized to preform this action");
+        }
+
         //checks if user is not admin
         if (user!.RoleCode != 1)
         {
@@ -87,6 +105,7 @@ public partial class UserRepository : IUserRepository
         {
             throw new ArgumentException("the user is an Admin and cant be deactivated");
         }
+
         await _context.SaveChangesAsync();
     }
 
@@ -94,7 +113,7 @@ public partial class UserRepository : IUserRepository
     {
         return await _context.Users.AnyAsync(u => u.UserName == username);
     }
-    
+
     private async Task<bool> DoesEmailExist(string email)
     {
         return await _context.Users.AnyAsync(u => u.Email == email);

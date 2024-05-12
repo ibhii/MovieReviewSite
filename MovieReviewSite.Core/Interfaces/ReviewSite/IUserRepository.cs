@@ -12,8 +12,8 @@ public interface IUserRepository : IBaseRepository
     Task<List<BaseUserModel>> GetAllUsers();
     Task<BaseUserModel?> GetUserById(int id);
     Task AddUser(NewUserRequest dto);
-    Task UpdateUser(UpdateUserRequest dto);
-    Task DeactivateUser(int id);
+    Task UpdateUser(int id,UpdateUserRequest dto);
+    Task DeactivateUser(int id,BaseModifier modifier);
     Task<LoginResponse> LoginUser(LoginUserRequest dto);
     Task ChangeUserRole(UserRole dto);
     Task<UserDetailsViewModel> GetUserDetails(int id);

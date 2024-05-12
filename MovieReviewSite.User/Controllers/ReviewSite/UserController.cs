@@ -3,6 +3,7 @@ using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
+using MovieReviewSite.Core.Models.User.ViewModel;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
@@ -37,16 +38,16 @@ public class UserController : Controller
         await _userRepository.AddUser(dto);
     }
 
-    [HttpPut("[action]")]
-    public async Task UpdateAddUserDetails([FromBody] UpdateUserRequest dto)
+    [HttpPost("[action]/{id}")]
+    public async Task UpdateUser(int id,[FromBody] UpdateUserRequest dto)
     {
-        await _userRepository.UpdateUser(dto);
+        await _userRepository.UpdateUser(id,dto);
     }
 
-    [HttpDelete("[action]")]
-    public async Task DeleteUser([FromBody] int id)
+    [HttpPost("[action]/{id}")]
+    public async Task DeactivateUser(int id,[FromBody]BaseModifier modifier)
     {
-        await _userRepository.DeactivateUser(id);
+        await _userRepository.DeactivateUser(id,modifier);
     }
 
     /// <summary>
@@ -91,6 +92,22 @@ public class UserController : Controller
     {
         var userDetails = await _userRepository.GetUserDetails(id);
         return View(userDetails);
+    }
+    
+    /// <summary>
+    /// returns a view that updates user details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("[action]/{id}")]
+    public async Task<ActionResult> GetUserUpdateView(int id)
+    {
+        var userDetails = await _userRepository.GetUserDetails(id);
+        var result = new UpdateUserViewModel()
+        {
+            User = userDetails.UserBaseInfo!
+        };
+        return View(result);
     }
 
     /// <summary>
