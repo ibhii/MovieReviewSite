@@ -14,7 +14,7 @@ public class CrewController : Controller
 {
     private readonly ILogger<CrewController> _logger;
     private readonly ICrewRepository _crewRepository;
-    
+
 
     public CrewController(ILogger<CrewController> logger, ICrewRepository crewRepository)
     {
@@ -23,9 +23,9 @@ public class CrewController : Controller
     }
 
     [HttpGet]
-    public async Task<List<BaseCrew>> GetAllCrew()
+    public async Task<List<BaseCrew>> GetAllCrew(AllCrewListRequest dto)
     {
-        return await _crewRepository.GetAllCrew();
+        return await _crewRepository.GetAllCrew(dto);
     }
 
     [HttpGet("[action]")]
@@ -48,15 +48,15 @@ public class CrewController : Controller
     }
 
     [HttpPost("[action]/{id}")]
-    public async Task UpdateCrew(int id,[FromBody] UpdateCrewRequest dto)
+    public async Task UpdateCrew(int id, [FromBody] UpdateCrewRequest dto)
     {
-        await _crewRepository.UpdateCrew(id,dto);
+        await _crewRepository.UpdateCrew(id, dto);
     }
 
     [HttpPost("[action]/{id}")]
-    public async Task DeleteCrew(int id,[FromBody]int userId)
+    public async Task DeleteCrew(int id, [FromBody] int userId)
     {
-        await _crewRepository.DeleteCrew(id,userId);
+        await _crewRepository.DeleteCrew(id, userId);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class CrewController : Controller
     /// </summary>
     /// <param name="dto"></param>
     [HttpPost("[action]")]
-    public async Task AddCrewToMovie(CrewMovieRequest dto)
+    public async Task AddCrewToMovie([FromBody]CrewMovieRequest dto)
     {
         await _crewRepository.AddCrewToMovie(dto);
     }
@@ -73,12 +73,12 @@ public class CrewController : Controller
     /// removes a crew from movie
     /// </summary>
     /// <param name="dto"></param>
-    [HttpDelete]
-    public async Task RemoveCrewFromMovie(CrewMovieRequest dto)
+    [HttpPost("[action]")]
+    public async Task RemoveCrewFromMovie([FromBody]CrewMovieRequest dto)
     {
         await _crewRepository.RemoveCrewFromMovie(dto);
     }
-    
+
     /// <summary>
     /// return crew details view
     /// </summary>
@@ -99,10 +99,11 @@ public class CrewController : Controller
     public async Task<ActionResult> ModifyCrewForMovieView(int id)
     {
         var crew = await _crewRepository.GetCrewByMovieId(id);
+        var dto = new AllCrewListRequest();
         var result = new ModifyCrewForMovieViewModel
         {
             CrewType = await _crewRepository.GetCrewTypes(),
-            AllCrew = await _crewRepository.GetAllCrew(),
+            AllCrew = await _crewRepository.GetAllCrew(dto),
             MovieCrew = await _crewRepository.GetCrewByMovieId(id),
             Movie = await _crewRepository.GetMovieById(id)
         };
@@ -117,10 +118,18 @@ public class CrewController : Controller
     [Route("[action]")]
     public async Task<ActionResult> GetAllCrewListView()
     {
-        var result = await _crewRepository.GetAllCrew();
+        var result = new AllCrewViewModel
+        {
+            DTO = new AllCrewListRequest()
+            {
+                Search = ""
+            }
+        };
+
+        result.Crew = await _crewRepository.GetAllCrew(result.DTO);
         return View(result);
     }
-    
+
     /// <summary>
     /// returns view  for adding crew
     /// </summary>
@@ -130,7 +139,7 @@ public class CrewController : Controller
     {
         return View(new NewCrewRequest());
     }
-    
+
     /// <summary>
     /// returns view for updating crew
     /// </summary>
@@ -144,6 +153,4 @@ public class CrewController : Controller
         };
         return View(result);
     }
-
-
 }

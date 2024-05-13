@@ -13,7 +13,10 @@
 <span>
     <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary" style="background-color: #137354">Review</a>
     <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
-    <button type="submit" id="deleteMovie" class="btn btn-danger" style="background-color: #730c1d">Delete</button>
+    @using (Html.BeginForm("DeleteMovie", "Movie", FormMethod.Post, new {id = "deleteMovie"}))
+    {
+        <button type="submit" id="deleteMovie" class="btn btn-outline-danger">Delete</button>
+    }
 </span>
 
 @* movie details *@

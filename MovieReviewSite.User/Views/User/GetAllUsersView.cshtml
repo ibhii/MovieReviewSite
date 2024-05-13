@@ -1,4 +1,4 @@
-﻿@model List<MovieReviewSite.Core.Models.User.BaseUserModel>
+﻿@model MovieReviewSite.Core.Models.User.ViewModel.AllUsersViewModel
 
 @{
     ViewData["Title"] = "Users";
@@ -21,7 +21,7 @@
             Role
         </th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.User)
     {
         <tr>
             <td>

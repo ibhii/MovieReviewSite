@@ -18,7 +18,7 @@ submitButton.addEventListener("submit", function (event) {
 
     $.ajax({
         type: 'POST',
-        url: '/Crew/UpdateCrew/' + id,
+        url: '/Genre/RemoveGenreByMovieId/' + id,
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
         headers: {

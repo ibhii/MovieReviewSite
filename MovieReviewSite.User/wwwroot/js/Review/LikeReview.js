@@ -1,15 +1,15 @@
-﻿const submitButton = document.getElementById("submitLike"); // Use the form ID
+﻿const submitButton = document.getElementById("like"); // Use the form ID
 
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
-    const id = document.getElementById("Id").value;
+    const id = document.getElementById("reviewId").value;
 
 
     const reviewData = {
-        id: id
+        
     }
 
-    fetch("/Review/LikeReview", { // Assuming an API endpoint for adding movies
+    fetch("/Review/LikeReview" + id, { // Assuming an API endpoint for adding movies
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

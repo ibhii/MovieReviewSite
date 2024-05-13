@@ -7,6 +7,7 @@ using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
 using MovieReviewSite.Core.Models.Movie.Responses;
+using MovieReviewSite.Core.Repositories.Crew.Extensions;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Crew;
@@ -27,9 +28,9 @@ public partial class CrewRepository : ICrewRepository
         _userRepository = userRepository;
     }
 
-    public async Task<List<BaseCrew>> GetAllCrew()
+    public async Task<List<BaseCrew>> GetAllCrew(AllCrewListRequest dto)
     {
-        return await _context.Crews.Select(c => new BaseCrew()
+        return await _context.Crews.Search(dto.Search).Select(c => new BaseCrew()
         {
             Id = c.Id,
             FullName = c.FullName

@@ -9,7 +9,7 @@ namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
 public interface IUserRepository : IBaseRepository
 {
-    Task<List<BaseUserModel>> GetAllUsers();
+    Task<List<BaseUserModel>> GetAllUsers(AllUsersListRequest dto);
     Task<BaseUserModel?> GetUserById(int id);
     Task AddUser(NewUserRequest dto);
     Task UpdateUser(int id,UpdateUserRequest dto);
@@ -24,4 +24,6 @@ public interface IUserRepository : IBaseRepository
     Task<int?> GetUserRoleCodeById(int id);
     Task<bool> IsUserAdminOrVIP(int id);
     Task<bool> IsUserAdmin(int id);
+    Task UpdateUserAuthInfoAfterLogin(UserAuth userinfo);
+    Task<UserAuth> GetUserAuthInfo();
 }

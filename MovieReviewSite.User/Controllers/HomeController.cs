@@ -26,8 +26,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> GetAllMoviesList()
     {
-        // ViewBag.accessToken = GenerateJwt();
-        // var movies = await _movieRepository.GetMovieList(dto);
         var movieList = new AllMoviesListVewModel();
         var dto = new MovieListRequest
         {

@@ -42,8 +42,8 @@ public class ReviewController : Controller
         await _repository.AddReview(dto,id);
     }
 
-    [HttpPut("[action]")]
-    public async Task LikeReview([FromBody]int id)
+    [HttpPut("[action]/{id}")]
+    public async Task LikeReview(int id,[FromBody]int userId)
     {
         await _repository.LikeReview(id);
     }

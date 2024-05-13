@@ -25,20 +25,18 @@ public partial class GenreRepository
     {
         var movieGenreList = await GetGenreByMovieId(dto.MovieId);
         var movie = await _context.Movies.Where(m => m.Id == dto.MovieId).SingleOrDefaultAsync();
-        if (dto.GenreIds.Any(g => movieGenreList.Any(m => g!.Value != m.Id)))
+        if (movieGenreList.Any(m => dto.GenreId != m.Id))
         {
-            foreach (var movieGenres in dto.GenreIds.Select(genreId => new MovieGenre()
-                     {
-                         MovieId = dto.MovieId,
-                         GenreId = genreId
-                     }))
+            var movieGenres = new MovieGenre()
             {
-                _context.Add(movieGenres);
-            }
+                MovieId = dto.MovieId,
+                GenreId = dto.GenreId
+            };
+            _context.Add(movieGenres);
             await _context.SaveChangesAsync();
-            
+
             //changes movie's last modified on field 
-            await _movieRepository.UpdateMovieLastModifiedOnById(dto.MovieId); 
+            await _movieRepository.UpdateMovieLastModifiedOnById(dto.MovieId);
         }
 
         throw new ArgumentException("this genre already belongs to this movie!");
@@ -46,19 +44,16 @@ public partial class GenreRepository
 
     public async Task RemoveGenreByMovieId(MovieGenreRequest dto)
     {
-        foreach (var genreId in dto.GenreIds)
-        {
-            var movieGenre = await _context.MovieGenres.Where(mg => mg.MovieId == dto.MovieId && mg.GenreId == genreId)
-                .SingleOrDefaultAsync();
-            _context.MovieGenres.Remove(movieGenre!);
-        }
+        var movieGenre = await _context.MovieGenres.Where(mg => mg.MovieId == dto.MovieId && mg.GenreId == dto.GenreId)
+            .SingleOrDefaultAsync();
+        _context.MovieGenres.Remove(movieGenre!);
 
         await _context.SaveChangesAsync();
     }
 
     public async Task<GenreMovies?> GetMoviesByGenreId(int id)
     {
-        var result =  await _context.Genres.Where(g => g.Id == id)
+        var result = await _context.Genres.Where(g => g.Id == id)
             .Select(g => new GenreMovies()
             {
                 GenreTitle = g.Title,
@@ -73,13 +68,14 @@ public partial class GenreRepository
                         Title = mg.Movie.AgeRate!.Title
                     },
                     ReleaseDate = mg.Movie.RealeaseDate
-                        // Image = 
+                    // Image = 
                 }).ToList()
             }).SingleOrDefaultAsync();
         foreach (var movie in result!.MoviesList!)
         {
             movie.Score = await _reviewRepository.GetScoreAverageByMovieId(movie.Id);
         }
+
         return result;
     }
 }

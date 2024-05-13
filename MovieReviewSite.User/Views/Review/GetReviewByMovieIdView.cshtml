@@ -25,7 +25,11 @@
             <p>
                 @Html.DisplayFor(r => review!.LikesCount) Likes | <a asp-action="GetReviewDetailsView" asp-controller="Review" asp-route-id="@review.Id">@Html.DisplayFor(r => review!.CommentsCount) Comments</a>
             </p>
-            @* <button id="submitLike" type="submit" class="btn btn-primary" style="background-color: #137354" > Like </button> *@
+            @*  @using (Html.BeginForm("LikeReview", "Review", FormMethod.Post, new {id = "like"})) *@
+            @*  { *@
+            @*      <button id="submitLike" type="submit" class="btn btn-primary" style="background-color: #137354"> Like </button> *@
+            @*  } *@
+            @* <input type="hidden" id="reviewId" value="@review.Id"> *@
             <p style="color:dimgray "> Created On : @Html.DisplayFor(r => review.CreatedOn, "{MM/dd/yyyy}") | Last Modifies On : @Html.DisplayFor(r => review.LastModified, "{MM/dd/yyyy}")</p>
 
         </div>

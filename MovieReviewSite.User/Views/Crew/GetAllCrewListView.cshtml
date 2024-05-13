@@ -1,5 +1,5 @@
 ﻿@using Microsoft.IdentityModel.Tokens
-@model System.Collections.Generic.List<MovieReviewSite.Core.Models.Crew.BaseCrew>
+@model MovieReviewSite.Core.Models.Crew.ViewModels.AllCrewViewModel
 
 @{
     ViewBag.Title = "title";
@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody id="tableData">
-        @foreach (var crew in Model)
+        @foreach (var crew in Model.Crew!)
         {
             <tr>
                 <td>

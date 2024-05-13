@@ -103,6 +103,12 @@ public class MovieController : Controller
         };
         return View(movieDetails);
     }
+    
+    /// <summary>
+    /// returns view for adding movie
+    /// </summary>
+    /// <returns></returns>
+    [Route("[action]")]
     public IActionResult AddMovieView()
     {
         return View();

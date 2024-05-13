@@ -21,9 +21,9 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public async Task<List<BaseUserModel>> GetAllUsers()
+    public async Task<List<BaseUserModel>> GetAllUsers(AllUsersListRequest dto)
     {
-        return await _userRepository.GetAllUsers();
+        return await _userRepository.GetAllUsers(dto);
     }
 
     [HttpGet("[action]")]
@@ -78,8 +78,17 @@ public class UserController : Controller
     [Route("[action]")]
     public async Task<ActionResult> GetAllUsersView()
     {
-        var users= await _userRepository.GetAllUsers();
-        return View(users);
+        var result = new AllUsersViewModel
+        {
+            DTO = new AllUsersListRequest()   
+            {
+                Search = "",
+                RoleFilter = 0,
+                CreatedOnOrder = 0
+            }
+        };
+        result.User = await _userRepository.GetAllUsers(result.DTO);
+        return View(result);
     }
 
     /// <summary>
@@ -130,6 +139,26 @@ public class UserController : Controller
     {
         var dto = new NewUserRequest();
         return View(dto);
+    }
+
+    /// <summary>
+    /// gets user authinfo
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("[action]")]
+    public async Task<UserAuth> GetUserAuthInfo()
+    {
+        return await _userRepository.GetUserAuthInfo();
+    }
+    
+    /// <summary>
+    /// submits user as logged in and other info
+    /// </summary>
+    /// <param name="userinfo"></param>
+    [HttpPost("[action]")]
+    public async Task UpdateUserAuthInfoAfterLogin(UserAuth userinfo)
+    {
+        await _userRepository.UpdateUserAuthInfoAfterLogin(userinfo);
     }
 }
 

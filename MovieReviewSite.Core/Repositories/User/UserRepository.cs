@@ -5,6 +5,7 @@ using MovieReviewSite.Core.Interfaces.Services;
 using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
+using MovieReviewSite.Core.Repositories.User.Extensions;
 using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
@@ -26,9 +27,13 @@ public partial class UserRepository : IUserRepository
         _authServices = authServices;
     }
 
-    public async Task<List<BaseUserModel>> GetAllUsers()
+    public async Task<List<BaseUserModel>> GetAllUsers(AllUsersListRequest dto)
     {
-        return await _context.Users.Where(u => u.IsActive == true).Select(u => new BaseUserModel()
+        return await _context.Users.Where(u => u.IsActive == true)
+            .Search(dto.Search)
+            .OrderByCreatedOn(dto.CreatedOnOrder)
+            .FilterRole(dto.RoleFilter)
+            .Select(u => new BaseUserModel()
         {
             Id = u.Id,
             Name = u.FullName,

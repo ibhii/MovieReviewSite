@@ -5,5 +5,5 @@ namespace MovieReviewSite.Core.Models.Genre.Request;
 public class MovieGenreRequest
 {
     public int MovieId { get; set; }
-    public List<int?> GenreIds { get; set; }
+    public int? GenreId { get; set; }
 }

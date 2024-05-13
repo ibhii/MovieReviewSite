@@ -11,7 +11,7 @@ namespace MovieReviewSite.Core.Interfaces.ReviewSite;
 
 public interface ICrewRepository : IBaseRepository
 {
-    Task<List<BaseCrew>> GetAllCrew();
+    Task<List<BaseCrew>> GetAllCrew(AllCrewListRequest dto);
     Task<MoviesForCrew?> GetCrewById(int id);
     Task<List<BaseCrewWithType>> GetCrewByMovieId(int id);
     Task AddCrew(NewCrewRequest dto);

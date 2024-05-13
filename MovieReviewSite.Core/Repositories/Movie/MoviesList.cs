@@ -10,7 +10,10 @@ public partial class MovieRepository
 {
     public async Task<List<Movies>> GetMovieList(MovieListRequest dto)
     {
-        var query = await _context.Movies.Search(dto.Search).Select(m => new Movies
+        var query = await _context.Movies
+            .Search(dto.Search)
+            .OrderByReleaseDate(dto.Order)
+            .Select(m => new Movies
         {
             Id = m.Id,
             Name = m.Name,

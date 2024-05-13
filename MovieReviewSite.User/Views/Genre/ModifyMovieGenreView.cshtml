@@ -5,36 +5,55 @@
     Layout = "_Layout";
 }
 
-<h2> @ViewData["Title"] Genres :</h2>
-
 @* movies genres *@
-<div style="border-style: solid; border-color: dimgray ; padding: 5px ;">
-    @foreach (var item in Model.MovieGenres!)
+<div>
+    @using (Html.BeginForm("RemoveGenreByMovieId", "Genre", FormMethod.Post, new {id = "deleteGenre"}))
     {
-        <br>
-        <ul style="padding: 5px ; justify-content: left ;display:inline-block;">
-            <btn id="@item!.Id" class="btn btn-primary" style="background-color: #34496a" type="button"> @Html.DisplayFor(m => item.Title)</btn>
-        </ul>
-        <br>
+        <h2> @ViewData["Title"] Genres :</h2>
+
+        <div>
+            <select class="form-select" name="genres" id="movieGenres">
+
+                @foreach (var item in Model.MovieGenres!)
+                {
+                    <option value="@item.Id">@item.Title</option>
+                    <option type="hidden" id="movieGenreId" value="@item.Id"></option>
+                }
+            </select>
+        </div>
+        <div>
+            <btn id="deleteGenre" class="btn btn-danger" type="submit">Delete Genre</btn>
+        </div>
+    }
+</div>
+<br>
+<br>
+<div>
+    @using (Html.BeginForm("AddGenreByMovieId", "Genre", FormMethod.Post, new {id = "addGenre"}))
+    {
+    <div>
+
+        @* database genres *@
+        <div>
+            <label>All Genres :</label>
+            <select class="form-select" name="genres" id="genres">
+                @foreach (var item in Model.AllGenres!.Where(item => Model.MovieGenres.All(mg => mg.Id != item.Id)))
+                {
+                    <option value="@item.Id">@item.Title</option>
+                    <option type="hidden" id="GenreId" value="@item.Id"></option>
+                }
+            </select >
+        </div>
+    </div>
+    <br>
+        <div>
+            <btn id="addGenre" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Genre</btn>
+        </div>
     }
 </div>
 
-<div>
-<br>
-@* database genres *@
-<h3>All Genres :</h3>
-<br>
-<div style="border-style: solid; border-color: dimgray ; padding: 5px ;">
-    @foreach (var item in Model.AllGenres!.Where(item => Model.MovieGenres.All(mg => mg.Id != item.Id)))
-    {
-        <ul style="padding: 5px ; justify-content: left ;display:inline-block;">
-            <btn id="@item.Id" class="btn btn-primary" style="background-color: #34496a" type="button"> @Html.DisplayFor(m => item.Title)</btn>
-        </ul>
-    }
-</div>
-</div>
-<br>
-<div>
-    <btn id="add" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Genre</btn>
-    <btn id="delete" class="btn btn-danger" type="submit">Delete Genre</btn>
-</div>
+@section Scripts
+{
+    <script src="~/js/Genre/AddGenreToMovie.js"></script>
+    <script src="~/js/Genre/RemoveGenreFromMovie.js"></script>
+}

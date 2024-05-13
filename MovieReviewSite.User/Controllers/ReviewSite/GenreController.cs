@@ -81,7 +81,7 @@ public class GenreController : Controller
     /// removes a list of genres from a movie
     /// </summary>
     /// <param name="dto"></param>
-    [HttpDelete("[action]")]
+    [HttpPost("[action]")]
     public async Task RemoveGenreByMovieId([FromBody] MovieGenreRequest dto)
     {
         await _genreRepository.RemoveGenreByMovieId(dto);
