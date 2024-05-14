@@ -1,0 +1,43 @@
+﻿@model MovieReviewSite.Core.Models.User.ViewModel.ChangeUserRoleViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Change User Role</h2>
+
+@* users list  *@
+<div>
+    <div>
+        <label for="userId">Choose User : </label>
+        <select class="form-select" name="genres" id="userId">
+
+            @foreach (var item in Model.Users!)
+            {
+                <option value="@item.Id">@item.UserName | @item.Role!.Role </option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="userRoleCode">Choose Role :</label>
+        <select class="form-select" name="genres" id="userRoleCode">
+
+            @foreach (var item in Model.Roles!)
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select>
+    </div>
+    @using (Html.BeginForm("ChangeUserRole", "User", FormMethod.Post, new {id = "changeRole"}))
+    {
+        <div>
+            <button id="changeRole" class="btn btn-primary" type="submit">Change Role</button>
+        </div>
+    }
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/User/ChangeUserRole.js"></script>
+}

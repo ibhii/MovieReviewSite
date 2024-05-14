@@ -7,7 +7,7 @@ submitButton.addEventListener("submit", function (event) {
         comment: comment,
         userId: localStorage.getItem("userId")
     }
-    
+
 
     $.ajax({
         type: 'POST',
@@ -23,5 +23,6 @@ submitButton.addEventListener("submit", function (event) {
         self.result("Done!");
     })
     // .fail(showError);
+    window.location.reload();
 });
 

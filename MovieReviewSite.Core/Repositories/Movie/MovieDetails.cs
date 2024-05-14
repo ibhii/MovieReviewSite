@@ -46,7 +46,8 @@ public partial class MovieRepository
                     Id = mg.Genre!.Id,
                     Title = mg.Genre.Title
                 }).ToList()!,
-                ReviewsCount = m.Reviews.Count
+                ReviewsCount = m.Reviews.Count,
+                Synopsis = m.Synopsis
             }).SingleOrDefaultAsync();
         result!.Score = await _reviewRepository.GetScoreAverageByMovieId(result.Id);
         return result;

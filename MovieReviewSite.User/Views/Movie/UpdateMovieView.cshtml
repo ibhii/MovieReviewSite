@@ -10,26 +10,34 @@
 @using (Html.BeginForm("UpdateMovie", "Movie", FormMethod.Post, new {id = "submitForm"}))
 {
     @Html.LabelFor(m => m.DTO.Name)
-    <input id="Name" placeholder="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
+    <input id="Name" value="@Model.Movie.MovieName" asp-for="DTO.Name" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.Synopsis)
-    <input id="Synopsis" placeholder="@Model.Movie.Synopsis" asp-for="DTO.Synopsis" type="text" class="form-control"/>
+    <input id="Synopsis" value="@Model.Movie.Synopsis" asp-for="DTO.Synopsis" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.Duration)
-    <input id="Duration" placeholder="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
+    <input id="Duration" value="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.ReleaseDate)
-    <input id="ReleaseDate" placeholder="@Html.DisplayFor(m => Model.Movie.ReleaseDate, "{MM/dd/yyyy}")" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
+    <input id="ReleaseDate" value="@Html.DisplayFor(m => Model.Movie.ReleaseDate)" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
     <br>
+    
+    <label for="AgeRate">AgeRate</label>
+    <select class="form-select" name="AgeRate" id="AgeRate">
+        <option value="0"></option>
+        <option value="1">G</option>
+        <option value="2">PG</option>
+        <option value="3">PG-13</option>
+        <option value="4">R</option>
+        <option value="5">NC-17</option>
 
-
-    @Html.LabelFor(m => m.DTO.AgeRate)
-    <input id="AgeRate" placeholder="@Model.Movie.AgeRating!.Title" asp-for="DTO.AgeRate" type="text" class="form-control">
+    </select>
     <br>
-    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Accept Changes</button>
+    
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Apply Changes</button>
 }
 
 @section Scripts{

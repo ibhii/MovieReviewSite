@@ -6,11 +6,11 @@
 }
 <h1> @Html.DisplayFor(m => m.Movie!.MovieName) </h1>
 
-@* link to movie reviews *@
-<a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@Model.Movie!.Id">@Model.Movie.ReviewsCount Reviews</a>
 
 @* buttons to review or edit movie *@
-<span>
+<span class="list-group-horizontal">
+    @* link to movie reviews *@
+    <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@Model.Movie!.Id">@Model.Movie.ReviewsCount Reviews</a>
     <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary" style="background-color: #137354">Review</a>
     <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
     @using (Html.BeginForm("DeleteMovie", "Movie", FormMethod.Post, new {id = "deleteMovie"}))
@@ -22,11 +22,6 @@
 @* movie details *@
 <div>
     <br>
-    <p>@Html.DisplayNameFor(m => m.Movie!.Synopsis) :</p>
-    <p style="border-style: solid; padding: 10px">
-        @Html.DisplayFor(m => m.Movie!.Synopsis)
-    </p>
-    <br>
     <p style="border-style: solid; padding: 10px">
         Average Score :@Html.DisplayFor(m => m!.Movie!.Score)
         <br>
@@ -37,41 +32,48 @@
         @Html.DisplayNameFor(m => m.Movie!.AgeRating) : @Html.DisplayFor(m => m!.Movie!.AgeRating!.Title)
         <br>
     </p>
-
-    @* movie Genres *@
-    <div>
-        <h4>
-            Genres :
-        </h4>
-        @foreach (var item in Model.Movie!.Genre)
-        {
-            <br>
-            <ul style="border-style: solid; border-color: dimgray ; padding: 5px ; justify-content: left ;display:inline-block;">
-                <a asp-action="GetMoviesByGenreView" asp-controller="Genre" asp-route-id="@item!.Id"> @Html.DisplayFor(m => item.Title)</a>
-            </ul>
-            <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id">Add Genres</a>
-            <br>
-        }
-    </div>
-
-    @* crew for movie *@
-    <div>
-        <h4>
-            Cast & Crew :
-        </h4>
-        <div style="border-style: solid; border-color: dimgray; padding: 5px">
-            @foreach (var item in Model!.Movie!.Crew!)
-            {
-                <ul>
-                    @Html.DisplayFor(m => item.CrewType!.Title) : <a asp-action="GetCrewDetailsView" asp-controller="Crew" asp-route-id="@item.Id">@Html.DisplayFor(m => item.FullName)</a>
-                </ul>
-            }
-            <br>
-            <a asp-controller="Crew" asp-action="ModifyCrewForMovieView" asp-route-id="@Model.Movie.Id" class="btn btn-primary">Modify</a>
-        </div>
-    </div>
+</div>
+<br>
+<div>
+    <p>@Html.DisplayNameFor(m => m.Movie!.Synopsis) :</p>
+    <p style="border-style: solid; padding: 10px">
+        @Html.DisplayFor(m => m.Movie!.Synopsis)
+    </p>
     <br>
 </div>
+
+@* movie Genres *@
+<div>
+    <h4>
+        Genres :
+    </h4>
+    @foreach (var item in Model.Movie!.Genre)
+    {
+        <ul class="list-group-horizontal" style="border-style: solid; border-color: dimgray ; padding: 5px ; justify-content: left ;display:inline-block;">
+            <a asp-action="GetMoviesByGenreView" asp-controller="Genre" asp-route-id="@item!.Id"> @Html.DisplayFor(m => item.Title)</a>
+        </ul>
+    }
+    <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id">Modify Genres</a>
+</div>
+
+@* crew for movie *@
+<div>
+    <h4>
+        Cast & Crew :
+    </h4>
+    <div style="border-style: solid; border-color: dimgray; padding: 5px">
+        @foreach (var item in Model!.Movie!.Crew!)
+        {
+            <ul>
+                @Html.DisplayFor(m => item.CrewType!.Title) : <a asp-action="GetCrewDetailsView" asp-controller="Crew" asp-route-id="@item.Id">@Html.DisplayFor(m => item.FullName)</a>
+            </ul>
+        }
+        <br>
+    </div>
+    <br>
+    <a asp-controller="Crew" asp-action="ModifyCrewForMovieView" asp-route-id="@Model.Movie.Id" class="btn btn-primary">Modify Cast and Crew</a>
+</div>
+<br>
 
 @section Scripts{
 

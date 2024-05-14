@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieReviewSite.Core.Models;
 
 namespace MovieReviewSite.Core.Repositories.User;
 
@@ -29,5 +30,14 @@ public partial class UserRepository
         }
 
         return true;
+    }
+
+    public async Task<List<BaseIdTitleModel>> GetAllRoles()
+    {
+        return await _context.Roles.Select(r => new BaseIdTitleModel()
+        {
+            Id = r.Code,
+            Title = r.Title
+        }).ToListAsync();
     }
 }

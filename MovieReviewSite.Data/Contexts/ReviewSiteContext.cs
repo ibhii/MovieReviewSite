@@ -46,6 +46,8 @@ public partial class ReviewSiteContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserMovie> UserMovies { get; set; }
+
     public virtual DbSet<UserPassword> UserPasswords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -344,6 +346,27 @@ public partial class ReviewSiteContext : DbContext
             entity.HasOne(d => d.RoleCodeNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleCode)
                 .HasConstraintName("User_Role_Code_fk");
+        });
+
+        modelBuilder.Entity<UserMovie>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("UserMovie_pk");
+
+            entity.ToTable("UserMovie", "ReviewSite");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.MovieId).HasColumnName("MovieID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Movie).WithMany(p => p.UserMovies)
+                .HasForeignKey(d => d.MovieId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("UserMovie_Movie_ID_fk");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserMovies)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("UserMovie_User_ID_fk");
         });
 
         modelBuilder.Entity<UserPassword>(entity =>

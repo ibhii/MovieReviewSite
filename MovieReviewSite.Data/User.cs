@@ -47,5 +47,7 @@ public partial class User
 
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 
+    public virtual ICollection<UserMovie> UserMovies { get; set; } = new List<UserMovie>();
+
     public virtual ICollection<UserPassword> UserPasswords { get; set; } = new List<UserPassword>();
 }

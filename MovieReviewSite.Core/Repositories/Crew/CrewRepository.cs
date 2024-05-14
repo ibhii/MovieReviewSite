@@ -110,7 +110,13 @@ public partial class CrewRepository : ICrewRepository
         var isUserAuthorized = await _userRepository.IsUserAdmin(userId);
         if (isUserAuthorized)
         {
+            var movieCrew = await _context.MovieCrews.Where(c => c.CrewId == id).ToListAsync();
             var crew = await _context.Crews.Where(c => c.Id == id).SingleOrDefaultAsync();
+            
+            //removes all crew from movies also
+            _context.MovieCrews.RemoveRange(movieCrew);
+            await _context.SaveChangesAsync();
+            
             _context.Crews.Remove(crew!);
             await _context.SaveChangesAsync();
         }

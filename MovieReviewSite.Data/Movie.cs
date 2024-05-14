@@ -44,4 +44,6 @@ public partial class Movie
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Status? Status { get; set; }
+
+    public virtual ICollection<UserMovie> UserMovies { get; set; } = new List<UserMovie>();
 }

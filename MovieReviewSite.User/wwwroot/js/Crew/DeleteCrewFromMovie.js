@@ -1,4 +1,4 @@
-﻿const submitButton = document.getElementById("addCrew"); // Get the form by its ID
+﻿const submitButton = document.getElementById("deleteCrew"); // Get the form by its ID
 submitButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     alert("AAAAAAAAA")
@@ -15,7 +15,7 @@ submitButton.addEventListener("submit", function (event) {
 
     $.ajax({
         type: 'POST',
-        url: '/Crew/RemoveCrewFromMovie/',
+        url: '/Crew/RemoveCrewFromMovie',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
         headers: {
@@ -25,4 +25,6 @@ submitButton.addEventListener("submit", function (event) {
     }).done(function (data) {
         self.result("Done!");
     })
+    alert("Changes Applied!");
+    window.location.reload();
 });

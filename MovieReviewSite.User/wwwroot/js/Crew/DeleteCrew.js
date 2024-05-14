@@ -15,4 +15,8 @@ $.ajax({
     }
 }).done(function (data) {
     self.result("Done!");}
-)});
+    
+)
+    alert("Crew Deleted!")
+    window.history.back();
+});

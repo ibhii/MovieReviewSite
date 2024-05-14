@@ -10,7 +10,7 @@
 @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new {id = "submitForm"}))
 {
     @Html.LabelFor(u => u.DTO.Username)
-    <input placeholder="@Model.User.UserName" id="Username" asp-for="DTO.Username" type="text" class="form-control"/>
+    <input value="@Model.User.UserName" id="Username" asp-for="DTO.Username" type="text" class="form-control"/>
     <br>
     
     @Html.LabelFor(u => u.DTO.FirstName)
@@ -22,7 +22,7 @@
     <br>
     
     @Html.LabelFor(u => u.DTO.Email)
-    <input placeholder="@Model.User.Email" id="Email" asp-for="DTO.Email" type="text" class="form-control"/>
+    <input value="@Model.User.Email" id="Email" asp-for="DTO.Email" type="text" class="form-control"/>
     <br>
     
     @Html.LabelFor(u => u.DTO.BirthDate)

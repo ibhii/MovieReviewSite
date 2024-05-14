@@ -95,7 +95,7 @@ public partial class UserRepository : IUserRepository
     {
         var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
 
-        if (user!.Id != modifier.Id || modifier.Id != 1 || modifier.Id != 2)
+        if (user!.Id != modifier.Id && modifier.RoleCode != 1)
         {
             throw new ArgumentException("this user is not authorized to preform this action");
         }

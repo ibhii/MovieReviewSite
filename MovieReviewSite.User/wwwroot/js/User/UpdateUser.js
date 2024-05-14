@@ -1,7 +1,6 @@
 ﻿const submitButton = document.getElementById("submitForm"); // Get the form by its ID
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
-    alert("Changes Applied!");
 
     const firstName = document.getElementById("FirstName").value;
     const lastName = document.getElementById("LastName").value;
@@ -32,4 +31,5 @@ submitButton.addEventListener("submit", function(event) {
     }).done(function (data) {
         self.result("Done!");
     })
+    alert("Changes Applied!");
 });

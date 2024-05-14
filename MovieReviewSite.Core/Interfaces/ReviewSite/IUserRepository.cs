@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.Base;
+using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
@@ -26,4 +27,5 @@ public interface IUserRepository : IBaseRepository
     Task<bool> IsUserAdmin(int id);
     Task UpdateUserAuthInfoAfterLogin(UserAuth userinfo);
     Task<UserAuth> GetUserAuthInfo();
+    Task<List<BaseIdTitleModel>> GetAllRoles();
 }

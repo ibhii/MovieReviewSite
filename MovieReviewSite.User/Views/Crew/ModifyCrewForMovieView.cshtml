@@ -8,59 +8,75 @@
 <h2> @ViewData["Title"] Crew :</h2>
 
 <div>
-    <div>
-            <select class="form-select" name="genres" id="movieGenres">
-
+    <br>
+    <div style="border: solid;">
+        <div style="padding: 5px">
+            <ul class="list-group-horizontal">
                 @foreach (var item in Model.MovieCrew!)
                 {
-                    <option value="@item.Id">@item.FullName | @item.CrewType.Title </option>
-                    <option type="hidden" id="movieCrewId" value="@item.Id"></option>
-                    <option type="hidden" id="movieCrewTypeCode" value="@item.CrewType.Id"></option>
+                    <p style="color: #1c8760;border: solid; border-color: dimgray;">
+                        @item.FullName | @item.CrewType.Title
+                    </p>
                 }
-            </select>
+            </ul>
         </div>
+    </div>
+    <br>
+    <div>
+        <select class="form-select" name="genres" id="movieCrewId">
+
+            @foreach (var item in Model.MovieCrew!)
+            {
+                <option value="@item.Id">@item.FullName </option>
+            }
+        </select>
+        <select class="form-select" name="genres" id="movieCrewTypeCode">
+
+            @foreach (var item in Model.MovieCrew!)
+            {
+                <option value="@item.CrewType.Id">@item.CrewType.Title </option>
+            }
+        </select>
+    </div>
     @using (Html.BeginForm("RemoveCrewFromMovie", "Crew", FormMethod.Post, new {id = "deleteCrew"}))
     {
         <div>
-            <btn id="deleteCrew" class="btn btn-danger" type="submit">Remove Crew</btn>
+            <button id="deleteCrew" class="btn btn-danger" type="submit">Remove Crew</button>
         </div>
     }
 </div>
 <br>
 <br>
 <div>
-        <div>
-            @* database genres *@
-            <div>
-                <label>All Genres :</label>
-                <select class="form-select" name="genres" id="genres">
-                    @foreach (var item in Model.AllCrew!.Where(item => Model.MovieCrew.All(mg => mg.Id != item.Id)))
-                    {
-                        <option value="@item.Id">@item.FullName</option>
-                        <option type="hidden" id="crewId" value="@item.Id"></option>
-                    }
-                </select >
-            </div>
-            @* crew types *@
-            <div>
-                <label>Crew Types :</label>
-                <select class="form-select" name="genres" id="genres">
-                    @foreach (var item in Model.CrewType!)
-                    {
-                        <option value="@item.Id">@item.Title</option>
-                        <option type="hidden" id="typeCode" value="@item.Id"></option>
-                    }
-                </select >
-            </div>
-        </div>
-        <br>
-    @using (Html.BeginForm("AddCrewToMovie", "Crew", FormMethod.Post, new {id = "addCrew"}))
-    {
-        <div>
-            <btn id="addCrew" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Crew</btn>
-        </div>
-    }
+    @* database genres *@
+    <div>
+        <label>All Crew : </label>
+        <select class="form-select" name="genres" id="crewId">
+            @foreach (var item in Model.AllCrew!)
+            {
+                <option value="@item.Id">@item.FullName</option>
+            }
+        </select >
+    </div>
+    @* crew types *@
+    <div>
+        <label>Crew Types :</label>
+        <select class="form-select" name="genres" id="typeCode">
+            @foreach (var item in Model.CrewType!)
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select >
+    </div>
+<br>
+@using (Html.BeginForm("AddCrewToMovie", "Crew", FormMethod.Post, new {id = "addCrew"}))
+{
+    <div>
+        <button id="addCrew" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Crew</button>
+    </div>
+}
 </div>
+
 
 @section Scripts
 {

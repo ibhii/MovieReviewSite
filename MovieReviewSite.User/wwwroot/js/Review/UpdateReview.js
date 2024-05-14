@@ -26,4 +26,6 @@ submitButton.addEventListener("submit", function(event) {
     }).done(function (data) {
         self.result("Done!");
     })
+    alert("Changes Applied!");
+    window.location.reload();
 });

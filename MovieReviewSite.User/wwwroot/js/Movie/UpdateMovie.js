@@ -1,7 +1,6 @@
 const submitButton = document.getElementById("submitForm"); // Get the form by its ID
 submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
-    alert("Changes Applied!");
     
     const name = document.getElementById("Name").value;
     const synopsis = document.getElementById("Synopsis").value;
@@ -15,7 +14,7 @@ submitButton.addEventListener("submit", function(event) {
         Synopsis: synopsis || null,
         Duration: duration || 0,
         ReleaseDate: releaseDate || null,
-        AgeRating: ageRate || null,
+        AgeRate: ageRate || null,
         UserId: localStorage.getItem("userId"),
     };
     
@@ -32,5 +31,8 @@ $.ajax({
     }
 }).done(function (data) {
     self.result("Done!");
+
 })
+    alert("Changes Applied!");
+    window.location.reload();
 });

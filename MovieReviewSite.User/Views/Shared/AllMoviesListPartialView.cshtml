@@ -53,7 +53,10 @@
                         {
                             <p class="link-primary" style="text-underline: auto" asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</p>
                         }
-                        <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</a>
+                        else
+                        {
+                            <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@movie.Id">@movie.ReviewsCount Reviews</a>
+                        }
                     </td>
                     <td>
                         <a class="btn btn-primary" style="background-color : #137354" asp-action="AddReviewView" asp-controller="Review" asp-route-id="@movie.Id">Review</a>

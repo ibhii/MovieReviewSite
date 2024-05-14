@@ -54,7 +54,7 @@ public class UserController : Controller
     /// changes a users role
     /// </summary>
     /// <param name="dto"></param>
-    [HttpPut("[action]")]
+    [HttpPost("[action]")]
     public async Task ChangeUserRole([FromBody] UserRole dto)
     {
         await _userRepository.ChangeUserRole(dto);
@@ -140,6 +140,22 @@ public class UserController : Controller
         var dto = new NewUserRequest();
         return View(dto);
     }
+    
+    [Route("[action]")]
+    public async Task<ActionResult> ChangeUserRoleView()
+    {
+        var dto = new AllUsersListRequest();
+        var request = new UserRole();
+        var users = await _userRepository.GetAllUsers(dto);
+        var roles = await _userRepository.GetAllRoles();
+        var result = new ChangeUserRoleViewModel()
+        {
+            Users = users,
+            Roles = roles
+        };
+        return View(result);
+    }
+    
 
     /// <summary>
     /// gets user authinfo

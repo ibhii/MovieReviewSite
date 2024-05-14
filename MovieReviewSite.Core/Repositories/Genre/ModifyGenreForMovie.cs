@@ -25,21 +25,18 @@ public partial class GenreRepository
     {
         var movieGenreList = await GetGenreByMovieId(dto.MovieId);
         var movie = await _context.Movies.Where(m => m.Id == dto.MovieId).SingleOrDefaultAsync();
-        if (movieGenreList.Any(m => dto.GenreId != m.Id))
+        if (movieGenreList.Any(m => dto.GenreId == m.Id))
+            throw new ArgumentException("this genre already belongs to this movie!");
+        var movieGenres = new MovieGenre()
         {
-            var movieGenres = new MovieGenre()
-            {
-                MovieId = dto.MovieId,
-                GenreId = dto.GenreId
-            };
-            _context.Add(movieGenres);
-            await _context.SaveChangesAsync();
+            MovieId = dto.MovieId,
+            GenreId = dto.GenreId
+        };
+        _context.Add(movieGenres);
+        await _context.SaveChangesAsync();
 
-            //changes movie's last modified on field 
-            await _movieRepository.UpdateMovieLastModifiedOnById(dto.MovieId);
-        }
-
-        throw new ArgumentException("this genre already belongs to this movie!");
+        //changes movie's last modified on field 
+        await _movieRepository.UpdateMovieLastModifiedOnById(dto.MovieId);
     }
 
     public async Task RemoveGenreByMovieId(MovieGenreRequest dto)

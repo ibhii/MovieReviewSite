@@ -79,13 +79,24 @@ public partial class MovieRepository : IMovieRepository
         }
     }
 
-    public async Task DeleteMovie(int id,int userId)
+    public async Task DeleteMovie(int id, int userId)
     {
         //only admins can delete movies so this checks to make sure 
         var isUserAuthorized = await _userRepository.IsUserAdmin(userId);
         if (isUserAuthorized)
         {
             var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
+            var movieCrew = await _context.MovieCrews.Where(m => m.MovieId == id).ToListAsync();
+            var movieGenre = await _context.MovieGenres.Where(m => m.MovieId == id).ToListAsync();
+            var userMovie =  await _context.UserMovies.Where(m => m.MovieId == id).ToListAsync();
+            
+            _context.MovieCrews.RemoveRange(movieCrew);
+            await _context.SaveChangesAsync();
+            _context.MovieGenres.RemoveRange(movieGenre);
+            await _context.SaveChangesAsync();
+            _context.UserMovies.RemoveRange(userMovie);
+            await _context.SaveChangesAsync();
+
             _context.Movies.Remove(movie!);
             await _context.SaveChangesAsync();
         }

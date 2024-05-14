@@ -9,7 +9,7 @@
 
 @* Review Title *@
 <p>
-    <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@Model.Review.User!.Id">@Html.DisplayFor(r => r.Review.User!.UserName)</a>|Score: @Html.DisplayFor(r => r.Review.Score)|@Html.DisplayFor(r => r.Review.LikesCount) Likes
+    <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@Model.Review.User!.Id">@Html.DisplayFor(r => r.Review.User!.UserName)</a>|Score: @Html.DisplayFor(r => r.Review.Score)
 </p>
 
 
@@ -20,14 +20,14 @@
 <br>
 <br>
 
-<span>
+<span class="list-group-horizontal">
     @* edit button *@
     <a asp-action="UpdateReviewView" asp-controller="Review" asp-route-id="@Model.Review.Id" type="submit" class="btn btn-primary">Edit</a>
     <br>
     @* delete review button *@
     @using (Html.BeginForm("DeleteReview", "Review", FormMethod.Post, new {id = "deleteReview"}))
     {
-        <button type="submit" class="btn btn-primary" style="background-color: #730c1d">Delete</button>
+        <button type="submit" class="btn btn-outline-danger">Delete</button>
     }
 </span>
 
