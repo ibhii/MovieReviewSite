@@ -116,17 +116,15 @@ public class CrewController : Controller
     /// </summary>
     /// <returns></returns>
     [Route("[action]")]
-    public async Task<ActionResult> GetAllCrewListView()
+    public async Task<ActionResult> GetAllCrewListView(string? searchString)
     {
-        var result = new AllCrewViewModel
+        var result = new AllCrewViewModel();
+        @ViewData["CurrentFilter"] = searchString;
+        var dto = new AllCrewListRequest
         {
-            DTO = new AllCrewListRequest()
-            {
-                Search = ""
-            }
+            Search = searchString
         };
-
-        result.Crew = await _crewRepository.GetAllCrew(result.DTO);
+        result.Crew = await _crewRepository.GetAllCrew(dto);
         return View(result);
     }
 

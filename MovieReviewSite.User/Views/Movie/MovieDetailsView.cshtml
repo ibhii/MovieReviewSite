@@ -17,6 +17,14 @@
     {
         <button type="submit" id="deleteMovie" class="btn btn-outline-danger">Delete</button>
     }
+    @using (Html.BeginForm("AddMovieToWatched", "Movie", FormMethod.Post, new {id = "watched"}))
+    {
+        <button type="submit" id="deleteMovie" class="btn btn-outline-success">Watched</button>
+    }
+    @using (Html.BeginForm("AddMovieToWantToWatch", "Movie", FormMethod.Post, new {id = "wantToWatch"}))
+    {
+        <button type="submit" id="deleteMovie" class="btn btn-outline-warning">Want To Watch</button>
+    }
 </span>
 
 @* movie details *@
@@ -78,4 +86,5 @@
 @section Scripts{
 
     <script src="~/js/Movie/DeleteMovie.js"></script>
+    <script src="~/js/Movie/AddMovieToList.js"></script>
 }

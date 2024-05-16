@@ -13,7 +13,7 @@ public partial class UserMovie
 
     public bool? IsWatched { get; set; }
 
-    public bool? IsWatchListed { get; set; }
+    public bool? IsWantToWatch { get; set; }
 
     public virtual Movie Movie { get; set; } = null!;
 

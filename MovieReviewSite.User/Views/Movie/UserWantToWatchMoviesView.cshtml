@@ -1,25 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.UseMovieListsViewModel
+
+@{
+    ViewBag.Title = "Want To Watch List";
+    Layout = "_Layout";
 }
-@model MovieReviewSite.Core.Models.Movie.ViewModels.AllMoviesListVewModel
 
+<h2>@Model.User!.UserName 's Want To Watch List</h2>
 
-<h1 class="display-4">Welcome</h1>
-<br>
-
-<h2> List of all available movies </h2>
-
-@* search bar  *@
 <div>
-    <br>
-    <div >
-        <form method="get" asp-controller="Home" asp-action="GetAllMoviesList" class="d-flex">
-            <input class="form-control me-sm-2" type="search" placeholder="Search" name="SearchString" value="@ViewData["CurrentFilter"]"/>
-            <button type="submit" value="Search" class="btn btn-secondary my-2 my-sm-0">Search</button>
-        </form>
-    </div>
-    <br>
-
+    @* @using (Html.BeginForm(new {id = "searchRequest"})) *@
+    @* { *@
+    @*     <input type="text" placeholder="Search" aria-label="Search" id="searchTerm"> *@
+    @*     <button id="searchButton" type="submit" class="btn btn-primary">Search</button> *@
+    @* } *@
     <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
         <thead>
         <tr>
@@ -31,9 +24,9 @@
         </tr>
         </thead>
         <tbody id="tableData">
-        @if (Model.Movie != null)
+        @if (Model.Movies != null)
         {
-            @foreach (var movie in Model.Movie!)
+            @foreach (var movie in Model.Movies!)
             {
                 <tr>
                     <td>
@@ -71,9 +64,3 @@
         </tbody>
     </table>
 </div>
-
-@section Scripts
-{
-    @* <script src="~/js/Movie/SearchMovie.js"></script > *@
-
-}

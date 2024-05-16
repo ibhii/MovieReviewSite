@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.ViewModels;
@@ -24,14 +25,15 @@ public class HomeController : Controller
         _config = config;
     }
 
-    public async Task<IActionResult> GetAllMoviesList()
+    public async Task<IActionResult> GetAllMoviesList(string? searchString,int sort)
     {
         var movieList = new AllMoviesListVewModel();
-        var dto = new MovieListRequest
-        {
-            Search = ""
-        };
-        movieList.Movie = await _movieRepository.GetMovieList(dto);
+        var dto = new MovieListRequest();
+        @ViewData["CurrentFilter"] = searchString;
+        dto.Search = searchString;
+        // @ViewData["CurrentFilter"] = sort;
+        // dto.Order = (ReleasedOnOrder) sort;
+             movieList.Movie = await _movieRepository.GetMovieList(dto);
         return View(movieList);
     }
 
@@ -48,27 +50,5 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     
-    // private string GenerateJwt() {
-    //     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-    //     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-    //
-    //     //If you've had the login module, you can also use the real user information here
-    //     var claims = new[] {
-    //         new Claim(JwtRegisteredClaimNames.Sub, "user_name"),
-    //         new Claim(JwtRegisteredClaimNames.Email, "user_email"),
-    //         new Claim("DateOfJoing", "2022-09-12"),
-    //         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    //     };
-    //
-    //     var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-    //         _config["Jwt:Issuer"],
-    //         claims,
-    //         expires: DateTime.Now.AddMinutes(120),
-    //         signingCredentials: credentials);
-    //
-    //     return new JwtSecurityTokenHandler().WriteToken(token);
-    // }
-    //
-    //
 
 }

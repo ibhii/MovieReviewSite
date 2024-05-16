@@ -9,6 +9,13 @@
 <br>
 <h2> List of all users </h2>
 <br>
+<div>
+    <form method="get" asp-controller="User" asp-action="GetAllUsersView" class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Search" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+        <input type="submit" value="Search" class="btn btn-secondary my-2 my-sm-0"/>
+    </form>
+</div>
+<br>
 <table style="width:100% ; border: black; border-collapse: separate ">
     <tr>
         <th>

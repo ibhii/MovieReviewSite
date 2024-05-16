@@ -1,21 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Movies List";
+﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.UseMovieListsViewModel
+
+@{
+    ViewBag.Title = "Watched List";
+    Layout = "_Layout";
 }
-@model MovieReviewSite.Core.Models.Movie.ViewModels.AllMoviesListVewModel
 
+<h2>@Model.User!.UserName 's Watched List</h2>
 
-<h1 class="display-4">Welcome</h1>
-<br>
-
-<h2> List of all available movies </h2>
-
-@* search bar  *@
 <div>
-    @using (Html.BeginForm(new {id = "searchRequest"}))
-    {
-        <input type="text" placeholder="Search" aria-label="Search" id="searchTerm">
-        <button id="searchButton" type="submit" class="btn btn-primary">Search</button>
-    }
+    @* @using (Html.BeginForm(new {id = "searchRequest"})) *@
+    @* { *@
+    @*     <input type="text" placeholder="Search" aria-label="Search" id="searchTerm"> *@
+    @*     <button id="searchButton" type="submit" class="btn btn-primary">Search</button> *@
+    @* } *@
     <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
         <thead>
         <tr>
@@ -27,9 +24,9 @@
         </tr>
         </thead>
         <tbody id="tableData">
-        @if (Model.Movie != null)
+        @if (Model.Movies != null)
         {
-            @foreach (var movie in Model.Movie!)
+            @foreach (var movie in Model.Movies!)
             {
                 <tr>
                     <td>
@@ -67,9 +64,3 @@
         </tbody>
     </table>
 </div>
-
-@section Scripts
-{
-    <script src="~/js/Movie/SearchMovie.js"></script >
-
-}

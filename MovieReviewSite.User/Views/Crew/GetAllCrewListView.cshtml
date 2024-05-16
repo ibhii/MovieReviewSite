@@ -12,7 +12,14 @@
 <br>
 
 <h2>All Crew :</h2>
-
+<br>
+<div>
+    <form method="get" asp-controller="Crew" asp-action="GetAllCrewListView" class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Search" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+        <input type="submit" value="Search" class="btn btn-secondary my-2 my-sm-0"/>
+    </form>
+</div>
+<br>
 <div>
     <table style="width:100% ; border: black; border-collapse: separate " id="movieTable">
         <thead>

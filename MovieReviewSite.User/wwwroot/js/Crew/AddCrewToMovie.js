@@ -1,7 +1,6 @@
 ﻿const submitButton = document.getElementById("addCrew"); // Get the form by its ID
 submitButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
-    alert("AAAAAAAAA")
     const crewId = document.getElementById("crewId").value
     const movieId = window.location.pathname.split('/')[3];
     const crewType = document.getElementById("typeCode").value

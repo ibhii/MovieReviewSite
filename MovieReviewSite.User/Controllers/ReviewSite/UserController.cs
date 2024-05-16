@@ -76,18 +76,15 @@ public class UserController : Controller
     /// </summary>
     /// <returns></returns>
     [Route("[action]")]
-    public async Task<ActionResult> GetAllUsersView()
+    public async Task<ActionResult> GetAllUsersView(string? searchString)
     {
-        var result = new AllUsersViewModel
+        var result = new AllUsersViewModel();
+        @ViewData["CurrentFilter"] = searchString;
+        var dto = new AllUsersListRequest
         {
-            DTO = new AllUsersListRequest()   
-            {
-                Search = "",
-                RoleFilter = 0,
-                CreatedOnOrder = 0
-            }
+            Search = searchString
         };
-        result.User = await _userRepository.GetAllUsers(result.DTO);
+        result.User = await _userRepository.GetAllUsers(dto);
         return View(result);
     }
 

@@ -25,12 +25,22 @@
     </p>
 </div>
 
+@* update user buttons *@
 <br>
 <div>
     <a class="btn btn-primary" asp-controller="User" asp-action="GetUserUpdateView" asp-route-id="@Model.UserBaseInfo!.Id">Edit</a>
     <a class="btn btn-primary" asp-controller="Password" asp-action="ChangeUserPasswordView" asp-route-id="@Model.UserBaseInfo!.Id">ChangePassword</a>
 </div>
 <br>
+
+@* user movie list buttons *@
+<br>
+<div>
+    <a asp-controller="Movie" asp-action="UserWatchedMoviesView" asp-route-id="@Model.UserBaseInfo!.Id" class="btn btn-success">Watched List</a>
+    <a asp-controller="Movie" asp-action="UserWantToWatchMoviesView" asp-route-id="@Model.UserBaseInfo!.Id" class="btn btn-warning">Want To Watch List</a>
+</div>
+<br>
+
 
 <h3>Reviews:</h3>
 <ul>
