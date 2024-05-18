@@ -1,7 +1,7 @@
 ﻿@model MovieReviewSite.Core.Models.User.Request.NewUserRequest
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Register";
     Layout = "_Layout";
 }
 
@@ -16,19 +16,33 @@
     @Html.LabelFor(u => u.LastName)
     <input asp-for="LastName" type="text" class="form-control"/>
     <br>
-    
+
     @Html.LabelFor(u => u.Email)
-    <input asp-for="Email" type="text" class="form-control"/>
+    <input asp-for="Email" type="email" class="form-control"/>
     <br>
 
     @Html.LabelFor(u => u.UserName)
     <input asp-for="UserName" type="text" class="form-control"/>
     <br>
-    
-    @Html.LabelFor(u => u.Password)
-    <input asp-for="Password" type="text" class="form-control"/>
+
+    <div>
+        @Html.LabelFor(u => u.Password)
+        <input asp-for="Password" type="password" class="form-control"/>
+        <input id="1" class="form-check-label" type="checkbox" onclick="showPassword()">
+        <label style="color: darkgray;font-size: smaller" class="form-check-label" for="1">Show Password</label>
+    </div>
     <br>
-    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Register</button>  
+
+    <div>
+        <label for="repeatPassword">Repeat Password</label>
+        <input id="repeatPassword" type="password" class="form-control"/>
+        <input id="1" class="form-check-label" type="checkbox" onclick="showRepeatedPassword()">
+        <label style="color: darkgray;font-size: smaller" class="form-check-label" for="1">Show Password</label>
+    </div>
+    <br>
+    <br>
+
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Register</button>
 }
 
 @section Scripts

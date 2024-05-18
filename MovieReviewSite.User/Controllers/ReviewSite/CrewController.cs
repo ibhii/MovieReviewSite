@@ -8,6 +8,7 @@ using MovieReviewSite.Core.Models.Crew.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class CrewController : Controller
@@ -132,6 +133,7 @@ public class CrewController : Controller
     /// returns view  for adding crew
     /// </summary>
     /// <returns></returns>
+    // [Authorize(Policy = "Admin")]
     [Route("[action]")]
     public async Task<ActionResult> AddCrewView()
     {

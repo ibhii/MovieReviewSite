@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Review;
 using MovieReviewSite.Core.Models.Review.Request;
@@ -7,6 +8,7 @@ using MovieReviewSite.Core.Models.Review.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class ReviewController : Controller

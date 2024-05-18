@@ -22,24 +22,24 @@
         </div>
     </div>
     <br>
-    <div>
-        <select class="form-select" name="genres" id="movieCrewId">
-
-            @foreach (var item in Model.MovieCrew!)
-            {
-                <option value="@item.Id">@item.FullName </option>
-            }
-        </select>
-        <select class="form-select" name="genres" id="movieCrewTypeCode">
-
-            @foreach (var item in Model.MovieCrew!)
-            {
-                <option value="@item.CrewType.Id">@item.CrewType.Title </option>
-            }
-        </select>
-    </div>
     @using (Html.BeginForm("RemoveCrewFromMovie", "Crew", FormMethod.Post, new {id = "deleteCrew"}))
     {
+        <div>
+            <select class="form-select" name="CrewId" id="movieCrewId">
+
+                @foreach (var item in Model.MovieCrew!)
+                {
+                    <option value="@item.Id">@item.FullName </option>
+                }
+            </select>
+            <select class="form-select" name="CrewType" id="movieCrewTypeCode">
+
+                @foreach (var item in Model.MovieCrew!)
+                {
+                    <option value="@item.CrewType.Id">@item.CrewType.Title </option>
+                }
+            </select>
+        </div>
         <div>
             <button id="deleteCrew" class="btn btn-danger" type="submit">Remove Crew</button>
         </div>
@@ -68,18 +68,17 @@
             }
         </select >
     </div>
-<br>
-@using (Html.BeginForm("AddCrewToMovie", "Crew", FormMethod.Post, new {id = "addCrew"}))
-{
-    <div>
-        <button id="addCrew" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Crew</button>
-    </div>
-}
+    <br>
+    @using (Html.BeginForm("AddCrewToMovie", "Crew", FormMethod.Post, new {id = "addCrew"}))
+    {
+        <div>
+            <button id="addCrew" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Crew</button>
+        </div>
+    }
 </div>
 
 
 @section Scripts
 {
     <script src="~/js/Crew/AddCrewToMovie.js"></script>
-    <script src="~/js/Crew/DeleteCrewFromMovie.js"></script>
 }

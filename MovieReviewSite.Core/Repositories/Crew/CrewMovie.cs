@@ -76,7 +76,7 @@ public partial class CrewRepository
     //checks to see id the crew already belongs to the movie or not
     private async Task<bool> IsCrewRelatedToMovie(CrewMovieRequest dto)
     {
-        return await _context.MovieCrews.Where(mc => mc.Id == dto.MovieId)
+        return await _context.MovieCrews.Where(mc => mc.MovieId == dto.MovieId)
             .AnyAsync(mc => mc.CrewId == dto.CrewId && mc.CrewTypeCode == dto.CrewType);
     }
 

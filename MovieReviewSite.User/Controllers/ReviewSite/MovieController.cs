@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie;
@@ -48,6 +49,7 @@ public class MovieController : Controller
     /// Adds a new movie to the database 
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task AddMovie([FromBody] NewMovie dto)
     {
@@ -59,6 +61,7 @@ public class MovieController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task UpdateMovie(int id, [FromBody] UpdatedMovie dto)
     {
@@ -70,6 +73,7 @@ public class MovieController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <param name="userId"></param>
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task DeleteMovie(int id, [FromBody] int userId)
     {

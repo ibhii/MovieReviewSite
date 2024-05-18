@@ -22,11 +22,11 @@
     <br>
     
     @Html.LabelFor(u => u.DTO.Email)
-    <input value="@Model.User.Email" id="Email" asp-for="DTO.Email" type="text" class="form-control"/>
+    <input value="@Model.User.Email" id="Email" asp-for="DTO.Email" type="email" class="form-control"/>
     <br>
     
     @Html.LabelFor(u => u.DTO.BirthDate)
-    <input id="BirthDate" asp-for="DTO.BirthDate" type="text" class="form-control"/>
+    <input id="BirthDate" asp-for="DTO.BirthDate" type="date" class="form-control"/>
     <br>
 
     <button style="background-color: #1e7316" type="submit" class="btn btn-primary">Apply Changes</button>  

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Password;
 using MovieReviewSite.Core.Models.Password.Requests;
@@ -6,6 +7,7 @@ using MovieReviewSite.Core.Models.Password.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 public class PasswordController : Controller
 {

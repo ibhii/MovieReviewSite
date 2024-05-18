@@ -18,11 +18,11 @@
     <br>
 
     @Html.LabelFor(m => m.DTO.Duration)
-    <input id="Duration" value="@Model.Movie.Duration" asp-for="DTO.Duration" type="text" class="form-control"/>
+    <input id="Duration" value="@Model.Movie.Duration" asp-for="DTO.Duration" type="number" class="form-control"/>
     <br>
 
     @Html.LabelFor(m => m.DTO.ReleaseDate)
-    <input id="ReleaseDate" value="@Html.DisplayFor(m => Model.Movie.ReleaseDate)" asp-for="DTO.ReleaseDate" type="text" class="form-control"/>
+    <input id="ReleaseDate" value="@Html.DisplayFor(m => Model.Movie.ReleaseDate)" asp-for="DTO.ReleaseDate" type="date" class="form-control"/>
     <br>
     
     <label for="AgeRate">AgeRate</label>

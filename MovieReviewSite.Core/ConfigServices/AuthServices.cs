@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ public class AuthServices : IAuthServices
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
@@ -40,14 +42,15 @@ public class AuthServices : IAuthServices
         services.AddMvc();
     }
     
-    public string GenerateJsonWebToken(BaseUserModel userModelInfo)
+    
+    public string GenerateJsonWebToken(BaseUserModel userModelInfo,List<Claim> claims)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Issuer"],
-            null,
+            claims,
             expires: DateTime.Now.AddMinutes(120),
             signingCredentials: credentials);
 

@@ -4,36 +4,42 @@
     ViewBag.Title = @Model.Movie!.Name!;
     Layout = "_Layout";
 }
+<h2>Modify Genres</h2>
 
 @* removing genre *@
-<div>
-    @using (Html.BeginForm("RemoveGenreByMovieId", "Genre", FormMethod.Post, new {id = "deleteGenre"}))
+ @using (Html.BeginForm("RemoveGenreByMovieId", "Genre", FormMethod.Post, new {id = "deleteGenre"}))
     {
-        <h2> @ViewData["Title"] Genres :</h2>
-        <div>
-            <select class="form-select" name="genres" id="movieGenreId">
-                @foreach (var item in Model.MovieGenres!)
-                {
-                    <option value="@item.Id">@item.Title</option>
-                }
-            </select>
-        </div>
-        <div>
-            <button id="deleteGenre" class="btn btn-danger" type="submit">Delete Genre</button>
-        </div>
-    }
-</div>
-<br>
-<br>
-@* adding genre *@
 <div>
-    @using (Html.BeginForm("AddGenreByMovieId", "Genre", FormMethod.Post, new {id = "addGenre"}))
-    {
         <div>
 
             @* database genres *@
             <div>
-                <label>All Genres :</label>
+                <label>Genres :</label>
+                <select class="form-select" name="genres" id="movieGenreId">
+                    @foreach (var item in Model.MovieGenres!)
+                    {
+                        <option value="@item.Id">@item.Title</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <br>
+        <div>
+            <button id="deleteGenre" class="btn btn-danger" type="submit" >Remove Genre</button>
+        </div>
+</div>
+    }
+<br>
+<br>
+@* adding genre *@
+    @using (Html.BeginForm("AddGenreByMovieId", "Genre", FormMethod.Post, new {id = "addGenre"}))
+    {
+<div>
+        <div>
+
+            @* database genres *@
+            <div>
+                <label>Shrek Genres :</label>
                 <select class="form-select" name="genres" id="GenreId">
                     @foreach (var item in Model.AllGenres!.Where(item => Model.MovieGenres.All(mg => mg.Id != item.Id)))
                     {
@@ -46,11 +52,10 @@
         <div>
             <button id="addGenre" class="btn btn-primary" type="submit" style="background-color: #1e7316">Add Genre</button>
         </div>
-    }
 </div>
+    }
 
 @section Scripts
 {
-    <script src="~/js/Genre/AddGenreToMovie.js"></script>
-    <script src="~/js/Genre/RemoveGenreFromMovie.js"></script>
+    <script src="~/js/Genre/ModifyGenreForMovie.js"></script>
 }

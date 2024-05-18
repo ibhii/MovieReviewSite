@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.ConfigServices;
+using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Interfaces.Services;
 using MovieReviewSite.Core.Repositories.Comment;
@@ -12,7 +15,6 @@ using MovieReviewSite.Core.Repositories.Movie;
 using MovieReviewSite.Core.Repositories.Password;
 using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.Core.Repositories.Tag;
-using MovieReviewSite.Core.Repositories.User;
 using MovieReviewSite.DataBase.Contexts;
 using UserRepository = MovieReviewSite.Core.Repositories.User.UserRepository;
 
@@ -45,13 +47,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
-            //store the value in appsettings.json
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
 
+//handles authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Roles.Admin.ToString(), policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+    options.AddPolicy(Roles.Vip.ToString(), policy =>policy.RequireClaim(ClaimTypes.Role, "Admin"));
+});
 
 var app = builder.Build();
 

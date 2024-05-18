@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Tag;
 using MovieReviewSite.Core.Models.Tag.Requests;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class TagController : Controller

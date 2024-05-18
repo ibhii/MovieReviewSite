@@ -10,6 +10,7 @@ using MovieReviewSite.Core.Models.Movie;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class GenreController : Controller
@@ -82,7 +83,7 @@ public class GenreController : Controller
     /// </summary>
     /// <param name="dto"></param>
     [HttpPost("[action]")]
-    public async Task RemoveGenreByMovieId([FromBody] MovieGenreRequest dto)
+    public async Task RemoveGenreByMovieId([FromBody]MovieGenreRequest dto)
     {
         await _genreRepository.RemoveGenreByMovieId(dto);
     }

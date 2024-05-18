@@ -10,9 +10,9 @@ submitButton.addEventListener("submit", function (event) {
         userName: userName,
         password: password,
     }
-    
-    
-    $.ajax({        
+
+
+    $.ajax({
         type: 'POST',
         url: '/User/LoginUser',
         contentType: 'application/json; charset=utf-8',

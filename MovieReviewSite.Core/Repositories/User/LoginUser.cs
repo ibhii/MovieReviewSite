@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,8 +37,15 @@ public partial class UserRepository
             throw new ArgumentException("the password you've entered is invalid!");
         }
 
-        var tokenString = _authServices.GenerateJsonWebToken(user);
-
+        
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.Role!.Role!),
+            new Claim(ClaimTypes.Name,user.UserName!),
+        };
+        
+        var tokenString = _authServices.GenerateJsonWebToken(user,claims);
         var result = new LoginResponse()
         {
             Token = tokenString,

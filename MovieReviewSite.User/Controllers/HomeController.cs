@@ -30,6 +30,8 @@ public class HomeController : Controller
         var movieList = new AllMoviesListVewModel();
         var dto = new MovieListRequest();
         @ViewData["CurrentFilter"] = searchString;
+        ViewData["DateSortParam"] = sort;
+        dto.Order = (ReleasedOnOrder) sort;
         dto.Search = searchString;
         // @ViewData["CurrentFilter"] = sort;
         // dto.Order = (ReleasedOnOrder) sort;

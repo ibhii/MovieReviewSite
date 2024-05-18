@@ -6,6 +6,7 @@ submitButton.addEventListener("submit", function (event) {
     const email = document.getElementById("Email").value;
     const userName = document.getElementById("UserName").value;
     const password = document.getElementById("Password").value;
+    const repeatedPassword = document.getElementById("repeatPassword").value;
 
 
     const dto = {
@@ -14,6 +15,10 @@ submitButton.addEventListener("submit", function (event) {
         email: email,
         userName: userName,
         password: password,
+    }
+    
+    if (password === repeatedPassword) {
+        alert("Passwords Dont Match!")
     }
 
     $.ajax({
@@ -26,3 +31,21 @@ submitButton.addEventListener("submit", function (event) {
     })
     // .fail(showError);
 });
+
+function showPassword() {
+    const x = document.getElementById("Password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+function showRepeatedPassword() {
+    const x = document.getElementById("repeatPassword");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}

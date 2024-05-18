@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
@@ -7,6 +8,7 @@ using MovieReviewSite.Core.Models.User.ViewModel;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class UserController : Controller
@@ -32,6 +34,7 @@ public class UserController : Controller
         return await _userRepository.GetUserById(id);
     }
 
+    [AllowAnonymous]
     [HttpPost("[action]")]
     public async Task AddUser([FromBody] NewUserRequest dto)
     {
@@ -65,6 +68,8 @@ public class UserController : Controller
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
+    
+    [AllowAnonymous]
     [HttpPost("[action]")]
     public async Task<LoginResponse> LoginUser([FromBody] LoginUserRequest dto)
     {
@@ -75,6 +80,7 @@ public class UserController : Controller
     /// returns a view with the list of all users 
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> GetAllUsersView(string? searchString)
     {
@@ -93,6 +99,7 @@ public class UserController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [Route("[action]/{id}")]
     public async Task<ActionResult> GetUserDetailView(int id)
     {
@@ -120,6 +127,7 @@ public class UserController : Controller
     /// returns view for users to sign in
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> LoginView()
     {
@@ -131,6 +139,7 @@ public class UserController : Controller
     /// returns view for users to sign up
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> RegisterView()
     {
