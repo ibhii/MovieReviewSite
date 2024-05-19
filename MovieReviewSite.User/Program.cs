@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MovieReviewSite.Core.ConfigServices;
 using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Interfaces.Services;
@@ -16,6 +15,7 @@ using MovieReviewSite.Core.Repositories.Password;
 using MovieReviewSite.Core.Repositories.Review;
 using MovieReviewSite.Core.Repositories.Tag;
 using MovieReviewSite.DataBase.Contexts;
+using AuthServices = MovieReviewSite.Core.ConfigServices.AuthServices;
 using UserRepository = MovieReviewSite.Core.Repositories.User.UserRepository;
 
 var builder = WebApplication.CreateBuilder(args);

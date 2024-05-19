@@ -28,6 +28,10 @@ public partial class CrewRepository
 
     public async Task AddCrewToMovie(CrewMovieRequest dto)
     {
+        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
+        {
+            throw new ArgumentException("user is not authorized to make these changes!");
+        }
         //checks to see id the crew already belongs to the movie or not
         var isCrewDuplicated = await IsCrewRelatedToMovie(dto);
         if (isCrewDuplicated)
@@ -60,6 +64,11 @@ public partial class CrewRepository
 
     public async Task RemoveCrewFromMovie(CrewMovieRequest dto)
     {
+        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
+        {
+            throw new ArgumentException("user is not authorized to make these changes!");
+        }
+        
         var isCrewInMovie = await IsCrewRelatedToMovie(dto);
         if (!isCrewInMovie)
         {

@@ -7,7 +7,6 @@ using MovieReviewSite.Core.Models.Password.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 public class PasswordController : Controller
 {
@@ -67,6 +66,7 @@ public class PasswordController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task ChangePasswordByUserId(int id,[FromBody] UpdatePasswordRequest dto)
     {

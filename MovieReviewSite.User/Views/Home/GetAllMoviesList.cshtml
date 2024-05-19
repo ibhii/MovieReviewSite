@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using MovieReviewSite.Core.Enums
 @model MovieReviewSite.Core.Models.Movie.ViewModels.AllMoviesListVewModel
 
 
@@ -27,7 +28,7 @@
             <th>Duration</th>
             <th>Rating</th>
             <th>
-                <a asp-action="GetAllMoviesList" asp-route-sort="@ViewData["DateSortParam"]">ReleaseDate</a>
+                <a asp-action="GetAllMoviesList" asp-route-sort="@ViewData["DateSortParam"]">@Enum.GetName(typeof(ReleasedOnOrder),ReleasedOnOrder.ReleasedOnAsc)</a>
             </th>
             <th>AgeRate</th>
         </tr>

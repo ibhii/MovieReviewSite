@@ -8,7 +8,6 @@ using MovieReviewSite.Core.Models.Crew.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class CrewController : Controller
@@ -41,19 +40,21 @@ public class CrewController : Controller
         return await _crewRepository.GetCrewByMovieId(id);
     }
 
-    // [Authorize]
+    [Authorize]
     [HttpPost("[action]")]
     public async Task AddCrew([FromBody] NewCrewRequest dto)
     {
         await _crewRepository.AddCrew(dto);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task UpdateCrew(int id, [FromBody] UpdateCrewRequest dto)
     {
         await _crewRepository.UpdateCrew(id, dto);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task DeleteCrew(int id, [FromBody] int userId)
     {
@@ -64,6 +65,7 @@ public class CrewController : Controller
     /// adds crew to a movie
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task AddCrewToMovie([FromBody]CrewMovieRequest dto)
     {
@@ -74,6 +76,7 @@ public class CrewController : Controller
     /// removes a crew from movie
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task RemoveCrewFromMovie([FromBody]CrewMovieRequest dto)
     {

@@ -3,10 +3,12 @@ addButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const movieId = window.location.pathname.split('/')[3];
     const genreId = document.getElementById("GenreId").value;
+    const modifierRoleCode = localStorage.getItem('roleCode')
 
     const dto = {
         movieId : movieId,
-        genreId : genreId
+        genreId : genreId,
+        modifierRoleCode : modifierRoleCode 
     }
 
 
@@ -31,10 +33,13 @@ removeButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const movieId = window.location.pathname.split('/')[3];
     const genreId = document.getElementById("movieGenreId").value;
+    const modifierRoleCode = localStorage.getItem('roleCode')
+
 
     const dto = {
         movieId : movieId,
-        genreId : genreId
+        genreId : genreId,
+        modifierRoleCode : modifierRoleCode
     }
 
 

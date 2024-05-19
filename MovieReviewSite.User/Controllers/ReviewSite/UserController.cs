@@ -8,7 +8,6 @@ using MovieReviewSite.Core.Models.User.ViewModel;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class UserController : Controller
@@ -41,12 +40,14 @@ public class UserController : Controller
         await _userRepository.AddUser(dto);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task UpdateUser(int id,[FromBody] UpdateUserRequest dto)
     {
         await _userRepository.UpdateUser(id,dto);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task DeactivateUser(int id,[FromBody]BaseModifier modifier)
     {
@@ -57,6 +58,7 @@ public class UserController : Controller
     /// changes a users role
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task ChangeUserRole([FromBody] UserRole dto)
     {
@@ -68,7 +70,6 @@ public class UserController : Controller
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    
     [AllowAnonymous]
     [HttpPost("[action]")]
     public async Task<LoginResponse> LoginUser([FromBody] LoginUserRequest dto)
@@ -80,7 +81,6 @@ public class UserController : Controller
     /// returns a view with the list of all users 
     /// </summary>
     /// <returns></returns>
-    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> GetAllUsersView(string? searchString)
     {
@@ -99,7 +99,6 @@ public class UserController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [AllowAnonymous]
     [Route("[action]/{id}")]
     public async Task<ActionResult> GetUserDetailView(int id)
     {
@@ -127,7 +126,6 @@ public class UserController : Controller
     /// returns view for users to sign in
     /// </summary>
     /// <returns></returns>
-    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> LoginView()
     {
@@ -139,7 +137,6 @@ public class UserController : Controller
     /// returns view for users to sign up
     /// </summary>
     /// <returns></returns>
-    [AllowAnonymous]
     [Route("[action]")]
     public async Task<ActionResult> RegisterView()
     {

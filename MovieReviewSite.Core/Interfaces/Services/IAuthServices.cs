@@ -6,7 +6,7 @@ namespace MovieReviewSite.Core.Interfaces.Services;
 
 public interface IAuthServices
 {
-    void ConfigureServices(IServiceCollection services);
-    string GenerateJsonWebToken(BaseUserModel userModelInfo,List<Claim> claims);
-
+    string GenerateJsonWebToken(IEnumerable<Claim> claims);
+    List<Claim> GetClaimsFromToken();
+    public void ConfigureServices(IServiceCollection services);
 }

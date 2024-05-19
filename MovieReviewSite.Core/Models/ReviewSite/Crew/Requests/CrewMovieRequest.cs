@@ -5,4 +5,5 @@ public class CrewMovieRequest
     public int CrewId { get; set; }
     public int MovieId { get; set; }
     public int CrewType { get; set; }
+    public int? ModifierRoleCode { get; set; }
 }
