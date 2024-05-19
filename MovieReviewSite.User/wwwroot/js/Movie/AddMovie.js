@@ -8,17 +8,15 @@ submitButton.addEventListener("submit", function (event) {
     const duration = document.getElementById("Duration").value;
     const releaseDate = document.getElementById("ReleaseDate").value;
     const ageRate = document.getElementById("AgeRate").value;
-    //
+    
     const dto = {
         name: name || null,
         synopsis: synopsis || null,
         Duration: duration || 0,
         ReleaseDate: releaseDate || null,
-        ageRating: ageRate || 0,
+        ageRate: ageRate || 0,
         UserId: localStorage.getItem("userId"),
     };
-
-
 
     $.ajax({
         type: 'POST',

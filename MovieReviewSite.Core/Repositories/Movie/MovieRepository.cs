@@ -46,7 +46,7 @@ public partial class MovieRepository : IMovieRepository
                 Name = !dto.Name.IsNullOrEmpty() ? dto.Name : null,
                 Synopsis = !dto.Synopsis.IsNullOrEmpty() ? dto.Synopsis : null,
                 Duration = dto.Duration == 0 ? dto.Duration : 0,
-                AgeRateId = dto.AgeRate == 0 ? dto.AgeRate : 0,
+                AgeRateId = dto.AgeRate == 0 || dto.AgeRate == null ? dto.AgeRate : 0,
                 StatusId = 1,
                 CreatedOn = DateTime.UtcNow,
                 LastModifiedOn = DateTime.UtcNow,

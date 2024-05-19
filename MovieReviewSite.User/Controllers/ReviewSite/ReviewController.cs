@@ -8,7 +8,6 @@ using MovieReviewSite.Core.Models.Review.ViewModels;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class ReviewController : Controller
@@ -44,18 +43,21 @@ public class ReviewController : Controller
         await _repository.AddReview(dto,id);
     }
 
+    [Authorize]
     [HttpPut("[action]/{id}")]
     public async Task LikeReview(int id,[FromBody]int userId)
     {
         await _repository.LikeReview(id);
     }
 
+    [Authorize]
     [HttpPost("[action]")]
     public async Task UpdateReview([FromBody]UpdateReviewRequest dto)
     {
         await _repository.UpdateReview(dto);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
     public async Task DeleteReview(int id,[FromBody]int userId)
     {

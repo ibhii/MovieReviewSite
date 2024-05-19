@@ -6,7 +6,6 @@ using MovieReviewSite.Core.Models.Tag.Requests;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class TagController : Controller

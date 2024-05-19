@@ -3,12 +3,15 @@ addButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const crewId = document.getElementById("crewId").value
     const movieId = window.location.pathname.split('/')[3];
-    const crewType = document.getElementById("typeCode").value
+    const crewType = document.getElementById("typeCode").value;
+    const modifierRoleCode = localStorage.getItem('roleCode');
+
 
     const dto = {
         crewId: crewId,
         movieId: movieId,
-        crewType: crewType
+        crewType: crewType,
+        modifierRoleCode : modifierRoleCode
     }
 
 
@@ -33,12 +36,15 @@ removeButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const crewId = document.getElementById("movieCrewId").value
     const movieId = window.location.pathname.split('/')[3];
-    const crewType = document.getElementById("movieCrewTypeCode").value
+    const crewType = document.getElementById("movieCrewTypeCode").value;
+    const modifierRoleCode = localStorage.getItem('roleCode');
+
 
     const dto = {
         crewId: crewId,
         movieId: movieId,
-        crewType: crewType
+        crewType: crewType,
+        modifierRoleCode : modifierRoleCode
     }
 
 

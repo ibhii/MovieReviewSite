@@ -3,10 +3,13 @@ submitButton.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission
     const roleCode = document.getElementById("userRoleCode").value;
     const userId = document.getElementById("userId").value;
+    const modifierRoleCode = localStorage.getItem('roleCode')
+
 
     const dto = {
         roleCode : roleCode,
         userId : userId,
+        modifierRoleCode : modifierRoleCode
     }
 
     $.ajax({

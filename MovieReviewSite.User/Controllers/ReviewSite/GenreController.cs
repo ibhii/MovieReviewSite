@@ -10,7 +10,6 @@ using MovieReviewSite.Core.Models.Movie;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class GenreController : Controller
@@ -39,18 +38,21 @@ public class GenreController : Controller
         return await _genreRepository.GetGenreList();
     }
 
+    [Authorize]    
     [HttpPost]
     public async Task AddGenre([FromBody] GenreBase dto)
     {
         await _genreRepository.AddGenre(dto);
     }
 
+    [Authorize]
     [HttpPut]
     public async Task UpdateGenre([FromQuery] int id, [FromBody] GenreBase dto)
     {
         await _genreRepository.UpdateGenre(id, dto);
     }
 
+    [Authorize]
     [HttpDelete]
     public async Task DeleteGenre([FromQuery] int id)
     {
@@ -72,6 +74,7 @@ public class GenreController : Controller
     /// adds a list of genres to a movie
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task AddGenreByMovieId([FromBody] MovieGenreRequest dto)
     {
@@ -82,6 +85,7 @@ public class GenreController : Controller
     /// removes a list of genres from a movie
     /// </summary>
     /// <param name="dto"></param>
+    [Authorize]
     [HttpPost("[action]")]
     public async Task RemoveGenreByMovieId([FromBody]MovieGenreRequest dto)
     {

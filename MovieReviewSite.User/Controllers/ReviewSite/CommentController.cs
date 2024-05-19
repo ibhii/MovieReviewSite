@@ -6,7 +6,6 @@ using MovieReviewSite.Core.Models.Comment.Requests;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
-[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class CommentController : Controller
@@ -25,27 +24,28 @@ public class CommentController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<List<BaseComment>> GetCommentsByReviewId([FromQuery]int id)
+    public async Task<List<BaseComment>> GetCommentsByReviewId([FromQuery] int id)
     {
         return await _repository.GetCommentsByReviewId(id);
     }
 
     [HttpGet("[action]")]
-    public async Task<BaseComment?> GetCommentById([FromQuery]int id)
+    public async Task<BaseComment?> GetCommentById([FromQuery] int id)
     {
         return await _repository.GetCommentById(id);
     }
 
+    [Authorize]
     [HttpPost("[action]/{id}")]
-    public async Task AddComment(int id,[FromBody]CommentRequest dto)
+    public async Task AddComment(int id, [FromBody] CommentRequest dto)
     {
-        await _repository.AddComment(id,dto);
+        await _repository.AddComment(id, dto);
     }
 
+    [Authorize]
     [HttpDelete("[action]/{id}")]
-    public async Task DeleteComment(int id,[FromBody]int userId)
+    public async Task DeleteComment(int id, [FromBody] int userId)
     {
-        await _repository.DeleteComment(id,userId);
+        await _repository.DeleteComment(id, userId);
     }
-
 }

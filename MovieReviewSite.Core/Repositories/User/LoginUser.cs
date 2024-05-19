@@ -36,7 +36,6 @@ public partial class UserRepository
         {
             throw new ArgumentException("the password you've entered is invalid!");
         }
-
         
         var claims = new List<Claim>
         {
@@ -45,7 +44,7 @@ public partial class UserRepository
             new Claim(ClaimTypes.Name,user.UserName!),
         };
         
-        var tokenString = _authServices.GenerateJsonWebToken(user,claims);
+        var tokenString = _authServices.GenerateJsonWebToken(claims);
         var result = new LoginResponse()
         {
             Token = tokenString,
@@ -62,7 +61,7 @@ public partial class UserRepository
 
     public async Task<bool> AuthorizeUsername(string username)
     {
-        return await _context.Users.AnyAsync(u => u.UserName == username);
+        return await _context.Users.AnyAsync(u => u.UserName != username);
     }
 
     public async Task<bool> AuthorizeEmail(string email)
