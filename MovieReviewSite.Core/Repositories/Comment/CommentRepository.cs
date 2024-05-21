@@ -106,7 +106,7 @@ public partial class CommentRepository : ICommentRepository
         //checks to see that the user making changes is either an admin or the user that created the review
         if (author!.RoleCode != 1 || author.Id != userId)
         {
-            throw new ArgumentException("user is not authorized to perform this action!");
+            throw new UnauthorizedAccessException("user is not authorized to perform this action!");
         }
         _context.Comments.Remove(comment!);
         await _context.SaveChangesAsync();

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,29 +36,27 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
 builder.Services.AddScoped<IAuthServices, AuthServices>();
 
-
-//adding jwt auth
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+// Authentication Based On Cookie
+builder.Services.AddAuthentication(options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            //define which claim requires to check
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-        };
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    })
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/User/LoginUser"; // Specify the login page URL
     });
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ReviewSiteContext>();
 
 //handles authorization
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(Roles.Admin.ToString(), policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-    options.AddPolicy(Roles.Vip.ToString(), policy =>policy.RequireClaim(ClaimTypes.Role, "Admin"));
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+    options.AddPolicy("VipOnly", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
 });
 
 var app = builder.Build();
@@ -72,12 +71,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.MapIdentityApi<IdentityUser>();
+app.UseCookiePolicy();
+
 
 app.UseRouting();
 //adding UseAuthentication
 app.UseAuthentication();
-app.UseAuthorization();
-
 app.UseAuthorization();
 
 

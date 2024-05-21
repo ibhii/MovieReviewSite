@@ -1,4 +1,6 @@
-﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.UseMovieListsViewModel
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieReviewSite.Core.Models.Movie.ViewModels.UseMovieListsViewModel
 
 @{
     ViewBag.Title = "Watched List";
@@ -64,3 +66,5 @@
         </tbody>
     </table>
 </div>
+
+

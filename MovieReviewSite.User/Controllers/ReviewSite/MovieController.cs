@@ -49,7 +49,6 @@ public class MovieController : Controller
     /// Adds a new movie to the database 
     /// </summary>
     /// <param name="dto"></param>
-    [Authorize]
     [HttpPost("[action]")]
     public async Task AddMovie([FromBody] NewMovie dto)
     {

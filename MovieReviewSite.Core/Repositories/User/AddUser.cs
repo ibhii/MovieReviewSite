@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
 
@@ -16,15 +17,15 @@ public partial class UserRepository
         //checks to see if input parameters are correct
         if (dto.Password.IsNullOrEmpty() || dto.Password.Length < 4)
         {
-            throw new ArgumentException("the password you have entered is invalid!");
+            throw new BadHttpRequestException("the password you have entered is invalid!");
         }
         if (isUsernameDuplicate || dto.UserName.IsNullOrEmpty())
         {
-            throw new ArgumentException("this username you  have entered is invalid or already exists!");
+            throw new BadHttpRequestException("this username you  have entered is invalid or already exists!");
         }
         if (isEmailDuplicate || dto.Email.IsNullOrEmpty())
         {
-            throw new ArgumentException("this email you  have entered is invalid or already exists!");
+            throw new BadHttpRequestException("this email you  have entered is invalid or already exists!");
         }
         
         //creating user

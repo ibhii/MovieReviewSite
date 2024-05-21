@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
@@ -67,7 +68,7 @@ public partial class CrewRepository : ICrewRepository
         {
             if (dto.FirstName.IsNullOrEmpty())
             {
-                throw new ArgumentException("the crew must at least have a firstname!");
+                throw new BadHttpRequestException("the crew must at least have a firstname!");
             }
 
             var crew = new DataBase.Crew()
@@ -90,19 +91,15 @@ public partial class CrewRepository : ICrewRepository
     public async Task UpdateCrew(int id, UpdateCrewRequest dto)
     {
         //only admins or vip members can update Crew so this checks to make sure 
-        var isUserAuthorized = await _userRepository.IsUserAdminOrVIP(dto.UserId);
-        if (isUserAuthorized)
-        {
             var crew = await _context.Crews.Where(c => c.Id == id).SingleOrDefaultAsync();
             if (crew == null) throw new ArgumentException("crew does not exist!");
             crew!.FirstName = dto.FirstName.IsNullOrEmpty() ? crew.FirstName : dto.FirstName;
             crew.LastName = dto.LastName.IsNullOrEmpty() ? crew.LastName : dto.LastName;
-            crew.MiddleName = dto.MiddleName.IsNullOrEmpty() ? crew.MiddleName : dto.MiddleName;
+            crew.MiddleName = dto.MiddleName.IsNullOrEmpty() ? null : dto.MiddleName;
             crew.BirthDate = dto.BirthDate ?? crew.BirthDate;
             crew.LastModifiedOn = DateTime.UtcNow;
             _context.Crews.Update(crew);
             await _context.SaveChangesAsync();
-        }
     }
 
     public async Task DeleteCrew(int id,int userId)

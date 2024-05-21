@@ -5,12 +5,14 @@ submitButton.addEventListener("submit", function (event) {
     const title = document.getElementById("Title").value;
     const review = document.getElementById("Review").value;
     const givenRate = document.getElementById("GivenRate").value;
+    const userId = document.getElementById("userId").value
+
 
     const dto = {
         title: title,
         review: review,
         givenRate: givenRate,
-        userId: localStorage.getItem("userId"),
+        userId: userId,
     }
     
     $.ajax({
@@ -18,11 +20,9 @@ submitButton.addEventListener("submit", function (event) {
         url: '/Review/AddReview/' + id,
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })
+    alert("Changes Applied!");
+    window.location.back();
 });

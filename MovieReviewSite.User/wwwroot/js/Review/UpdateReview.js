@@ -5,12 +5,14 @@ submitButton.addEventListener("submit", function(event) {
     const review = document.getElementById("Review").value;
     const givenRate = document.getElementById("GivenRate").value;
     const id = window.location.pathname.split('/')[3];
+    const userId = document.getElementById("userId").value
+
 
     const reviewData = {
         title: title || "",
         review: review || "",
         givenRate: givenRate || 0,
-        userId : localStorage.getItem("userId"),
+        userId : userId,
     }
     
 
@@ -21,7 +23,7 @@ submitButton.addEventListener("submit", function(event) {
         data: JSON.stringify(dto),
         headers: {
             User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + localStorage.getItem("token")
         }
     }).done(function (data) {
         self.result("Done!");

@@ -13,7 +13,7 @@
             <p style="font-style: oblique; font-size: large">
                 @Html.DisplayFor(r => review.Title)
             </p>
-            <a style="font-size: small" asp-action="GetUserDetailView" asp-controller="User" asp-route-id="@review.User!.Id">
+            <a style="font-size: small" asp-action="UserDetailView" asp-controller="User" asp-route-id="@review.User!.Id">
                 @Html.DisplayFor(r => review.User!.UserName)
             </a>
             <p>

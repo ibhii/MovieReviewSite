@@ -1,4 +1,7 @@
 ﻿@using Microsoft.IdentityModel.Tokens
+@using MovieReviewSite.Core.Enums
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model MovieReviewSite.Core.Models.Crew.ViewModels.AllCrewViewModel
 
 @{
@@ -35,9 +38,12 @@
                     }
                     <a asp-controller="Crew" asp-action="GetCrewDetailsView" asp-route-id="@crew.Id">@Html.DisplayFor(m => crew.FullName)</a>
                 </td>
-                <td>
-                    <a asp-action="UpdateCrewView" asp-controller="Crew" asp-route-id="@crew.Id" class="btn btn-primary">Edit</a>
-                </td>
+                @if (User.FindFirstValue(ClaimTypes.Role) == Roles.Vip.ToString() || User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString())
+                {
+                    <td>
+                        <a asp-action="UpdateCrewView" asp-controller="Crew" asp-route-id="@crew.Id" class="btn btn-primary">Edit</a>
+                    </td>
+                }
             </tr>
         }
         </tbody>

@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using MovieReviewSite.DataBase;
 
 namespace MovieReviewSite.DataBase.Contexts;
 
-public partial class ReviewSiteContext : DbContext 
+public partial class ReviewSiteContext : DbContext
 {
     public ReviewSiteContext(DbContextOptions<ReviewSiteContext> options)
         : base(options)

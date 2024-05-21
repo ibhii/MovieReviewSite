@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieReviewSite.Core.Repositories.Movie;
 
@@ -10,7 +11,7 @@ public partial class MovieRepository
         var movie = await GetById(id);
         if (movie == null)
         {
-            throw new ArgumentException("this movie does not exist!(cant update LastModifiedDate)");
+            throw new BadHttpRequestException("this movie does not exist!(cant update LastModifiedDate)");
         }
         movie!.LastModifiedOn = DateTime.UtcNow;
 

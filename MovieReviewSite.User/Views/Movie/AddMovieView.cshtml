@@ -1,4 +1,6 @@
-﻿@model MovieReviewSite.Core.Models.Movie.Request.NewMovie
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieReviewSite.Core.Models.Movie.Request.NewMovie
 
 @{
     ViewData["Title"] = "Add A Movie";
@@ -22,9 +24,10 @@
     @Html.LabelFor(m => m.ReleaseDate)
     <input asp-for="ReleaseDate" type="date" class="form-control"/>
     <br>
-    
+
     <label for="AgeRate">Age Rate: </label>
     <select class="form-select" name="AgeRate" id="AgeRate">
+        <option value="0"></option>
         <option value="1">G</option>
         <option value="2">PG</option>
         <option value="3">PG-13</option>
@@ -33,7 +36,8 @@
 
     </select>
     <br>
-    
+
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
     <button type="submit" class="btn btn-primary">Add Movie</button>
 }
 

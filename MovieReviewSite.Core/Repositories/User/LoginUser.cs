@@ -1,23 +1,24 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Models.Role;
-using MovieReviewSite.Core.Models.Services;
 using MovieReviewSite.Core.Models.User;
+using Microsoft.AspNetCore.Authentication;
 using MovieReviewSite.Core.Models.User.Request;
 
 namespace MovieReviewSite.Core.Repositories.User;
 
 public partial class UserRepository
 {
-    public async Task<LoginResponse> LoginUser(LoginUserRequest dto)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public async Task LoginUser(LoginUserRequest dto)
     {
         //check if the dto is empty or null
         if (dto.Password.IsNullOrEmpty() || dto.Username.IsNullOrEmpty())
         {
-            throw new ArgumentException("please enter a value for both username and password fields!");
+            throw new BadHttpRequestException("please enter a value for both username and password fields!");
         }
 
         var usernameExists = await AuthorizeUsername(dto.Username!);
@@ -26,7 +27,7 @@ public partial class UserRepository
         //checks if username exists
         if (!usernameExists)
         {
-            throw new ArgumentException("the username you've entered is invalid!");
+            throw new BadHttpRequestException("the username you've entered is invalid!");
         }
 
         var user = await GetUserByUsername(dto.Username!);
@@ -34,7 +35,7 @@ public partial class UserRepository
         //checks if password is correct
         if (!isPasswordOk)
         {
-            throw new ArgumentException("the password you've entered is invalid!");
+            throw new BadHttpRequestException("the password you've entered is invalid!");
         }
         
         var claims = new List<Claim>
@@ -43,20 +44,33 @@ public partial class UserRepository
             new Claim(ClaimTypes.Role, user.Role!.Role!),
             new Claim(ClaimTypes.Name,user.UserName!),
         };
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        await _httpContextAccessor.HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
         
-        var tokenString = _authServices.GenerateJsonWebToken(claims);
-        var result = new LoginResponse()
-        {
-            Token = tokenString,
-            User = new BaseUserInfo()
-            {
-                Id = user.Id,
-                UserName = user.UserName!,
-                Name = user.Name,
-                RoleCode = user.Role!.RoleCode,
-            }
-        };
-        return result; // Ensure you use curly braces
+        // var tokenString = _authServices.GenerateJsonWebToken(claims);
+        // var result = new LoginResponse()
+        // {
+        //     Token = tokenString,
+        //     User = new BaseUserInfo()
+        //     {
+        //         Id = user.Id,
+        //         UserName = user.UserName!,
+        //         Name = user.Name,
+        //         RoleCode = user.Role!.RoleCode,
+        //     }
+        // };
+        // //add cookie as response
+        // var cookieOptions = new CookieOptions
+        // {   
+        //     HttpOnly = true,
+        //     Expires = DateTime.UtcNow.AddMinutes(60),  // Adjust expiration time
+        //     Secure = true // Set to true if using HTTPS (recommended)
+        // };
+        // _httpContextAccessor.HttpContext!.Response.Cookies.Append("AuthorizationToken", tokenString!, cookieOptions);
+        //
+
+        // return result; // Ensure you use curly braces
     }
 
     public async Task<bool> AuthorizeUsername(string username)
@@ -66,7 +80,7 @@ public partial class UserRepository
 
     public async Task<bool> AuthorizeEmail(string email)
     {
-        return await _context.Users.AnyAsync(u => u.Email == email);
+        return await _context.Users.AnyAsync(u => u.Email != email);
     }
 
     public async Task<int> GetUserIdByByUsername(string username)

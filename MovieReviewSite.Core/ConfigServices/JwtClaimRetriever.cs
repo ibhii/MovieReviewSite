@@ -17,17 +17,17 @@ public partial class AuthServices
         _config = config;
     }
     
-    public List<Claim> GetClaimsFromToken()
+    public IEnumerable<Claim> GetClaimsFromToken()
     {
         var token = GetAuthToken();
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true, // Set based on your configuration
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_signing_key")), // Replace with your key
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)), // Replace with your key
             ValidateIssuer = true, // Set based on your configuration
-            ValidIssuer = "your_issuer", // Replace with your issuer
+            ValidIssuer = _config["Jwt:Issuer"], // Replace with your issuer
             ValidateAudience = true, // Set based on your configuration
-            ValidAudience = "your_audience", // Replace with your audience
+            ValidAudience = _config["Jwt:Issuer"], // Replace with your audience
             ValidateLifetime = true // Set based on your needs
         };
 
@@ -36,10 +36,10 @@ public partial class AuthServices
         var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out validatedToken);
         return principal.Claims.ToList();
     }
-    
+
     public string? GetAuthToken()
     {
-        var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
+        var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Cookies["AuthorizationToken"];
         return authorizationHeader?.ToString().Split(' ').FirstOrDefault()?.Trim(); // Extract token value
     }
 }

@@ -15,7 +15,7 @@ public partial class UserRepository
         var userRole = await GetUserRoleCodeById(id);
         if(userRole == 2)
         {
-            throw new ArgumentException("UserIs not Authorized to preform this action!(user must be admin or vip member)");
+            throw new UnauthorizedAccessException("UserIs not Authorized to preform this action!(user must be admin or vip member)");
         }
 
         return true;
@@ -26,7 +26,7 @@ public partial class UserRepository
         var userRole = await GetUserRoleCodeById(id);
         if(userRole == 2 || userRole == 3)
         {
-            throw new ArgumentException("UserIs not Authorized to preform this action!(user must be admin)");
+            throw new UnauthorizedAccessException("UserIs not Authorized to preform this action!(user must be admin)");
         }
 
         return true;

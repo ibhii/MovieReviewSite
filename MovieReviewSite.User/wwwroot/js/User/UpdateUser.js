@@ -8,6 +8,8 @@ submitButton.addEventListener("submit", function(event) {
     const username = document.getElementById("Username").value;
     const birthDate = document.getElementById("BirthDate").value;
     const id = window.location.pathname.split('/')[3];
+    const modifierId = document.getElementById("modifierId").value
+
 
     const dto = {
         firstName : firstName || null,
@@ -15,8 +17,7 @@ submitButton.addEventListener("submit", function(event) {
         email : email || null,
         username : username || null,
         birthDate : birthDate || null,
-        modifierId  : localStorage.getItem("userId"),
-        modifierRoleCode : localStorage.getItem("roleCode")
+        modifierId  : modifierId,
     };
     
     $.ajax({
@@ -26,7 +27,7 @@ submitButton.addEventListener("submit", function(event) {
         data: JSON.stringify(dto),
         headers: {
             User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + localStorage.getItem("token")
         }
     }).done(function (data) {
         self.result("Done!");

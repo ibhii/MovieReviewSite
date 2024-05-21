@@ -21,7 +21,7 @@ submitButton.addEventListener("submit", function (event) {
     const dto = {
         currentPassword: currentPassword,
         newPassword: newPassword,
-        ModifierId: localStorage.getItem("userId"),
+        ModifierId: document.getElementById("userId").value,
     };
 
 
@@ -30,10 +30,6 @@ submitButton.addEventListener("submit", function (event) {
         url: '/Password/ChangePasswordByUserId/' + id,
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })

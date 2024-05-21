@@ -1,4 +1,7 @@
-﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.MovieDetailsViewModel
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.Infrastructure
+@using MovieReviewSite.Core.Enums
+@model MovieReviewSite.Core.Models.Movie.ViewModels.MovieDetailsViewModel
 
 @{
     ViewData["Title"] = "Movie Details";
@@ -12,17 +15,29 @@
     @* link to movie reviews *@
     <a asp-action="GetReviewByMovieIdView" asp-controller="Review" asp-route-id="@Model.Movie!.Id">@Model.Movie.ReviewsCount Reviews</a>
     <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary" style="background-color: #137354">Review</a>
-    <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
-    @using (Html.BeginForm("DeleteMovie", "Movie", FormMethod.Post, new {id = "deleteMovie"}))
+    @if (User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString() || User.FindFirstValue(ClaimTypes.Role) == Roles.Vip.ToString())
     {
-        <button type="submit" id="deleteMovie" class="btn btn-outline-danger">Delete</button>
+        <a asp-action="UpdateMovieView" asp-controller="Movie" asp-route-id="@Model!.Movie!.Id" class="btn btn-primary">Edit</a>
     }
+    @if (User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString())
+    {
+        // delete movie
+        @using (Html.BeginForm("DeleteMovie", "Movie", FormMethod.Post, new {id = "deleteMovie"}))
+        {
+            <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
+            <button type="submit" id="deleteMovie" class="btn btn-outline-danger">Delete</button>
+        }
+    }
+    <br>
+    @* add movie to lists *@
     @using (Html.BeginForm("AddMovieToWatched", "Movie", FormMethod.Post, new {id = "watched"}))
     {
+        <input type="hidden" value="@Convert.ToInt32(@User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
         <button type="submit" id="deleteMovie" class="btn btn-outline-success">Watched</button>
     }
     @using (Html.BeginForm("AddMovieToWantToWatch", "Movie", FormMethod.Post, new {id = "wantToWatch"}))
     {
+        <input type="hidden" value="@Convert.ToInt32(@User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
         <button type="submit" id="deleteMovie" class="btn btn-outline-warning">Want To Watch</button>
     }
 </span>

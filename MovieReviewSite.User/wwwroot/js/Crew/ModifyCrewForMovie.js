@@ -4,14 +4,12 @@ addButton.addEventListener("submit", function (event) {
     const crewId = document.getElementById("crewId").value
     const movieId = window.location.pathname.split('/')[3];
     const crewType = document.getElementById("typeCode").value;
-    const modifierRoleCode = localStorage.getItem('roleCode');
 
 
     const dto = {
         crewId: crewId,
         movieId: movieId,
         crewType: crewType,
-        modifierRoleCode : modifierRoleCode
     }
 
 
@@ -20,10 +18,6 @@ addButton.addEventListener("submit", function (event) {
         url: '/Crew/AddCrewToMovie',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })
@@ -37,14 +31,12 @@ removeButton.addEventListener("submit", function (event) {
     const crewId = document.getElementById("movieCrewId").value
     const movieId = window.location.pathname.split('/')[3];
     const crewType = document.getElementById("movieCrewTypeCode").value;
-    const modifierRoleCode = localStorage.getItem('roleCode');
 
 
     const dto = {
         crewId: crewId,
         movieId: movieId,
         crewType: crewType,
-        modifierRoleCode : modifierRoleCode
     }
 
 
@@ -53,10 +45,6 @@ removeButton.addEventListener("submit", function (event) {
         url: '/Crew/RemoveCrewFromMovie',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })

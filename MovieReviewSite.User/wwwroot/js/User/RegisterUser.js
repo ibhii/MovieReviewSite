@@ -29,7 +29,8 @@ submitButton.addEventListener("submit", function (event) {
     }).done(function (data) {
         self.result("Done!");
     })
-    // .fail(showError);
+    alert("User Registered!")
+    window.location.back()
 });
 
 function showPassword() {

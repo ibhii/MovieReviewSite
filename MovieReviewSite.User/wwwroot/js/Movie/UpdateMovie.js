@@ -8,6 +8,8 @@ submitButton.addEventListener("submit", function(event) {
     const releaseDate = document.getElementById("ReleaseDate").value;
     const ageRate = document.getElementById("AgeRate").value;
     const id = window.location.pathname.split('/')[3];
+    const userId = document.getElementById("userId").value
+
 
     const dto = {
         Name: name || null,
@@ -15,7 +17,7 @@ submitButton.addEventListener("submit", function(event) {
         Duration: duration || 0,
         ReleaseDate: releaseDate || null,
         AgeRate: ageRate || null,
-        UserId: localStorage.getItem("userId"),
+        UserId: userId,
     };
     
     
@@ -27,7 +29,7 @@ $.ajax({
     data: JSON.stringify(dto),
     headers: {
         User: localStorage.getItem("user"),
-        Authorization: "bearer " + localStorage.getItem("token")
+        Authorization: "Bearer " + localStorage.getItem("token")
     }
 }).done(function (data) {
     self.result("Done!");

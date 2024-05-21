@@ -6,25 +6,22 @@ submitButton.addEventListener("submit", function (event) {
     const lastName = document.getElementById("LastName").value;
     const birthDate = document.getElementById("BirthDate").value;
     const id = window.location.pathname.split('/')[3];
+    const userId = document.getElementById("userId").value
     
     const dto = {
         firstName: firstName || null,
         middleName: middleName || null,
         lastName: lastName || null,
         birthDate: birthDate || null,
-        userId : localStorage.getItem("userId")
+        userId : userId
     }
     
 
     $.ajax({
         type: 'POST',
-        url: '/Genre/RemoveGenreByMovieId/' + id,
+        url: '/Crew/UpdateCrew/' + id,
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })

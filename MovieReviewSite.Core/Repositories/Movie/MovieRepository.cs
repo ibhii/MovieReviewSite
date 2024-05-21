@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models.Movie;
@@ -46,7 +47,7 @@ public partial class MovieRepository : IMovieRepository
                 Name = !dto.Name.IsNullOrEmpty() ? dto.Name : null,
                 Synopsis = !dto.Synopsis.IsNullOrEmpty() ? dto.Synopsis : null,
                 Duration = dto.Duration == 0 ? dto.Duration : 0,
-                AgeRateId = dto.AgeRate == 0 || dto.AgeRate == null ? dto.AgeRate : 0,
+                AgeRateId = dto.AgeRate == 0 ? null : dto.AgeRate,
                 StatusId = 1,
                 CreatedOn = DateTime.UtcNow,
                 LastModifiedOn = DateTime.UtcNow,
@@ -66,7 +67,7 @@ public partial class MovieRepository : IMovieRepository
         {
             var movie = await _context.Movies.Where(m => m.Id == id).SingleOrDefaultAsync();
 
-            if (movie == null) throw new ArgumentException("this movie does not exist!");
+            if (movie == null) throw new BadHttpRequestException("this movie does not exist!");
             movie.Name = dto.Name.IsNullOrEmpty() ? movie.Name : dto.Name;
             movie.Duration = dto.Duration == 0 ? movie.Duration : dto.Duration;
             movie.RealeaseDate = dto.ReleaseDate ?? movie.RealeaseDate;

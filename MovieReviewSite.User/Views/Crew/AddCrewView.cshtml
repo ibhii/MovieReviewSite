@@ -1,4 +1,5 @@
-﻿@model MovieReviewSite.Core.Models.Crew.Requests.NewCrewRequest
+﻿@using System.Security.Claims
+@model MovieReviewSite.Core.Models.Crew.Requests.NewCrewRequest
 
 @{
     Layout = "_Layout";
@@ -22,9 +23,10 @@
     <br>
 
     @Html.LabelFor(c =>c.BirthDate)
-    <input asp-for="BirthDate" type="text" class="form-control"/>
+    <input asp-for="BirthDate" type="date" class="form-control"/>
     <br>
-
+    
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
     <button type="submit" class="btn btn-primary"  >Add Crew</button>
     }
 
