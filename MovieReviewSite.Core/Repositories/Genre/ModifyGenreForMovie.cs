@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Genre;
@@ -23,14 +24,10 @@ public partial class GenreRepository
 
     public async Task AddGenreByMovieId(MovieGenreRequest dto)
     {
-        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
-        {
-            throw new ArgumentException("user is not authorized to make these changes!");
-        }
         var movieGenreList = await GetGenreByMovieId(dto.MovieId);
         var movie = await _context.Movies.Where(m => m.Id == dto.MovieId).SingleOrDefaultAsync();
         if (movieGenreList.Any(m => dto.GenreId == m.Id))
-            throw new ArgumentException("this genre already belongs to this movie!");
+            throw new UnauthorizedAccessException("this genre already belongs to this movie!");
         var movieGenres = new MovieGenre()
         {
             MovieId = dto.MovieId,
@@ -45,10 +42,6 @@ public partial class GenreRepository
 
     public async Task RemoveGenreByMovieId(MovieGenreRequest dto)
     {
-        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
-        {
-            throw new ArgumentException("user is not authorized to make these changes!");
-        }
         var movieGenre = await _context.MovieGenres.Where(mg => mg.MovieId == dto.MovieId && mg.GenreId == dto.GenreId)
             .SingleOrDefaultAsync();
         _context.MovieGenres.Remove(movieGenre!);

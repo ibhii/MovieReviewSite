@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
@@ -28,10 +29,6 @@ public partial class CrewRepository
 
     public async Task AddCrewToMovie(CrewMovieRequest dto)
     {
-        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
-        {
-            throw new ArgumentException("user is not authorized to make these changes!");
-        }
         //checks to see id the crew already belongs to the movie or not
         var isCrewDuplicated = await IsCrewRelatedToMovie(dto);
         if (isCrewDuplicated)
@@ -64,15 +61,11 @@ public partial class CrewRepository
 
     public async Task RemoveCrewFromMovie(CrewMovieRequest dto)
     {
-        if (dto.ModifierRoleCode != 1 || dto.ModifierRoleCode != 3)
-        {
-            throw new ArgumentException("user is not authorized to make these changes!");
-        }
         
         var isCrewInMovie = await IsCrewRelatedToMovie(dto);
         if (!isCrewInMovie)
         {
-            throw new ArgumentException("information is invalid!");
+            throw new BadHttpRequestException("information is invalid!");
         }
 
         var movieCrew = await _context.MovieCrews.Where(mc =>

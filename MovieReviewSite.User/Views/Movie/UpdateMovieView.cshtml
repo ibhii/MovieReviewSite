@@ -1,4 +1,6 @@
-﻿@model MovieReviewSite.Core.Models.Movie.ViewModels.UpdateMovieViewModel
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieReviewSite.Core.Models.Movie.ViewModels.UpdateMovieViewModel
 
 @{
     ViewBag.Title = @Model.Movie!.MovieName!;
@@ -37,6 +39,7 @@
     </select>
     <br>
     
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
     <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Apply Changes</button>
 }
 

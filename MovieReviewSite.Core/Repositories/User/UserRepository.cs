@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Interfaces.Services;
@@ -6,7 +7,6 @@ using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
 using MovieReviewSite.Core.Models.User.Request;
 using MovieReviewSite.Core.Repositories.User.Extensions;
-using MovieReviewSite.DataBase;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.User;
@@ -19,12 +19,13 @@ public partial class UserRepository : IUserRepository
     private readonly IAuthServices _authServices;
 
     public UserRepository(ReviewSiteContext context, IReviewRepository reviewRepository,
-        IPasswordRepository passwordRepository, IAuthServices authServices)
+        IPasswordRepository passwordRepository, IAuthServices authServices, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _reviewRepository = reviewRepository;
         _passwordRepository = passwordRepository;
         _authServices = authServices;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<List<BaseUserModel>> GetAllUsers(AllUsersListRequest dto)
@@ -66,15 +67,15 @@ public partial class UserRepository : IUserRepository
     public async Task UpdateUser(int id, UpdateUserRequest dto)
     {
         var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
-        if (id != dto.ModifierId && dto.ModifierRoleCode != 1)
-            throw new ArgumentException("this user is not authorized to preform this action");
+        if (id != dto.ModifierId)
+            throw new BadHttpRequestException("this user is not authorized to preform this action");
         if (!dto.Username.IsNullOrEmpty())
         {
             var isUsernameUnique = await AuthorizeUsername(dto.Username!);
 
             if (!isUsernameUnique)
             {
-                throw new ArgumentException("this user name already exists!");
+                throw new BadHttpRequestException("this user name already exists!");
             }
         }
 
@@ -91,15 +92,10 @@ public partial class UserRepository : IUserRepository
     }
 
 
-    public async Task DeactivateUser(int id, BaseModifier modifier)
+    public async Task DeactivateUser(int id)
     {
         var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync();
-
-        if (user!.Id != modifier.Id && modifier.RoleCode != 1)
-        {
-            throw new ArgumentException("this user is not authorized to preform this action");
-        }
-
+        
         //checks if user is not admin
         if (user!.RoleCode != 1)
         {
@@ -108,7 +104,7 @@ public partial class UserRepository : IUserRepository
         }
         else
         {
-            throw new ArgumentException("the user is an Admin and cant be deactivated");
+            throw new BadHttpRequestException("the user is an Admin and cant be deactivated");
         }
 
         await _context.SaveChangesAsync();

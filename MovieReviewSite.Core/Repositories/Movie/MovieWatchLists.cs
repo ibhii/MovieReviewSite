@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Core.Models.Movie.Responses;
@@ -13,7 +14,7 @@ public partial class MovieRepository
         var userMovie = new UserMovie();
         if (dto.ModifierId != dto.UserId)
         {
-            throw new ArgumentException("you cant make changes to this users Movie lists");
+            throw new UnauthorizedAccessException("you are not authorized to make changes to this users Movie lists");
         }
 
         var isMovieListedByUser =
@@ -45,7 +46,7 @@ public partial class MovieRepository
         var userMovie = new UserMovie();
         if (dto.ModifierId != dto.UserId)
         {
-            throw new ArgumentException("you cant make changes to this users Movie lists");
+            throw new UnauthorizedAccessException("you are not authorized to make changes to this users Movie lists");
         }
 
         var isMovieListedByUser =

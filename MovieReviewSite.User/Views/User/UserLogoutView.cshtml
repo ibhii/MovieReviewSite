@@ -1,0 +1,23 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Logout";
+    Layout = "_Layout";
+}
+
+<h2>Log out</h2>
+
+<div>
+    <p>Are you sure you want to logout?</p>
+    @using (Html.BeginForm("LogoutUser", "User", FormMethod.Post, new {id = "logout"}))
+    {
+        <button class="btn btn-outline-success" type="submit" id="logout">yes</button>
+    }
+    <a asp-controller="Home" asp-action="GetAllMoviesList" class="btn btn-outline-danger">No</a>
+</div>
+
+
+@section Scripts
+{
+    <script src="js/User/Logout.js"></script>
+}

@@ -1,4 +1,6 @@
-﻿@model MovieReviewSite.Core.Models.User.ViewModel.UpdateUserViewModel
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieReviewSite.Core.Models.User.ViewModel.UpdateUserViewModel
 
 @{
     ViewData["Title"] = @Model.User.Name;
@@ -29,6 +31,7 @@
     <input id="BirthDate" asp-for="DTO.BirthDate" type="date" class="form-control"/>
     <br>
 
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="modifierId">
     <button style="background-color: #1e7316" type="submit" class="btn btn-primary">Apply Changes</button>  
 }
 

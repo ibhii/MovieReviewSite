@@ -1,4 +1,5 @@
-﻿@model MovieReviewSite.Core.Models.Crew.ViewModels.UpdateCrewViewModel
+﻿@using System.Security.Claims
+@model MovieReviewSite.Core.Models.Crew.ViewModels.UpdateCrewViewModel
 
 @{
     ViewBag.Title = @Model.Crew!.FullName!;
@@ -24,6 +25,7 @@
     @Html.LabelFor(c => c.Crew!.BirthDate)
     <input id="BirthDate" value="@Model.Crew.BirthDate" asp-for="DTO!.BirthDate" type="text" class="form-control"/>
     <br>
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
     <button type="submit" class="btn btn-primary">Apply Changes</button>
                                                         
 }

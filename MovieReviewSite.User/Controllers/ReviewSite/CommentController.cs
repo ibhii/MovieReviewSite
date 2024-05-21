@@ -43,7 +43,7 @@ public class CommentController : Controller
     }
 
     [Authorize]
-    [HttpDelete("[action]/{id}")]
+    [HttpPost("[action]/{id}")]
     public async Task DeleteComment(int id, [FromBody] int userId)
     {
         await _repository.DeleteComment(id, userId);

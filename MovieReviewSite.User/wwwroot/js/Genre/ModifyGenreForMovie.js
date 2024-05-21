@@ -3,12 +3,10 @@ addButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const movieId = window.location.pathname.split('/')[3];
     const genreId = document.getElementById("GenreId").value;
-    const modifierRoleCode = localStorage.getItem('roleCode')
 
     const dto = {
         movieId : movieId,
         genreId : genreId,
-        modifierRoleCode : modifierRoleCode 
     }
 
 
@@ -17,10 +15,6 @@ addButton.addEventListener("submit", function (event) {
         url: '/Genre/AddGenreByMovieId',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })
@@ -33,13 +27,11 @@ removeButton.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
     const movieId = window.location.pathname.split('/')[3];
     const genreId = document.getElementById("movieGenreId").value;
-    const modifierRoleCode = localStorage.getItem('roleCode')
 
 
     const dto = {
         movieId : movieId,
         genreId : genreId,
-        modifierRoleCode : modifierRoleCode
     }
 
 
@@ -48,10 +40,7 @@ removeButton.addEventListener("submit", function (event) {
         url: '/Genre/RemoveGenreByMovieId',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
+        
     }).done(function (data) {
         self.result("Done!");
     })

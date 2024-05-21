@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Models.Password.Requests;
 using MovieReviewSite.DataBase;
 
@@ -10,22 +11,22 @@ public partial class PasswordRepository
     {
         if (dto.CurrentPassword.IsNullOrEmpty() || dto.NewPassword.IsNullOrEmpty() )
         {
-            throw new ArgumentException("please enter a valid value for all the fields");
+            throw new BadHttpRequestException("please enter a valid value for all the fields");
         }
         if (dto.CurrentPassword == dto.NewPassword)
         {
-            throw new ArgumentException("the new password shouldn't be the same as your current password!");
+            throw new BadHttpRequestException("the new password shouldn't be the same as your current password!");
         }
 
         if (id != dto.ModifierId)
         {
-            throw new ArgumentException("you are not allowed to change other users passwords!");
+            throw new BadHttpRequestException("you are not allowed to change other users passwords!");
         }
         //checks if the current password is correct 
         var isCurrentCorrect = await AuthorizeUserPassword(dto.CurrentPassword!, id);
         if (!isCurrentCorrect)
         {
-            throw new ArgumentException("the password you entered as your current password is invalid!");
+            throw new BadHttpRequestException("the password you entered as your current password is invalid!");
         }
 
         //adds the ne password to passwords table

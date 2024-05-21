@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
 using MovieReviewSite.Core.Models;
@@ -138,7 +139,7 @@ public partial class ReviewRepository : IReviewRepository
             //checks to see that the user making changes is either an admin or the user that created the review
             if (review.Author!.RoleCode != 1 || review.Author.Id != dto.UserId)
             {
-                throw new ArgumentException("user is not authorized to perform this action!");
+                throw new UnauthorizedAccessException("user is not authorized to perform this action!");
             }
             review!.Title = dto.Title.IsNullOrEmpty() ? review.Title : dto.Title;
             review.Review1 = dto.Review.IsNullOrEmpty() ? review!.Review1 : dto.Review;
@@ -158,10 +159,6 @@ public partial class ReviewRepository : IReviewRepository
             RoleCode =r.Author!.RoleCode
         }).SingleOrDefaultAsync();
         //checks to see that the user making changes is either an admin or the user that created the review
-        if (author!.RoleCode != 1 || author.Id != userId)
-        {
-            throw new ArgumentException("user is not authorized to perform this action!");
-        }
         _context.Reviews.Remove(review!);
         await _context.SaveChangesAsync();
     }

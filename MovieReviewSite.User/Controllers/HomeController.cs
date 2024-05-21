@@ -3,9 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Interfaces.ReviewSite;
+using MovieReviewSite.Core.Interfaces.Services;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.ViewModels;
 using MovieReviewSite.Models;
@@ -17,12 +21,16 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IMovieRepository _movieRepository;
     private readonly IConfiguration _config;
+    private readonly IOptionsMonitor<CookieAuthenticationOptions> _optionsMonitor;
+    public readonly IAuthServices _auth;
 
-    public HomeController(ILogger<HomeController> logger,IMovieRepository movieRepository, IConfiguration config)
+    public HomeController(ILogger<HomeController> logger,IMovieRepository movieRepository, IConfiguration config, IAuthServices auth, IOptionsMonitor<CookieAuthenticationOptions> optionsMonitor)
     {
         _logger = logger;
         _movieRepository = movieRepository;
         _config = config;
+        _auth = auth;
+        _optionsMonitor = optionsMonitor;
     }
 
     public async Task<IActionResult> GetAllMoviesList(string? searchString,int sort)
@@ -30,11 +38,9 @@ public class HomeController : Controller
         var movieList = new AllMoviesListVewModel();
         var dto = new MovieListRequest();
         @ViewData["CurrentFilter"] = searchString;
-        ViewData["DateSortParam"] = sort;
+        @ViewData["DateSortParam"] = sort;
         dto.Order = (ReleasedOnOrder) sort;
         dto.Search = searchString;
-        // @ViewData["CurrentFilter"] = sort;
-        // dto.Order = (ReleasedOnOrder) sort;
              movieList.Movie = await _movieRepository.GetMovieList(dto);
         return View(movieList);
     }

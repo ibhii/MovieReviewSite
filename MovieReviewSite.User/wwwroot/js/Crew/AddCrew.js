@@ -5,13 +5,14 @@ submitButton.addEventListener("submit", function (event) {
     const middleName = document.getElementById("MiddleName").value;
     const lastName = document.getElementById("LastName").value;
     const birthDate = document.getElementById("BirthDate").value;
+    const createdBy = document.getElementById("userId").value;
 
 
     const dto = {
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,
-        createdBy: localStorage.getItem("userId"),
+        createdBy: createdBy,
         birthDate: birthDate || null,
     }
 
@@ -21,11 +22,9 @@ submitButton.addEventListener("submit", function (event) {
         url: '/Crew/AddCrew',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        }
     }).done(function (data) {
         self.result("Done!");
     })
+    alert("Changes Applied!");
+    window.location.reload();
 });

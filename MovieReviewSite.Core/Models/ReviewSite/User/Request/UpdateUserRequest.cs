@@ -10,5 +10,4 @@ public class UpdateUserRequest
     public string? Email { get; set; }
     public string? Username { get; set; }
     public int ModifierId { get; set; }
-    public int ModifierRoleCode { get; set; }
 }

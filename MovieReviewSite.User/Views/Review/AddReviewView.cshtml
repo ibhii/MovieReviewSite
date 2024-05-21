@@ -1,4 +1,6 @@
-﻿@model MovieReviewSite.Core.Models.Review.Request.AddReviewRequest
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieReviewSite.Core.Models.Review.Request.AddReviewRequest
 
 @{
     ViewData["Title"] = "Review";
@@ -35,6 +37,7 @@
     </select>
     <br>
 
+    <input type="hidden" value="@Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))" id="userId">
     <br>
     <button type="submit" class="btn btn-primary">Add Review</button>
 }

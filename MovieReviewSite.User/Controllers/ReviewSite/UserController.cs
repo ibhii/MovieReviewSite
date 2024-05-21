@@ -42,23 +42,23 @@ public class UserController : Controller
 
     [Authorize]
     [HttpPost("[action]/{id}")]
-    public async Task UpdateUser(int id,[FromBody] UpdateUserRequest dto)
+    public async Task UpdateUser(int id, [FromBody] UpdateUserRequest dto)
     {
-        await _userRepository.UpdateUser(id,dto);
+        await _userRepository.UpdateUser(id, dto);
     }
 
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost("[action]/{id}")]
-    public async Task DeactivateUser(int id,[FromBody]BaseModifier modifier)
+    public async Task DeactivateUser(int id)
     {
-        await _userRepository.DeactivateUser(id,modifier);
+        await _userRepository.DeactivateUser(id);
     }
 
     /// <summary>
     /// changes a users role
     /// </summary>
     /// <param name="dto"></param>
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost("[action]")]
     public async Task ChangeUserRole([FromBody] UserRole dto)
     {
@@ -72,10 +72,18 @@ public class UserController : Controller
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task<LoginResponse> LoginUser([FromBody] LoginUserRequest dto)
+    public async Task LoginUser([FromBody] LoginUserRequest dto)
     {
-        return await _userRepository.LoginUser(dto);
+        await _userRepository.LoginUser(dto);
     }
+
+    [Authorize]
+    [HttpPost("[action]")]
+    public async Task LogoutUser()
+    {
+        await _userRepository.LogoutUser();
+    }
+
 
     /// <summary>
     /// returns a view with the list of all users 
@@ -100,19 +108,19 @@ public class UserController : Controller
     /// <param name="id"></param>
     /// <returns></returns>
     [Route("[action]/{id}")]
-    public async Task<ActionResult> GetUserDetailView(int id)
+    public async Task<ActionResult> UserDetailView(int id)
     {
         var userDetails = await _userRepository.GetUserDetails(id);
         return View(userDetails);
     }
-    
+
     /// <summary>
     /// returns a view that updates user details
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [Route("[action]/{id}")]
-    public async Task<ActionResult> GetUserUpdateView(int id)
+    public async Task<ActionResult> UserUpdateView(int id)
     {
         var userDetails = await _userRepository.GetUserDetails(id);
         var result = new UpdateUserViewModel()
@@ -132,7 +140,7 @@ public class UserController : Controller
         var dto = new LoginUserRequest();
         return View(dto);
     }
-    
+
     /// <summary>
     /// returns view for users to sign up
     /// </summary>
@@ -143,7 +151,11 @@ public class UserController : Controller
         var dto = new NewUserRequest();
         return View(dto);
     }
-    
+
+    /// <summary>
+    /// returns a view that admin can change user roles in it
+    /// </summary>
+    /// <returns></returns>
     [Route("[action]")]
     public async Task<ActionResult> ChangeUserRoleView()
     {
@@ -158,7 +170,7 @@ public class UserController : Controller
         };
         return View(result);
     }
-    
+
 
     /// <summary>
     /// gets user authinfo
@@ -169,7 +181,7 @@ public class UserController : Controller
     {
         return await _userRepository.GetUserAuthInfo();
     }
-    
+
     /// <summary>
     /// submits user as logged in and other info
     /// </summary>
@@ -179,5 +191,11 @@ public class UserController : Controller
     {
         await _userRepository.UpdateUserAuthInfoAfterLogin(userinfo);
     }
-}
 
+    [Route("[action]")]
+    public async Task<ActionResult> UserLogoutView()
+    {
+        return View();
+    }
+
+}

@@ -1,4 +1,7 @@
 ﻿@using Microsoft.IdentityModel.Tokens
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MovieReviewSite.Core.Enums
 @model MovieReviewSite.Core.Models.User.ViewModel.UserDetailsViewModel
 
 @{
@@ -27,11 +30,15 @@
 
 @* update user buttons *@
 <br>
+@if (Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)) == Model.UserBaseInfo!.Id)
+{
+    
 <div>
-    <a class="btn btn-primary" asp-controller="User" asp-action="GetUserUpdateView" asp-route-id="@Model.UserBaseInfo!.Id">Edit</a>
+    <a class="btn btn-primary" asp-controller="User" asp-action="UserUpdateView" asp-route-id="@Model.UserBaseInfo!.Id">Edit</a>
     <a class="btn btn-primary" asp-controller="Password" asp-action="ChangeUserPasswordView" asp-route-id="@Model.UserBaseInfo!.Id">ChangePassword</a>
 </div>
 <br>
+}
 
 @* user movie list buttons *@
 <br>
@@ -62,12 +69,15 @@
 
 </div>
 
-<div>
-    @using (Html.BeginForm("DeactivateUser", "User", FormMethod.Post, new {id = "deactivateUser"}))
-    {
-        <button type="submit" id="deactivateUser" class="btn btn-danger">Deactivate User</button>
-    }
-</div>
+@if (Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)) == Model.UserBaseInfo!.Id || User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString())
+{
+    <div>
+        @using (Html.BeginForm("DeactivateUser", "User", FormMethod.Post, new {id = "deactivateUser"}))
+        {
+            <button type="submit" id="deactivateUser" class="btn btn-danger">Deactivate User</button>
+        }
+    </div>
+}
 
 @section Scripts
 {

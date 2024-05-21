@@ -15,10 +15,6 @@ SubmitButton1.addEventListener("submit", function (event) {
         url: '/Movie/AddMovieToWatched',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        },
     }).done(function (data) {
         self.result("Done!");
     })
@@ -42,10 +38,6 @@ SubmitButton2.addEventListener("submit", function (event) {
         url: '/Movie/AddMovieToWantToWatch',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto),
-        headers: {
-            User: localStorage.getItem("user"),
-            Authorization: "bearer " + localStorage.getItem("token")
-        },
     }).done(function (data) {
         self.result("Done!");
     })
