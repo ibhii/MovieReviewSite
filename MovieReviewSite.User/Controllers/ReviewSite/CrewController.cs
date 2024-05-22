@@ -5,6 +5,8 @@ using MovieReviewSite.Core.Models.Crew;
 using MovieReviewSite.Core.Models.Crew.Requests;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
 using MovieReviewSite.Core.Models.Crew.ViewModels;
+using MovieReviewSite.Core.Models.Movie.Request;
+using MovieReviewSite.Core.Repositories.Base;
 
 namespace MovieReviewSite.Controllers.ReviewSite;
 
@@ -89,9 +91,12 @@ public class CrewController : Controller
     /// <param name="id"></param>
     /// <returns></returns>
     [Route("[action]/{id}")]
-    public async Task<ActionResult> GetCrewDetailsView(int id)
+    public async Task<ActionResult> GetCrewDetailsView(int id,string? searchString)
     {
-        var crew = await _crewRepository.GetCrewDetails(id);
+        @ViewData["CurrentFilter"] = searchString;
+        var dto = new MovieListRequest();
+        dto.Search = searchString;
+        var crew = await _crewRepository.GetCrewDetails(id,dto);
         return View(crew);
     }
 
@@ -150,9 +155,10 @@ public class CrewController : Controller
     [Route("[action]/{id}")]
     public async Task<ActionResult> UpdateCrewView(int id)
     {
+        var dto = new MovieListRequest();
         var result = new UpdateCrewViewModel()
         {
-            Crew = await _crewRepository.GetCrewDetails(id)
+            Crew = await _crewRepository.GetCrewDetails(id,dto)
         };
         return View(result);
     }

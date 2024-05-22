@@ -9,11 +9,13 @@ public partial class Password
 
     public int? UserId { get; set; }
 
-    public byte[]? HashPassword { get; set; }
+    public string? HashPassword { get; set; }
 
     public string? Password1 { get; set; }
 
     public string? LastPassword { get; set; }
+
+    public string? Salt { get; set; }
 
     public virtual User? User { get; set; }
 

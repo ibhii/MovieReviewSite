@@ -33,13 +33,13 @@ public class HomeController : Controller
         _optionsMonitor = optionsMonitor;
     }
 
-    public async Task<IActionResult> GetAllMoviesList(string? searchString,int sort)
+    public async Task<IActionResult> GetAllMoviesList(string? searchString,ReleasedOnOrder? sort)
     {
         var movieList = new AllMoviesListVewModel();
         var dto = new MovieListRequest();
-        @ViewData["CurrentFilter"] = searchString;
-        @ViewData["DateSortParam"] = sort;
-        dto.Order = (ReleasedOnOrder) sort;
+        ViewData["CurrentFilter"] = searchString;
+        ViewData["DateSortParam"] = sort == ReleasedOnOrder.ReleasedOnAsc ? ReleasedOnOrder.ReleasedOnDesc : ReleasedOnOrder.ReleasedOnAsc;;
+        dto.Order = (ReleasedOnOrder?) ViewData["DateSortParam"];
         dto.Search = searchString;
              movieList.Movie = await _movieRepository.GetMovieList(dto);
         return View(movieList);

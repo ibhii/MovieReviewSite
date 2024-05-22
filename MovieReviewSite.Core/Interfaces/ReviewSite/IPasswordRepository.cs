@@ -13,5 +13,6 @@ public interface IPasswordRepository : IBaseRepository
     Task<BasePassword?> GetUsersLastPassword(int id);
     Task ChangePasswordByUserId(int id,UpdatePasswordRequest dto);
     Task<bool> AuthorizeUserPassword(string password, int userId);
+    Task<string> HashPassword(string password);
     Task<PasswordForUser?> GetPasswordForUserDetailsByUserId(int userId);
 }

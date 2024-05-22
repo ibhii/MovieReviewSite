@@ -216,11 +216,8 @@ public partial class ReviewSiteContext : DbContext
             entity.ToTable("Password", "ReviewSite");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.HashPassword).HasMaxLength(1);
             entity.Property(e => e.LastPassword).HasMaxLength(1);
-            entity.Property(e => e.Password1)
-                .HasMaxLength(50)
-                .HasColumnName("Password");
+            entity.Property(e => e.Password1).HasColumnName("Password");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Passwords)

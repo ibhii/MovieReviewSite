@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
+using MovieReviewSite.Core.Models.Movie.Request;
+using MovieReviewSite.Core.Repositories.Crew.Extensions;
 
 namespace MovieReviewSite.Core.Repositories.Crew;
 
 public partial class CrewRepository
 {
-    public async Task<CrewDetails?> GetCrewDetails(int id)
+    public async Task<CrewDetails?> GetCrewDetails(int id,MovieListRequest dto)
     {
         var crew = await _context.Crews.Where(c => c.Id == id)
             .Select(c => new CrewDetails()
@@ -22,7 +24,7 @@ public partial class CrewRepository
                 FullName = c.FullName,
                 LastModifiedOn = c.LastModifiedOn,
             }).SingleOrDefaultAsync();
-        crew!.MoviesList = await _context.MovieCrews.Where(mc => mc.CrewId == id)
+        crew!.MoviesList = await _context.MovieCrews.Search(dto.Search).Where(mc => mc.CrewId == id)
             .Select(mc => new MoviesForCrewDetails()
             {
                 Id = (int) mc.MovieId!,

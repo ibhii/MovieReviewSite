@@ -6,6 +6,7 @@ submitButton.addEventListener("submit", function (event) {
     const newPassword = document.getElementById("NewPassword").value;
     const repeatedPassword = document.getElementById("RepeatedPassword").value;
     const password = document.getElementById("Password").value;
+    const modifierId = document.getElementById("modifierId").value;
     const id = window.location.pathname.split('/')[3];
 
     if(currentPassword === newPassword){
@@ -21,7 +22,7 @@ submitButton.addEventListener("submit", function (event) {
     const dto = {
         currentPassword: currentPassword,
         newPassword: newPassword,
-        ModifierId: document.getElementById("userId").value,
+        ModifierId: modifierId,
     };
 
 

@@ -8,6 +8,7 @@ using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.Role;
 using MovieReviewSite.Core.Models.User;
+using MovieReviewSite.Core.Repositories.Review.Extensions;
 using MovieReviewSite.DataBase.Contexts;
 
 namespace MovieReviewSite.Core.Repositories.Review;
@@ -46,9 +47,9 @@ public partial class ReviewRepository : IReviewRepository
         }).ToListAsync();
     }
 
-    public async Task<List<ReviewPreview>> GetReviewsByMovieId(int id)
+    public async Task<List<ReviewPreview>> GetReviewsByMovieId(int id,ReviewListRequest dto)
     {
-        return await _context.Reviews.Where(r => r.MovieId == id).Select(r => new ReviewPreview()
+        return await _context.Reviews.Where(r => r.MovieId == id).Search(dto.Search).Select(r => new ReviewPreview()
         {
             Id = r.Id,
             User = new BaseUserModel()

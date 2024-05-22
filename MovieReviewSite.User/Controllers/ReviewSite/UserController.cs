@@ -35,9 +35,11 @@ public class UserController : Controller
 
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task AddUser([FromBody] NewUserRequest dto)
+    public async Task<IActionResult> AddUser([FromBody] NewUserRequest dto)
     {
         await _userRepository.AddUser(dto);
+        return RedirectToAction("LoginView","User");
+
     }
 
     [Authorize]
@@ -72,16 +74,18 @@ public class UserController : Controller
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task LoginUser([FromBody] LoginUserRequest dto)
+    public async Task<IActionResult> LoginUser([FromBody] LoginUserRequest dto)
     {
         await _userRepository.LoginUser(dto);
+        return RedirectToAction("GetAllMoviesList","Home");
     }
 
     [Authorize]
     [HttpPost("[action]")]
-    public async Task LogoutUser()
+    public async Task<IActionResult> LogoutUser()
     {
         await _userRepository.LogoutUser();
+        return RedirectToAction("GetAllMoviesList","Home");
     }
 
 
@@ -173,24 +177,15 @@ public class UserController : Controller
 
 
     /// <summary>
-    /// gets user authinfo
+    /// this is for users whom where created before hashing the password so that i can later add the hashed passwords
     /// </summary>
     /// <returns></returns>
-    [HttpGet("[action]")]
-    public async Task<UserAuth> GetUserAuthInfo()
+    [HttpPost("[action]/{id}")]
+    public async Task SaveUserHashedPassword(int id)
     {
-        return await _userRepository.GetUserAuthInfo();
+        await _userRepository.GetUserAuthInfo(id);
     }
-
-    /// <summary>
-    /// submits user as logged in and other info
-    /// </summary>
-    /// <param name="userinfo"></param>
-    [HttpPost("[action]")]
-    public async Task UpdateUserAuthInfoAfterLogin(UserAuth userinfo)
-    {
-        await _userRepository.UpdateUserAuthInfoAfterLogin(userinfo);
-    }
+    
 
     [Route("[action]")]
     public async Task<ActionResult> UserLogoutView()

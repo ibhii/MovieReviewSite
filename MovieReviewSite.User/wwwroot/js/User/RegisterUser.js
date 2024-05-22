@@ -17,7 +17,7 @@ submitButton.addEventListener("submit", function (event) {
         password: password,
     }
     
-    if (password === repeatedPassword) {
+    if (password !== repeatedPassword) {
         alert("Passwords Dont Match!")
     }
 
@@ -29,8 +29,6 @@ submitButton.addEventListener("submit", function (event) {
     }).done(function (data) {
         self.result("Done!");
     })
-    alert("User Registered!")
-    window.location.back()
 });
 
 function showPassword() {

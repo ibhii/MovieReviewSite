@@ -29,11 +29,12 @@ public partial class PasswordRepository
             throw new BadHttpRequestException("the password you entered as your current password is invalid!");
         }
 
+        var hashedPassword = await HashPassword(dto.NewPassword!);
         //adds the ne password to passwords table
         var newPassword = new DataBase.Password()
         {
             UserId = id,
-            Password1 = dto.NewPassword
+            HashPassword = hashedPassword
         };
         await _context.Passwords.AddAsync(newPassword);
         await _context.SaveChangesAsync();

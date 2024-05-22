@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using MovieReviewSite.Core.Enums;
 using MovieReviewSite.Core.Models;
 using MovieReviewSite.Core.Models.Crew;
@@ -6,6 +7,7 @@ using MovieReviewSite.Core.Models.Crew.ResponseBase;
 using MovieReviewSite.Core.Models.Genre;
 using MovieReviewSite.Core.Models.Movie.Responses;
 using MovieReviewSite.Core.Models.Review;
+using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 using MovieReviewSite.Core.Models.User;
 
@@ -53,8 +55,8 @@ public partial class MovieRepository
         return result;
     }
 
-    public async Task<List<ReviewPreview>> GetMovieReviewsList(int id)
+    public async Task<List<ReviewPreview>> GetMovieReviewsList(int id,ReviewListRequest dto)
     {
-        return await _reviewRepository.GetReviewsByMovieId(id);
+        return await _reviewRepository.GetReviewsByMovieId(id,dto);
     }
 }
