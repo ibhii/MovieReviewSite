@@ -76,7 +76,10 @@
             <a asp-action="GetMoviesByGenreView" asp-controller="Genre" asp-route-id="@item!.Id"> @Html.DisplayFor(m => item.Title)</a>
         </ul>
     }
-    <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id">Modify Genres</a>
+    @if (User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString() || User.FindFirstValue(ClaimTypes.Role) == Roles.Vip.ToString())
+    {
+        <a class="btn btn-primary" asp-action="ModifyMovieGenreView" asp-controller="Genre" asp-route-id="@Model.Movie.Id">Modify Genres</a>
+    }
 </div>
 
 @* crew for movie *@
@@ -94,7 +97,10 @@
         <br>
     </div>
     <br>
-    <a asp-controller="Crew" asp-action="ModifyCrewForMovieView" asp-route-id="@Model.Movie.Id" class="btn btn-primary">Modify Cast and Crew</a>
+    @if (User.FindFirstValue(ClaimTypes.Role) == Roles.Admin.ToString() || User.FindFirstValue(ClaimTypes.Role) == Roles.Vip.ToString())
+    {
+        <a asp-controller="Crew" asp-action="ModifyCrewForMovieView" asp-route-id="@Model.Movie.Id" class="btn btn-primary">Modify Cast and Crew</a>
+    }
 </div>
 <br>
 

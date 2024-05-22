@@ -1,9 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@using MovieReviewSite.Core.Enums
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Data.SqlClient
+@using MovieReviewSite.DataBase
+@using AgeRate = MovieReviewSite.Core.Enums.AgeRate
+@using System.Collections
 @model MovieReviewSite.Core.Models.Movie.ViewModels.AllMoviesListVewModel
 
 @if (User.Identity!.IsAuthenticated)
@@ -31,7 +34,7 @@
             <th>Duration</th>
             <th>Rating</th>
             <th>
-                ReleasedOn
+                <a asp-action="GetAllMoviesList" asp-route-sort ="@ViewData["DateSortParam"]">ReleasedOn</a>
             </th>
             <th>AgeRate</th>
         </tr>

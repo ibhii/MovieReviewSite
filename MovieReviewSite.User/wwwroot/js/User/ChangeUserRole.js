@@ -17,5 +17,7 @@ submitButton.addEventListener("submit", function(event) {
         data: JSON.stringify(dto),
     }).done(function (data) {
         self.result("Done!");}
-    
-    )});
+    )
+    alert("role changed")
+    window.location.reload()
+});

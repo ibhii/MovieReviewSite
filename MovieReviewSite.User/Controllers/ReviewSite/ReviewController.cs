@@ -26,9 +26,9 @@ public class ReviewController : Controller
     }
 
     [HttpGet("[action]")]
-    public async Task<List<ReviewPreview>> GetReviewByMovieId([FromQuery]int id)
+    public async Task<List<ReviewPreview>> GetReviewByMovieId([FromQuery]int id,ReviewListRequest dto)
     {
-        return await _repository.GetReviewsByMovieId(id);
+        return await _repository.GetReviewsByMovieId(id,dto);
     }
 
     [HttpGet("[action]")]
@@ -88,9 +88,12 @@ public class ReviewController : Controller
     
     
     [Route("[action]/{id}")]
-    public async Task<ActionResult> GetReviewByMovieIdView(int id)
+    public async Task<ActionResult> GetReviewByMovieIdView(int id,string? searchString)
     {
-        var reviews = await _repository.GetReviewsByMovieId(id);
+        @ViewData["CurrentFilter"] = searchString;
+        var dto = new ReviewListRequest();
+        dto.Search = searchString;
+        var reviews = await _repository.GetReviewsByMovieId(id,dto);
         return View(reviews);
     }
     

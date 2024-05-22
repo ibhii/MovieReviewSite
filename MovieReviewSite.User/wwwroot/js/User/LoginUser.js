@@ -17,18 +17,18 @@ submitButton.addEventListener("submit", function (event) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(dto)
     }).done(function (data) {
-            if (data.token) { // Check if token exists in the response
-                const user = data.user; // Assuming user information is in "user" property
-                // Store user information
-                self.result("Done!");
-                alert("logged in")
-                window.location.back()
-            } else {
-                const errorMessage = data.error?.message || "Login failed: Unexpected error";
-                console.error("Login failed:", errorMessage);
-                self.result("Login failed");
-                alert(errorMessage);
-            }
+            self.result("Done!");
         }
     )
+    alert("logged in")
+    window.location.back()
 });
+
+function showPassword() {
+    const x = document.getElementById("Password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}

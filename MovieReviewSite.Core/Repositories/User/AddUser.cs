@@ -44,12 +44,13 @@ public partial class UserRepository
         };
         var user =  await _context.Users.AddAsync(newUser);
         await _context.SaveChangesAsync();
-        
+
+        var hashPassword =  await _passwordRepository.HashPassword(dto.Password);
         //adding password
         var newPassword = new DataBase.Password()
         {
             UserId = user.Entity.Id,
-            Password1 = dto.Password
+            HashPassword = hashPassword,
         };
         
         var password = await _context.Passwords.AddAsync(newPassword);

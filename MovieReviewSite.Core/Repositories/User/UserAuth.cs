@@ -1,4 +1,5 @@
-﻿using MovieReviewSite.Core.Models.User;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieReviewSite.Core.Models.User;
 
 namespace MovieReviewSite.Core.Repositories.User;
 
@@ -11,9 +12,18 @@ public partial class UserRepository
         UserAuth = userinfo;
     }
     
-    public async Task<UserAuth> GetUserAuthInfo()
+    public async Task GetUserAuthInfo(int id)
     {
-        return UserAuth;
+        var passwords = await _context.UserPasswords.Where(up => up.UserId == id).Select(us => us.Password).ToListAsync();
+        foreach (var password in passwords)
+        {
+            password.HashPassword = await _passwordRepository.HashPassword(password.Password1!);
+            _context.Update(password);
+            await _context.SaveChangesAsync();
+        }
+        
+        
+        
     }
 
 }

@@ -2,6 +2,7 @@
 using MovieReviewSite.Core.Models.Movie;
 using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.Responses;
+using MovieReviewSite.Core.Models.Review.Request;
 using MovieReviewSite.Core.Models.Review.Responses;
 
 namespace MovieReviewSite.Core.Interfaces.ReviewSite;
@@ -14,7 +15,7 @@ public interface  IMovieRepository : IBaseRepository
     Task AddMovie(NewMovie dto);
     Task UpdateMovie(int id,UpdatedMovie dto);
     Task DeleteMovie(int id,int userId);
-    Task<List<ReviewPreview>> GetMovieReviewsList(int id);
+    Task<List<ReviewPreview>> GetMovieReviewsList(int id,ReviewListRequest dto);
     Task<List<Movies>> GetMoviesByCrewId(int id);
     Task UpdateMovieLastModifiedOnById(int id);
     Task AddMovieToWatched(MovieUser dto);

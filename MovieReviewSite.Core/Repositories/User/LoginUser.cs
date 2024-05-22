@@ -46,31 +46,6 @@ public partial class UserRepository
         };
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         await _httpContextAccessor.HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-        
-        // var tokenString = _authServices.GenerateJsonWebToken(claims);
-        // var result = new LoginResponse()
-        // {
-        //     Token = tokenString,
-        //     User = new BaseUserInfo()
-        //     {
-        //         Id = user.Id,
-        //         UserName = user.UserName!,
-        //         Name = user.Name,
-        //         RoleCode = user.Role!.RoleCode,
-        //     }
-        // };
-        // //add cookie as response
-        // var cookieOptions = new CookieOptions
-        // {   
-        //     HttpOnly = true,
-        //     Expires = DateTime.UtcNow.AddMinutes(60),  // Adjust expiration time
-        //     Secure = true // Set to true if using HTTPS (recommended)
-        // };
-        // _httpContextAccessor.HttpContext!.Response.Cookies.Append("AuthorizationToken", tokenString!, cookieOptions);
-        //
-
-        // return result; // Ensure you use curly braces
     }
 
     public async Task<bool> AuthorizeUsername(string username)

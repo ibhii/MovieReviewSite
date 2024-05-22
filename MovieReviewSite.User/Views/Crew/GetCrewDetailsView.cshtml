@@ -29,6 +29,12 @@
 <br>
 
 <h4> Movies: </h4>
+<br>
+<form method="get" asp-controller="Crew" asp-action="GetCrewDetailsView" class="d-flex">
+    <input class="form-control me-sm-2" type="search" placeholder="Search" name="searchString" value="@ViewData["CurrentFilter"]"/>
+    <button type="submit" value="Search" class="btn btn-secondary my-2 my-sm-0">Search</button>
+</form>
+<br>
 <table style="width:100% ; border: black; border-collapse: separate; border: solid;border-color: dimgray ">
     <tr class="table-primary">
         <th>

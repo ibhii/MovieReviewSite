@@ -5,6 +5,11 @@
 }
 
 <h1>Reviews:</h1>
+<form method="get" asp-controller="Review" asp-action="GetReviewByMovieIdView" class="d-flex">
+    <input class="form-control me-sm-2" type="search" placeholder="Search" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+    <button type="submit" value="Search" class="btn btn-secondary my-2 my-sm-0">Search</button>
+</form>
+<br>
 <a asp-action="AddReviewView" asp-controller="Review" asp-route-id="@Model.Select(m => m.Movie.Id).First()"></a>
 <ul>
     @foreach (var review in Model)

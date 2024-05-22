@@ -14,10 +14,13 @@
     <br>
 
     @Html.LabelFor(u => u.Password)
-    <input asp-for="Password" type="text" class="form-control"/>
+    <input asp-for="Password" type="password" class="form-control"/>
+    <input id="1" class="form-check-label" type="checkbox" onclick="showPassword()">
+    <label style="color: darkgray;font-size: smaller" class="form-check-label" for="1">Show Password</label>
     <br>
-    
-    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Login</button>  
+
+
+    <button type="submit" class="btn btn-primary" style="background-color: #1e7316">Login</button>
 }
 
 @section Scripts

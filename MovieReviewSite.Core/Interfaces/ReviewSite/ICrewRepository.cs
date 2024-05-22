@@ -5,6 +5,7 @@ using MovieReviewSite.Core.Models.Crew.Requests;
 using MovieReviewSite.Core.Models.Crew.ResponseBase;
 using MovieReviewSite.Core.Models.Crew.ViewModels;
 using MovieReviewSite.Core.Models.Movie;
+using MovieReviewSite.Core.Models.Movie.Request;
 using MovieReviewSite.Core.Models.Movie.Responses;
 
 namespace MovieReviewSite.Core.Interfaces.ReviewSite;
@@ -17,7 +18,7 @@ public interface ICrewRepository : IBaseRepository
     Task AddCrew(NewCrewRequest dto);
     Task UpdateCrew(int id,UpdateCrewRequest dto);
     Task DeleteCrew(int id,int userId);
-    Task<CrewDetails?> GetCrewDetails(int id);
+    Task<CrewDetails?> GetCrewDetails(int id,MovieListRequest dto);
     Task AddCrewToMovie(CrewMovieRequest dto);
     Task RemoveCrewFromMovie(CrewMovieRequest dto);
     Task<MovieBase?> GetMovieById(int id);

@@ -27,6 +27,6 @@ public interface IUserRepository : IBaseRepository
     Task<bool> IsUserAdminOrVIP(int id);
     Task<bool> IsUserAdmin(int id);
     Task UpdateUserAuthInfoAfterLogin(UserAuth userinfo);
-    Task<UserAuth> GetUserAuthInfo();
+    Task GetUserAuthInfo(int id);
     Task<List<BaseIdTitleModel>> GetAllRoles();
 }
